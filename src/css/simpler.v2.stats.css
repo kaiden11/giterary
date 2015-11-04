@@ -1,0 +1,17 @@
+.stats.display {
+    background-color:           #f9f9f9;
+    border:                     1px solid #999;
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding:                    1rem;
+}
+
+.stats.container.meta-on .meta.container {
+    width:  20rem !important;
+    background-color:   #e5e5ee;
+}
+
+.stats.container {
+    padding-left:   0.5rem;
+    padding-right:  0.5rem;
+}

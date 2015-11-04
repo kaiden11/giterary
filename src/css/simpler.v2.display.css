@@ -1,0 +1,166 @@
+
+.view.file h6 {
+    display: none;
+
+}
+
+.enable-decorations .view.file h6 {
+    display: block;
+    background-color: #ffefef;
+    font-size: 1.0em;
+    text-align: right;
+}
+
+.enable-decorations .view.file h6.collection-file-boundary {
+    background-color: #ffefff;
+}
+
+.enable-decorations .view.file annotate,
+.preview-on .view.file annotate
+{
+    border-bottom: 1px dotted silver;
+    background-color: #FFFFd0;
+}
+
+annotate, comment {
+    display: inline;
+}
+
+.view.file annotate comment
+{
+    display: none;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.enable-decorations .view.file annotate:hover comment,
+.preview-on .view.file annotate:hover comment
+{
+    /* visibility: visible; */
+    display: inline;
+    background-color: #FFddc0;
+}
+
+.enable-decorations .view.file p span.dialog
+{
+    color: #009900;
+}
+
+.enable-decorations .view.file span.todo
+{
+    background-color: #ffcccc;
+    color: #000000;
+}
+
+.enable-decorations .view.file span.tag {
+    display: block;
+    background-color: #ccccff;
+}
+
+.enable-decorations.only-dialog .view.file p
+{
+    color: #d0d0d0;
+}
+
+.enable-decorations.only-dialog .view.file .dialog {
+    /* visibility: visible; */
+}
+
+.view.file span.tag {
+    display: none;
+}
+
+
+.view.file a.edit,
+.view.file a.jot
+
+{
+    color:  #f00;
+}
+
+a.internal.annotation.highlight + annotate,
+    .annotations-container dt a.highlight {
+    background-color: #FF9999;
+}
+
+.view.file table.text-output pre {
+    white-space:    pre;
+}
+
+.view.file pre.wrap,
+    .view.file code.wrap,
+    .diff pre.wrap 
+    .diff code.wrap,
+    .view.file.markdown pre code,
+    .view.file.talk pre code,
+    .diff.markdown pre code
+{
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+
+.enable-decorations .view.file pre.wrap,
+.enable-decorations .view.file code.wrap,
+.enable-decorations .diff pre.wrap 
+.enable-decorations .diff code.wrap,
+.enable-decorations .view.file.markdown pre code,
+.enable-decorations .view.file.talk pre code,
+.enable-decorations .diff.markdown pre code 
+{
+    color:  #2222cc;
+
+
+}
+
+.view.file p {
+    margin: 0.75rem 0;
+}
+
+.view.file ul {
+    margin-top:         1rem;
+    margin-bottom:      1rem;
+}
+
+.view.file li > ul {
+    margin-top:     0.2rem;
+    margin-bottom:  0.2rem;
+}
+
+
+.view.file input,
+    .view.file select
+{
+
+    font-size:      0.8rem;
+    border:         1px solid #ccc;
+    background-color:   #e0f0f0;
+    color:              #000000;
+    margin:             0.2rem;
+
+}
+
+.view.file input[type=button],
+    .view.file input[type=submit] 
+{
+    padding:            0.1rem;
+}
+
+
+
+.view.file .audio {
+    padding: 1rem;
+}
+
+.view.file.markdown .flag {
+    background-color:   #D0F0D0;
+}
+
+.view.file.markdown .flag .flag {
+    background-color:   #f0F0c0;
+}
+
+

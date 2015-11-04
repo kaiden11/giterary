@@ -1,0 +1,152 @@
+
+.edit.container {
+    padding-left:   1rem;
+    padding-right:  1rem;
+}
+
+.edit.display {
+    background-color:           #f9f9f9;
+    border:                     1px solid #999;
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding:                    1rem;
+}
+
+.edit.editor .CodeMirror {
+    font-family:    Menlo, Courier New, monospace;
+    font-size:      0.8rem;
+
+    height:         30rem;
+    margin-bottom:  1rem;
+    border-bottom:  1px solid #ccc;
+}
+
+.edit.container textarea#commit_notes {
+    height:             3rem;
+    background-color:   #d0f0d0;
+    width:              100%;
+}
+
+
+.edit.container .CodeMirror-fullscreen {
+    position:   fixed !important;
+    top:        0; 
+    left:       0;
+    right:      0;
+    bottom:     0;
+    height:     auto;
+    z-index:    1000;
+}
+
+.edit.container .meta.info dt,
+.edit.container .meta.info dd
+{
+    max-width:      20rem;
+    overflow:       hidden;
+    text-overflow:  ellipsis;
+    white-space:    nowrap;
+}
+
+.edit.container .meta.info dd.filename
+{
+    direction:      rtl;
+    padding-right:  1rem;
+}
+
+.edit.container .meta.info dd.shortcut a
+{
+    display:            block;
+
+    background-color:   #E5EEE5;
+    border:             1px solid #CCCCCC;
+    border-radius:      0.2rem 0.2rem 0.2rem 0.2rem;
+    padding-left:       0.5rem;
+    padding-right:      0.5rem;
+
+}
+
+.edit.container .view.container  {
+    padding:            1rem;
+}
+
+.edit.container .view.container .view.file {
+    overflow-y:         auto;
+    max-height:         30rem;
+}
+
+
+.edit.container .view.container .view.file table.text-output {
+    max-width:          40rem;
+}
+
+.edit.container .preview.container {
+    background-color:           #F0D0D0;
+    height:                     100%;
+
+    border:                     1px solid #999999;
+    /*
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    */
+
+}
+
+/* .edit.container.preview-on .edit.display { */
+.edit.container.preview-on .edit.display {
+    border-top-right-radius:    0;
+    border-bottom-right-radius: 0;
+}
+
+.edit.container.preview-on .edit.display,
+.edit.container.preview-on .edit.preview {
+    width:                      50%;
+}
+
+.edit.container .edit.editor textarea {
+    width:                      100%;
+    height:                     30rem;
+    background-color:           #ffffff;
+    color:                      #333333;
+}
+
+.edit.container .edit.preview .preview.container {
+    display:    none;
+}
+
+.edit.container.preview-on .edit.preview .preview.container {
+    display:    block;
+
+}
+
+/* Preview Container Toggle */
+.edit.container .edit.preview .toggle {
+    width: 1rem;
+    min-width: 1rem;
+    height: 100%;
+    background-color: #f0f0f0;
+}
+
+.edit.container .edit.preview .toggle a {
+    display:                    block;
+    background-color:           #f0c0c0;
+    border:                     1px solid #999999;
+    border-left:                0;
+    width:                      100%;
+    height:                     100%;
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+#caret {
+    display:            inline-block;
+    background-color:   #f0d0d0;
+    color:              #f0d0d0;
+}
+
+#caret:after {
+    content:    "_";
+}
+
+.CodeMirror pre {
+    font-size: 0.8rem !important;
+}

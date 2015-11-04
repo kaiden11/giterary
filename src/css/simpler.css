@@ -1,0 +1,1339 @@
+* {
+    -webkit-text-size-adjust: 0;
+}
+
+body {
+    color: #000000;
+    /* background-color: #F9F8CB;  */
+    // background-color: #b0b0c0; 
+    background-color: #F5F5FF;
+    // background-color: #0f0f0f; 
+    // FONT-FAMILY:  sans-serif;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+    FONT-SIZE: 0.8em;
+    margin-left : 0px;
+    margin-right : 0px;
+    margin-top : 0px;
+}
+
+form {	margin: 0px; display: inline;}
+
+textarea[readonly], input[readonly] {
+    margin: 1px 1px 1px 1px; 
+    display: inline; 
+    background-color: #dddddd;
+}
+
+textarea {
+    font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+    font-size: medium;
+    // width: 40em;
+    // height: 20em;
+
+}
+
+.navigation input[type=checkbox],
+    .navigation select
+{
+    margin: 0px;
+    padding: 0px;
+
+}
+
+.navigation select.other-dropdown {
+    width: 10em;
+    margin-left: 5px;
+}
+
+div.navigation span.decoration-checkbox {
+
+}
+
+div.edit-contents textarea,
+    div.cherrypick-output textarea 
+{
+    width: 100%;
+    height: 220px;
+}
+
+div.markdown-edit div.edit-contents textarea#commit_notes {
+    height: 3em;
+}
+
+div.edit-contents textarea#edit_contents {
+    background-color: #d0d0f0;
+}
+
+div.edit-contents textarea#commit_notes {
+    background-color: #d0f0d0;
+}
+
+
+div.preview-pane {
+    // width: 40em;
+    height: 220px;
+    overflow-y: scroll;
+    background-color: #f0d0d0;
+    border: 0.3em solid #f0d0d0;
+}
+
+h2.error-message {
+    color: #dd0f0f;
+}
+
+input, textarea {
+    display: inline;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #e5e5ee;
+    // color: #000000;
+    FONT-SIZE: 0.9em;
+    FONT-WEIGHT: none;
+    background-color: #f5f5f5;
+}
+
+A { 
+    text-decoration: none;
+    color: #003399;
+}
+
+div.view-file A,
+    div.preview-pane A
+{
+    text-decoration: underline;
+}
+
+div.view-file div.toc-container div.toc A,
+div.view-file div.annotations-container div.annotations A
+{
+    text-decoration: none;
+}
+
+
+A:hover { 
+    color: #6699dd;
+    
+}
+
+div.banner {
+    background-color:   #FFFFFF;
+
+    box-shadow:         0px 3px 3px #d0d0dd;
+    # margin-bottom: 1.0em;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+
+    // border-bottom: 2px solid #E5E5EE;
+}
+
+div.nav-bar {
+
+    display: inline-block;
+    // -webkit-box-shadow: 0px 5px 9px #999999;
+    // -moz-box-shadow:    0px 5px 9px #999999;
+    box-shadow:         0px 3px 3px #d0d0dd;
+
+    margin-bottom: 1em;
+    border-bottom-right-radius: 0.5em;
+    -moz-border-bottom-right-radius: 0.5em;
+    -webkit-border-bottom-right-radius: 0.5em;
+    background-color: #ffffff;
+    // border-bottom: 2px solid #E5E5EE;
+    // border-right:  2px solid #E5E5EE;
+
+   
+    padding-right: 1em;
+
+
+}
+
+
+
+div.nav-bar div.jot {
+    display: inline;
+
+}
+
+div.breadcrumb {
+    display: block;
+    padding-left: 1em;
+    padding-right: 1em;
+
+    display: block;
+    box-shadow:         0px 3px 3px #d0d0dd;
+
+    background-color: #ffffff;
+
+    padding-bottom: 3px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+}
+
+div.breadcrumb,
+    div.banner
+{
+    height:             1.6em;
+    line-height:        1.6em;
+}
+
+
+div.navigation ul li A, 
+    div.navigation ul li A:visited,
+    div.navigation ul li span.decoration-checkbox,
+    div.navigation ul li span.toc-checkbox,
+    div.navigation ul li span.annotations-checkbox,
+    div.navigation ul li span.adds-checkbox,
+    div.navigation ul li span.removes-checkbox,
+    div.navigation ul li span.nav-checkbox,
+    div.navigation ul li span.wrap-checkbox
+{
+    color: #003399;
+
+    text-align:     left;
+    padding:        5px;
+
+    /*
+    border-left-color: #666666;
+    border-left-style: dotted;
+    border-left-width: 1px;
+    */
+
+}
+
+div.navigation ul li {
+    margin-left:    5px;
+    margin-right:   0px;
+}
+
+
+div.view-container div.navigation A,
+div.stats-container div.navigation A,
+div.diff-container div.navigation A,
+div.cherrypick-container div.navigation A,
+div.partition-container div.navigation A,
+div.blame-container div.navigation A,
+div.view-container span.decoration-checkbox,
+div.view-container span.toc-checkbox,
+div.view-container span.annotations-checkbox,
+div.diff-container span.adds-checkbox,
+div.diff-container span.removes-checkbox,
+div.navigation span.nav-checkbox,
+div.blame-container span.wrap-checkbox
+{
+    background-color: #FFFFFe;
+    border-top:     2px solid #E5E5EE;
+    border-left:    2px solid #E5E5EE;
+    border-right:   2px solid #E5E5EE;
+
+    // box-shadow:         0px -0.2em 0.1em #666666;
+}
+
+div.banner-image {
+    display: inline;
+    padding-left: 1em;
+}
+
+div.navigation a:first-child { 
+    border-left-width: 0px;
+}
+
+div.banner div.navigation  {
+
+    text-align:         left;
+    padding-left:       0.4em;
+    padding-right:      0.4em;
+    
+    // width:              auto;
+    display:            inline;
+
+
+    // opacity: 0.2;
+}
+
+div.navigation:hover,
+    div.login:hover
+{
+    // opacity: 1.0;
+    // filter:alpha(opacity=40); /* For IE8 and earlier */
+}
+
+// div.main {
+//     box-shadow:         0.3em 0.3em 1.0em #666666;
+//     border-radius: 0.5em;
+//     -moz-border-radius: 0.5em;
+//     -webkit-border-radius: 0.5em;
+// 
+//     padding: 1em;
+//     background-color: #f0f0f0;
+// 
+// }
+
+div.main div.edit {
+    width: auto;
+}
+
+div.main div.edit-contents {
+    // margin-right: auto;
+    // margin-left: auto;
+    // width: 800px;
+}
+
+div.main div.edit-contents div.pane-container {
+    display: block;
+    // overflow-x: scroll;
+    // white-space: nowrap;
+    width: 100%;
+}
+
+
+div.markdown-edit div.edit-split div.edit-pane {
+    float: left;
+    width: 49%;
+    z-index 2;
+    position: relative;
+}
+
+
+
+div.markdown-edit div.edit-split div.render-pane {
+    float: right;
+    width: 48%;
+}
+
+div.markdown-edit div.edit-split.disable-live-preview div.edit-pane {
+    width: 100%;
+}
+
+div.markdown-edit div.edit-split.disable-live-preview div.render-pane {
+    display: none;
+}
+
+
+@media only screen and (max-width: 800px), only screen and (max-device-width: 800px) {
+
+    div.markdown-edit div.edit-split div.edit-pane {
+        float: none;
+        width: 100%
+    }
+    
+    div.markdown-edit div.edit-split div.render-pane {
+        float: none;
+        width: 100%;
+    }
+}
+
+
+
+div.main div.edit-contents div.child-pane {
+    width: 100%;
+    display: inline-block;
+}
+
+div.main div.edit-contents div.child-pane > div {
+    display: block;
+}
+
+div.scrollable {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height: 20em;
+}
+
+div.view-file,
+    div.diff,
+    div.edit,
+    div.dir_view,
+    div.gen_history,
+    div.view-stats,
+    div.view-commit,
+    div.view-drafts,
+    div.gen-blame,
+    div.gen_search,
+    div.gen_todos,
+    div.cherrypick-diff,
+    div.cherrypick-preview,
+    div.partition,
+    div.partition-preview,
+    div.move-file,
+    div.assoc
+
+
+{
+
+    /* box-shadow:         0.3em 0.3em 1.0em #666666; */
+
+    box-shadow:         0px 3px 5px #d0d0dd;
+
+
+    border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+ 
+    padding: 1em;
+    background-color: #FFFFFF;
+
+    width: auto;
+    margin-bottom: 1em;
+
+    overflow-x: scroll;
+    border: 1px solid #E5E5EE;
+}
+
+div.file-meta {
+    float:right;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+div.view-file div.file-name
+{
+    text-align: right;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+div.edit-contents div.file-name {
+    text-align: right;
+    float: right;
+    margin-right: 2em;
+}
+
+div.toc-container,
+    div.annotations-container {
+//    float: right;
+    text-align: left;
+
+    padding: 1em;
+    background-color: #F9F9F9;
+    border: 1px solid #aaaaaa;
+
+    margin-top: 0.5em;
+    position: fixed;
+    left: 815px;
+    max-height: 400px;
+    overflow-y: scroll;
+    display: none;
+}
+
+
+div.view-container.enable-toc div.toc-container,
+    div.view-container.enable-annotations div.annotations-container {
+    display: block;
+}
+
+
+div.table-container div.help {
+    text-align: left;
+
+    padding: 1em;
+    background-color: #F9F9F9;
+    border: 1px solid #aaaaaa;
+
+    margin-top: 0.5em;
+    position: absolute;
+    left: 815px;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+
+/*  Snap the table of contents to within the document
+    in the event the browser width is lame.
+*/
+@media only screen and (max-width: 820px), only screen and (max-device-width: 820px) {
+    div.toc-container {
+        float: right;
+        position: relative;
+        left: auto;
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    div.annotations-container {
+        float: right;
+        position: relative;
+        left: auto;
+        max-height: none;
+        overflow-y: visible;
+    }
+
+
+    div.table-container div.help {
+        float: none;
+        position: relative;
+        left: auto;
+        max-height: none;
+        overflow-y: visible;
+    }
+}
+
+div.toc-container ul {
+    padding-left: 0.5em;
+    margin-top: 0.2em;
+    margin-bottom: 0px;
+}
+
+div.toc-container ul li {
+    margin-left: 0px;
+    list-style: none;
+}
+
+div.toc-container div.toc a.h1 {
+    margin-left: 0px;
+}
+
+div.toc-container div.toc a.h2 {
+    margin-left: 0.3em;
+}
+
+div.toc-container div.toc a.h3 {
+    margin-left: 0.6em;
+}
+div.toc-container div.toc a.h4 {
+    margin-left: 1.2em;
+}
+div.toc-container div.toc a.h5 {
+    margin-left: 1.5em;
+}
+
+div.toc-container div.toc a.hidden {
+    margin-left: 0px;
+}
+
+div.toc-container div.toc a.hidden:before {
+    content: "*";
+}
+
+
+
+
+
+
+div.view-file span.title,
+    div.diff span.title,
+    div#rendered_edit_contents span.title,
+    div.dir_view div.title span
+
+{
+    font-size: 1.5em;
+    clear: both;
+}
+
+div.view-file span.breadcrumb {
+    font-size: 0.8em;
+}
+
+div.view-file A.edit,
+    div.view-file A.edit:hover,
+    div.view-file A.edit:visited,
+    div.breadcrumb A.edit,
+    div.breadcrumb A.edit:hover,
+    div.breadcrumb A.edit:visited,
+    div.assoc A.edit,
+    div.assoc A.edit:hover,
+    div.assoc A.edit:visited,
+    div.banner A.new,
+    div.banner A.new:hover,
+    div.banner A.new:visited
+
+
+{
+    color: #ff0000;
+    
+}
+
+div.navigation ul,
+    div.login ul ,
+    div.breadcrumb ul
+{
+    padding: 0px; 
+    // margin-left:1em; 
+    margin-top: 0px;
+    margin-bottom: 0.3em;
+    display: inline;
+
+}
+
+div.navigation ul li,
+    div.login ul li ,
+    div.breadcrumb ul li 
+{
+    list-style-type: none;
+    margin: 0px;
+    padding-left: 0.2em;
+    display: inline;
+}
+
+div.breadcrumb ul li,
+    div.navigation div.nav-bar ul li ,
+    div.navigation ul li.default-file ,
+    div.login ul li 
+{
+    background-color: #e5e5eE;
+    margin-left: 2px;
+    margin-right: 2px;
+
+    border-radius:          0.5em;
+    -moz-border-radius:     0.5em;
+    -webkit-border-radius:  0.5em;
+
+    border: 1px solid #cccccc;
+
+    padding-left:   2px;
+    padding-right:  2px;
+
+
+}
+
+div.navigation ul li.default-file {
+    background-color: #ffddc0;
+}
+
+div.navigation div.nav-bar ul li,
+    div.login ul li 
+{
+    background-color: #e5efe5;
+    border: 1px solid #cccccc;
+}
+
+div.breadcrumb ul li a.wikilink,
+    div.nav-bar ul li a
+
+{
+    margin-left: 0px;
+    margin-right: 0px;
+
+}
+
+
+div.nav-bar div.navigation ul li:first-child {
+    border-left: none;
+}
+
+div.nav-bar div.navigation ul li {
+    border-left: 1px dotted #999999;
+    padding-right: 0.2em;
+
+}
+
+div.view-container div.nav-container {
+    width: 100%;
+    display: inline-block;
+
+}
+
+div.view-container div.navigation 
+
+{
+    display: inline;
+    float: left;
+}
+div.view-container div.navigation ul li {
+    // margin-bottom: 0.5em;
+
+}
+
+div.left-pane {
+    margin-right: 0.5em;
+
+    overflow: visible;
+    float: left;
+}
+
+div.right-pane {
+
+    overflow: visible;
+    float: left;
+}
+
+.fleft {
+    float: left;
+}
+
+.fright {
+    float: right;
+}
+
+div.login {
+    // float: right;
+    // text-align: left;
+
+    // opacity: 0.2;
+    // filter:alpha(opacity=20); /* For IE8 and earlier */
+    display:        inline;
+}
+
+div.bottom-pane {
+    margin-left:    0.5em;
+    margin-right:   0.5em;
+    width:          auto;
+    clear:          both;
+}
+
+.edit-constraints {
+    width: 100%;
+    min-width: 600px;
+}
+
+.constrained-content {
+    width: 100%;
+    min-width: 600px;
+    max-width: 800px;
+}
+
+div.view-file h6 {
+    display: none;
+
+}
+
+.enable-decorations div.view-file h6 {
+    display: block;
+    background-color: #ffefef;
+    font-size: 1.0em;
+    text-align: right;
+}
+
+.enable-decorations div.view-file h6.collection-file-boundary {
+    background-color: #ffefff;
+
+}
+
+.enable-decorations div.view-file annotate, 
+    div.preview-pane annotate {
+    border-bottom: 1px dotted silver;
+    background-color: #FFFFd0;
+}
+
+/* div.diff:hover annotate,  */
+
+
+annotate, comment {
+    display: inline;
+}
+
+div.diff-container div.diff span.diff.add, 
+    div.diff-container div.diff span.diff.remove
+{
+    display: none;
+}
+
+div.diff-container div.diff.adds span.diff.add
+{
+    display: inline;
+    color: blue;
+}
+
+div.diff-container div.diff.removes span.diff.remove
+{
+    display: inline;
+    color: red;
+}
+
+
+div.view-file annotate comment ,
+    div.diff annotate comment,
+    div.preview-pane annotate comment
+{
+    display: none;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+/*
+div.view-file a.internal {
+    display: none;
+}
+
+.enable-decorations div.view-file a.internal {
+    display: inline;
+}
+
+.enable-decorations div.view-file a.internal.annotation:after {
+    content: "*";
+}
+
+.enable-decorations div.view-file a.internal:active
+{
+    color: red;
+}
+*/
+
+
+.enable-decorations div.view-file:hover annotate comment,
+    div.preview-pane:hover annotate comment,
+    div.diff:hover annotate comment {
+    /* visibility:  hidden; */
+    display: none;
+}
+
+.enable-decorations div.view-file annotate:hover comment,
+    div.preview-pane annotate:hover comment
+{
+    /* visibility: visible; */
+    display: inline;
+    background-color: #FFddc0;
+}
+
+/* div.diff annotate:hover comment  */
+
+.enable-decorations div.view-file p span.dialog,
+    div.preview-pane p span.dialog {
+    /* font-style: italic; */
+    color: #009900;
+}
+
+.enable-decorations div.view-file span.todo,
+    div.gen_todos code span.todo,
+    div.preview-pane span.todo {
+    /* font-style: italic; */
+    background-color: #ffcccc;
+    color: #000000;
+}
+
+.enable-decorations div.view-file span.tag {
+    display: block;
+    background-color: #ccccff;
+
+
+}
+
+div.view-file span.tag {
+    display: none;
+}
+
+/*
+div.view-file p {
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+}
+*/
+
+div.view-file pre.wrap,
+    div.view-file code.wrap,
+    div.diff pre.wrap 
+    div.diff code.wrap,
+    div.view-file.markdown pre code,
+    div.view-file.talk pre code,
+    div.diff.markdown pre code
+{
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+
+}
+
+
+div.gen_history table th.diff,
+    div.assoc table th.diff,
+    div.gen_history table td.diff {
+
+    background-color: #E5E5EE;
+}
+
+div.gen_history table tr:hover td,
+    div.assoc table tr:hover td,
+    div.dir_view table tr:hover td 
+{
+    background-color: #c5c5cE;
+}
+
+div.gen_history table tr.assoc td {
+    display: none;
+}
+
+div.gen_history.enable-assoc table tr.assoc td {
+    display: table-cell;
+    opacity: 0.3;
+}
+
+div.gen_history.enable-assoc table tr.assoc:hover td {
+    display: table-cell;
+    opacity: 1.0;
+}
+
+
+div.gen_history table tr td.filename {
+
+    max-width: 10em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div.dir_view table th.commit,
+    div.dir_view table td.commit 
+{
+    background-color: #e5e5eE;
+}
+
+table {
+    border-spacing: 0px;
+}
+
+table td,
+    table th {
+    padding: 2px;
+
+}
+
+div.view-file pre, div.view-file code {
+    font-family: Consolas, "Lucida Console", monospace;
+    font-size: 1.0em;
+
+}
+
+div.view-file {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+    font-size: 1.0em;
+
+
+}
+
+div.view-file table.text-output {
+
+}
+
+
+div.gen-blame table td  {
+    vertical-align: top;
+}
+
+div.gen-blame table td div.blame-line {
+    overflow: hidden; 
+    width: 500px;
+}
+
+div.gen-blame table td div.blame-line code {
+    white-space: pre; 
+}
+
+div.gen-blame.wrap table td div.blame-line code {
+    white-space: pre-wrap !important;
+}
+
+div.gen-blame table td div.blame-author {
+    white-space: nowrap; 
+}
+
+div.gen-blame.wrap table tr.alt1 td {
+    background-color: #ffffff;
+}
+
+div.gen-blame.wrap table tr.alt2 td {
+    background-color: #e5eee5;
+}
+
+
+
+#caret {
+    background-color: white !important;
+}
+
+input.suggestible {
+    color: #cccccc;
+}
+
+input.suggestible:focus {
+    color: black;
+}
+
+
+div.cherrypick-diff .line-of-code,
+    div.cherrypick-preview .line-of-code,
+    div.diff-container .line-of-code,
+    div.partition .line-of-code 
+{
+
+    font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+    font-size: 12px;
+    display: block;
+    min-height: 12px;
+    white-space: pre-wrap;
+
+}
+
+
+div.cherrypick-container div.cherrypick-diff span.diff {
+    cursor: pointer;
+}
+
+div.cherrypick-container div.cherrypick-diff span.diff.add
+{
+    display: inline;
+    color: blue;
+}
+
+div.cherrypick-container div.cherrypick-diff span.diff.remove
+{
+    display: inline;
+    color: red;
+}
+
+div.cherrypick-container div.cherrypick-diff span.cancel.remove {
+    color: #ffdddd !important;
+    // border-bottom: 1px dotted red;
+}
+
+div.cherrypick-container div.cherrypick-diff span.cancel.add {
+    color: #ddddff !important;
+    // border-bottom: 1px dotted blue;
+}
+
+div.cherrypick-container div.cherrypick-diff span.unseen {
+    background-color: #fffacd;
+}
+
+div.cherrypick-container div.cherrypick-preview span.diff.add.revised {
+    background-color: #ddffdd;
+    // border-bottom: 1px dotted #0ffd0f;
+}
+
+div.cherrypick-container div.cherrypick-preview span.diff.remove.revised {
+    background-color: #ffd469;
+
+}
+
+div.cherrypick-container div.cherrypick span.diff.newline,
+    div.cherrypick-container div.cherrypick-preview span.diff.newline {
+    display: none;
+}
+
+
+
+div.cherrypick-container div.cherrypick-diff,
+    div.cherrypick-container div.cherrypick-preview,
+    div.partition-container div.partition,
+    div.partition-container div.partition-preview
+{
+    width: 47%;
+}
+
+div.cherrypick-container div.cherrypick-diff  {
+    float: left;
+}
+
+
+div.cherrypick-container div.cherrypick-preview {
+    float: right;
+}
+
+div.partition-container div.partition {
+    float: left;
+}
+
+
+div.partition-container div.partition-preview {
+    float: right;
+}
+
+
+div.partition div.partition-boundary {
+    background-color: #ddffff;
+    display: block;
+    min-height: 8px;
+}
+
+div.partition div.partition-boundary.enabled {
+    background-color: #fff099;
+    min-height: 8px;
+}
+
+
+div.partition div.partition-boundary:hover {
+    background-color: #ace0ff;
+}
+
+
+div.partition div.partition-boundary:hover span.toggle {
+    display: block;
+    text-align: right;
+}
+
+div.partition div.partition-boundary input[type=text],
+    div.partition div.partition-boundary span.toggle
+{
+    display: none;
+}
+
+div.partition div.partition-boundary.enabled input[type=text] {
+    display: inline;
+}
+
+div.partition-preview-output div.partition-boundary {
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    background-color: #fff099;
+
+}
+
+div.partition-preview-output div.partition-boundary div.starts-with,
+div.partition-preview-output div.partition-boundary div.ends-with {
+    display: block;
+}
+
+div.partition-preview-output div.partition-boundary div.starts-with:before {
+    content: "Starts with: ";
+}
+
+div.partition-preview-output div.partition-boundary div.ends-with:before {
+    content: "Ends with: ";
+}
+
+table.tabulizer {
+    background-color: #f9f9f9;
+    width: 100%;
+}
+
+table.tabulizer tr td {
+    white-space: nowrap;    
+}
+
+table.tabulizer tr td:last-child {
+    white-space: normal;
+}
+
+
+
+table.tabulizer .header {
+    background-color: #ace0ff;
+}
+
+table.tabulizer th.header.headerSortUp {
+    background-color: #6ce099;
+}
+
+table.tabulizer th.header.headerSortUp span:after {
+    content: '\21d1'; 
+}
+
+table.tabulizer th.header.headerSortDown {
+    background-color: #f0ff99;
+
+}
+
+table.tabulizer th.header.headerSortDown span:after {
+    content: '\21d3'; 
+}
+
+table.tabulizer tr:nth-child(2n) td {
+    background-color: #f0f0f0;
+}
+
+table.tabulizer tr.hidden {
+    display: none;
+}
+
+table.tabulizer thead tr th:first-child,
+table.tabulizer tbody tr td:first-child {
+    border-left: 0px;
+}
+
+table.tabulizer thead tr th,
+table.tabulizer tbody tr td {
+    border-left: 1px solid #cccccc;
+}
+
+
+div.edit-contents div.buttons a {
+    display:                inline-block;
+    margin-left:            1px;
+    margin-right:           1px;
+
+    padding-left:            2px;
+    padding-right:           2px;
+
+
+    text-align:             center;
+
+    min-width:                  2em;
+
+    border-radius:          0.5em;
+    -moz-border-radius:     0.5em;
+    -webkit-border-radius:  0.5em;
+
+    border:                 2px solid #d0d0f0;
+
+
+}
+
+div.edit-contents div.buttons a.annotate {
+    border-bottom: 1px dotted silver;
+    background-color: #FFFFd0;
+}
+
+div.edit-contents div.buttons a.wikilink,
+    div.view-file a.wikilink.jot {
+    color: #ff0000;
+}
+
+div.edit-contents div.buttons a.bold {
+    font-weight: bold;
+}
+
+div.edit-contents div.buttons a.italics {
+    font-style: italic;
+}
+
+div.edit-contents div.buttons a span.first {
+    // text-decoration: underline;
+}
+
+div.edit-contents div.buttons a span.rest { 
+    display: none;
+
+}
+
+div.edit-contents div.buttons a:hover span.rest { 
+    display: inline;
+}
+
+div.edit-contents div.buttons div.button-group {
+    display: inline-block;
+    text-align: center;
+}
+
+div.buttons span.bold {
+    font-weight: bold;
+}
+
+div.quick-nav.disabled {
+    display: none;
+}
+
+div.quick-nav {
+    box-shadow:         0px 3px 5px #d0d0dd;
+
+    border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+ 
+    padding: 1em;
+    background-color: #FFFFFF;
+
+    width: auto;
+    margin-bottom: 1em;
+
+    border: 1px solid #E5E5EE;
+}
+
+div.quick-nav table {
+    width: 100%;
+}
+
+div.quick-nav table tr td:first-child {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+
+input#quick-nav {
+    width: 100%;
+}
+
+.ui-autocomplete {
+    display: inline-block;
+
+    margin-bottom: 1em;
+    border-bottom-right-radius: 0.5em;
+    -moz-border-bottom-right-radius: 0.5em;
+    -webkit-border-bottom-right-radius: 0.5em;
+    background-color: #ffffff;
+}
+
+.ui-state-focus {
+    color: #ff0000;
+}
+
+.ui-menu-item a span.match,
+    div.gen_search td div span.match {
+    font-weight: bold;
+    background-color: #FFFFd0;
+
+}
+
+div.view-file hr,
+    div.preview-pane hr,
+    div.diff hr 
+{
+    width:              100%;
+    background-color:   #606066;
+    border:             0;
+    height:             1px;
+    /*
+    box-shadow:         0px 0px 10px #606066;
+    margin-top:         2em;
+    margin-bottom:      2em;
+    */
+
+}
+
+div.view-file img {
+    max-width: 100%;
+    height: auto;
+
+}
+
+div.gen_history td.message div,
+    div.ls_tree td.message div {
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+
+}
+
+div.gen_history td.message div span,
+    div.ls_tree td.message div span {
+    white-space: nowrap;
+}
+
+div.gen_todos table tr.heading td,
+    div.gen_search table tr.heading td 
+{
+    background-color: #e5e5ee;
+}
+
+.noselect {
+    -webkit-touch-callout:  none;
+    -webkit-user-select:    none;
+    -khtml-user-select:     none;
+    -moz-user-select:       none;
+    -ms-user-select:        none;
+    user-select:            none;
+}
+
+/*
+
+div.breadcrumb ul li a.wikilink.component {
+    display: none;
+}
+
+div.breadcrumb ul li:hover a.wikilink.component {
+    display: inline;
+}
+
+div.breadcrumb ul li a.wikilink.component:last-child {
+    display: inline;
+}
+
+
+*/
+
+
+a.internal.annotation.highlight + annotate,
+    .annotations-container dt a.highlight {
+    background-color: #FF9999;
+}
+
+
+div.constrained-content.expandable {
+    /* Forcing width to expand  with contents */
+    display: table;
+}

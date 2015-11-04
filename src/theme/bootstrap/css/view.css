@@ -1,0 +1,61 @@
+.view .panel-heading .breadcrumb {
+    padding:        0px;
+    margin-bottom:  0px;
+}
+
+.view .panel-heading .breadcrumb a  {
+    padding-right:  0.5rem;;
+    padding-left:  0.5rem;;
+}
+
+body.giterary {
+    padding-bottom: 50px
+}
+
+.dropdown-menu.scrollable {
+    height:     auto;
+    max-height: 600px;
+    overflow-y: scroll;
+}
+
+/*
+.dropdown-menu a.h1,
+.dropdown-menu a.h2,
+.dropdown-menu a.h3,
+.dropdown-menu a.h4,
+.dropdown-menu a.h5,
+.dropdown-menu a.h6 {
+    font-size:  75%;
+}
+*/
+/*
+.dropdown-menu .h1{font-size:18px}
+.dropdown-menu .h2{font-size:15px}
+.dropdown-menu .h3{font-size:12px}
+.dropdown-menu .h4{font-size:9px}
+.dropdown-menu .h5{font-size:7px}
+.dropdown-menu .h6{font-size:6px}
+*/
+
+.view .panel .panel-heading .panel-title .linkify .separator {
+    padding-left:   0.5rem;
+    padding-right:  0.5rem;
+}
+
+.view #scratch-activity.no-selection,
+.view #snippets-activity.no-selection {
+    display: none;
+}
+
+@media only screen and (max-width: 768px ) {
+
+    .view .navbar .navbar-nav {
+        margin: 0px;
+
+    }
+}
+
+.view .file p.random {
+    background-color: pink;
+
+}

@@ -1,0 +1,101 @@
+.partition.container {
+    width:              100%;
+    padding-left:       1rem;
+    padding-right:      1rem;
+    height:             100%;
+}
+
+.partition.display,
+.partition-preview
+{
+    background-color:           #f9f9f9;
+    border:                     1px solid #999;
+    padding:                    1rem;
+}
+
+.partition-preview {
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+
+}
+ 
+
+.partition.display .line-of-code 
+{
+
+    font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+    font-size: 12px;
+    display: block;
+    min-height: 12px;
+    white-space: pre-wrap;
+}
+
+.partition.container .partition.source,
+.partition.container .partition-preview
+{
+    /* width: 47%; */
+}
+
+.partition.container .partition.source {
+    /* float: left; */
+}
+
+
+.partition.container .partition-preview {
+    /* float: right; */
+}
+
+.partition.source .partition-boundary {
+    background-color: #ddffff;
+    display: block;
+    min-height: 8px;
+}
+
+.partition.source .partition-boundary.enabled {
+    background-color: #fff099;
+    min-height: 8px;
+}
+
+
+.partition.source .partition-boundary:hover {
+    background-color: #ace0ff;
+}
+
+
+.partition.source .partition-boundary:hover span.toggle {
+    display: block;
+    text-align: right;
+}
+
+/* Not sure this was ever used
+.partition.display .partition-boundary input[type=text],
+    .partition.display .partition-boundary span.toggle
+{
+    display: none;
+}
+*/
+
+.partition.display .partition-boundary input[type=text] {
+    display: inline;
+}
+
+.partition-preview-output .partition-boundary {
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    background-color: #fff099;
+
+}
+
+.partition-preview-output .partition-boundary div.starts-with,
+.partition-preview-output .partition-boundary div.ends-with {
+    display: block;
+}
+
+.partition-preview-output div.partition-boundary div.starts-with:before {
+    content: "Starts with: ";
+}
+
+.partition-preview-output div.partition-boundary div.ends-with:before {
+    content: "Ends with: ";
+}

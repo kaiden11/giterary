@@ -1,0 +1,71 @@
+body.giterary {
+    padding-bottom: 50px
+}
+
+.cherrypick.display {
+    /*
+    background-color:           #f9f9f9;
+    border:                     1px solid #999;
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding:                    1rem;
+    */
+}
+
+div.cherrypick-diff .line-of-code,
+    div.cherrypick-preview .line-of-code
+{
+
+    /* font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace; */
+    font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+    font-size: 12px;
+    display: block;
+    min-height: 12px;
+    white-space: pre-wrap;
+}
+
+.cherrypick div.cherrypick-diff span.diff {
+    cursor: pointer;
+}
+
+.cherrypick div.cherrypick-diff span.diff.add
+{
+    display: inline;
+    color: blue;
+}
+
+.cherrypick div.cherrypick-diff span.diff.remove
+{
+    display: inline;
+    color: red;
+}
+
+.cherrypick div.cherrypick-diff span.cancel.remove {
+    color: #ffdddd !important;
+    // border-bottom: 1px dotted red;
+}
+
+.cherrypick div.cherrypick-diff span.cancel.add {
+    color: #ddddff !important;
+    // border-bottom: 1px dotted blue;
+}
+
+.cherrypick div.cherrypick-diff span.unseen {
+    background-color: #fffacd;
+}
+
+.cherrypick div.cherrypick-preview span.diff.add.revised {
+    background-color: #ddffdd;
+    // border-bottom: 1px dotted #0ffd0f;
+}
+
+.cherrypick div.cherrypick-preview span.diff.remove.revised {
+    background-color: #ffd469;
+
+}
+
+.cherrypick div.cherrypick span.diff.newline,
+    .cherrypick div.cherrypick-preview span.diff.newline {
+    display: none;
+}
+

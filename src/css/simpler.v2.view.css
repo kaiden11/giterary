@@ -1,0 +1,408 @@
+.view.container {
+    width:              100%;
+    padding-left:       1rem;
+    padding-right:      1rem;
+    height:             100%;
+}
+
+.view.container .view.file {
+    padding-left:       0.5rem;
+    padding-right:      0.5rem;
+    padding-top:        0;
+
+    background-color:   #f9f9f9;
+
+    /* box-shadow:         0 0 0.2rem  #333; */
+    border:             1px solid #999;
+
+    border-top-right-radius:      0.5rem;
+    border-bottom-right-radius:      0.5rem;
+
+    padding-bottom:     2.0rem;
+
+    width:              100%;
+    height:             100%;
+
+
+}
+
+.view.file .file.meta {
+    float:              right;
+    margin-top:         0.5rem;
+    /*
+    margin-left:        0.5rem;
+    margin-right:       0.5rem;
+    */
+    background-color:   #E5E5EE;
+    padding:            0.5rem;
+    border-radius:      0.5rem;
+    border:             1px solid #999;
+}
+
+.view.file .file.meta .breadcrumb {
+    font-size:      0.8rem;
+}
+
+.view.file .file.meta .file.name
+{
+    text-align:     right;
+    font-size:      1.5rem;
+    clear:          both;
+}
+
+.view.file .file.meta .file.status {
+    text-align:     right;
+    font-size:      0.6rem;
+    clear:          both;
+}
+
+/*
+.view.file .file.meta .file.status a {
+    color:          #f00;
+}
+*/
+
+/* Container for all document meta activities, internal or external */
+.view.container .meta.container {
+    width:              20rem;
+    height:             100%;
+
+    /* background-color:   #f9f9e9; */
+
+    background-color:   #e5e5ee;
+
+    /* transform:          translate( -95%, 0 ); */
+    /*
+    border-top-left-radius:     0.5rem;
+    border-bottom-left-radius:  0.5rem;
+    */
+
+}
+
+.view.container .meta.container .toggle {
+    display:            block;
+    width:              1rem;
+    float:              left;
+    height:             100%;
+
+    background-color:   #f0f0f0;
+
+    /* box-shadow:                 0 0 0.1rem  #333; */
+
+}
+
+.view.container .meta.container .toggle a {
+    display:            block;
+    background-color:   #E5EEE5;
+    border:             1px solid #999999;
+    width:              100%;
+    height:             100%;
+
+    border-top-left-radius:     0.5rem;
+    border-bottom-left-radius:  0.5rem;
+}
+
+
+.view.container .meta.container .toggle a:hover {
+    background-color:   #d5ddd5;
+
+}
+
+.view.container.enable-toc .meta.container .activities,
+.view.container.enable-annotations .meta.container .activities
+{
+    display:    block;
+}
+
+
+.view.container.meta-on .internal.meta,
+    .view.container.enable-toc .internal.meta,
+    .view.container.enable-annotations .internal.meta
+{
+    display:            block;
+}
+
+.view.container.meta-on .external.meta,
+    .view.container.enable-toc .external.meta,
+    .view.container.enable-annotations .external.meta
+{
+    display:            block;
+}
+
+
+
+.view.container .meta.container
+{
+    width:              1rem;
+    max-width:          1rem;
+
+}
+
+.view.container.meta-on .meta.container,
+.view.container.enable-toc .meta.container,
+.view.container.enable-annotations .meta.container 
+{
+    /* transform:          translate( 0, 0 ); */
+    width:              20rem;
+    max-width:          20rem;
+
+}
+
+/* Internal activities menu: Edit, History, etc. */
+
+.view.container .internal.meta {
+    display:            none;
+}
+
+.view.container .internal.meta .activities ul,
+    .view.container .external.meta .activities ul 
+{
+    display:            block;
+    list-style:         none;
+
+    padding:            0;
+
+    white-space:        nowrap;
+
+
+}
+
+.view.container .internal.meta .activities ul li,
+    .view.container .external.meta .activities ul li {
+    display:                    block;
+    list-style-type:            none;
+
+    overflow-x:                 hidden;
+    white-space:                nowrap;
+
+
+    /* margin-right:               1rem; */
+
+    /* background-color:           #F9F9F9; */
+
+    /* box-shadow:                 0 0 0.1rem  #333; */
+}
+
+.view.container .internal.meta .activities ul li:hover {
+    /* border-bottom:  0.2rem solid #333; */
+}
+
+.view.container .internal.meta .activities {
+    display:                    block;
+}
+
+
+.view.container .internal.meta .activities ul {
+    display:                    block;
+}
+
+/*
+.view.container .view.sequence {
+    display:                    table;
+    height:                     100%;
+}
+
+.view.container .view.sequence .view.sequence.horizontal {
+    display:                    table-row;
+    height:                     100%;
+}
+
+
+.view.container .view.sequence .meta.container,
+    .view.container .view.sequence .view.file {
+    display:                    table-cell;
+    vertical-align:             top;
+}
+*/
+
+
+/* External menu, Annotations, Tables, etc. */
+.view.container .external.meta
+{
+    display:            none;
+}
+
+.view.container .external.meta .activities {
+    overflow-x:                 hidden;
+    white-space:                nowrap;
+}
+
+.view.container .external.meta .activities ul {
+    display:                    block;
+    padding:                    0;
+}
+
+.view.container .toc-container,
+    .view.container .refs-container,
+    .view.container .annotations-container {
+    height:             100%;
+    display:            none;
+
+    text-align:         left;
+
+    padding:            1rem;
+    background-color:   #F9F9F9;
+    border:             1px solid #aaaaaa;
+
+    /* box-shadow:         -0.1rem 0 0  #333; */
+
+    overflow-y:         auto;
+    /* margin-right:       2rem; */
+
+}
+
+.view.container.enable-toc .external.meta,
+    .view.container.enable-file-refs .external.meta,
+    .view.container.enable-annotations .external.meta {
+    display:                block !important;
+}
+
+.view.container.enable-toc .external.meta .toc-container,
+    .view.container.enable-file-refs .external.meta .refs-container,
+    .view.container.enable-annotations .external.meta .annotations-container {
+    display: block !important;
+}
+
+
+.view.container.meta-on .view.file,
+.view.container.enable-annotations .view.file,
+.view.container.enable-toc .view.file
+{
+    /* padding-left:       21rem; */
+}
+
+
+/* Formatting within the document */
+
+
+.view.container .internal.meta .activities ul li a,
+    .view.container .internal.meta .activities ul li span
+{
+    display:    block;
+    width:      100%;
+
+    padding-left:   2rem;
+    padding-top:    0.2rem;
+    padding-bottom: 0.2rem;
+}
+
+.view.container .internal.meta .activities ul li input[type=checkbox]
+{
+    /* */
+    margin-left:    1rem;
+    margin-right:   1rem;
+}
+
+.view.container .internal.meta .activities ul li select
+{
+    margin-left:    2rem;
+    width:          10rem;
+    padding-top:    0.2rem;
+    padding-bottom: 0.2rem;
+
+}
+
+/*
+.view.container .internal.meta .activities ul li a:hover,
+    .view.container .internal.meta .activities ul li span:hover 
+{
+    background-color:   #fff;
+
+}
+*/
+
+
+
+.view.container .external.meta .activities ul li span {
+    display:    block;
+    width:      100%;
+
+    padding-left:   2rem;
+    padding-top:    0.2rem;
+    padding-bottom: 0.2rem;
+}
+
+
+.view.container.meta-on                 .meta.scroller,
+    .view.container.enable-toc          .meta.scroller,
+    .view.container.enable-annotations  .meta.scroller
+{
+    display:            block !important;
+}
+
+.toc-container .toc a.h1 {
+    border-left: 1px solid    #dfeefe;
+}
+.toc-container .toc a.h2 {
+    /* margin-left: 0.6rem; */
+    border-left: 0.3rem solid #dfeefe;
+}
+.toc-container .toc a.h3 {
+    /* margin-left: 0.6rem; */
+    border-left: 0.6rem solid #dfeefe;
+}
+.toc-container .toc a.h4 {
+    /* margin-left: 1.2rem; */
+    border-left: 0.9rem solid #dfeefe;
+}
+.toc-container .toc a.h5 {
+    /* margin-left: 1.5rem; */
+    border-left: 1.2rem solid #dfeefe;
+}
+
+.toc-container .toc a.toc-hidden {
+    margin-left: 0px;
+}
+
+.toc-container .toc a.toc-hidden:before {
+    content: "*";
+}
+
+.view.container .external.meta .refs-container ul li {
+    max-width:      20rem;
+    overflow:       hidden;
+    text-overflow:  ellipsis;
+    white-space:    nowrap;
+
+    direction:      rtl;
+    padding-right:  1rem;
+
+}
+
+.view.container .external.meta .refs-container ul li.link a.edit {
+    color:  #ff0000;
+}
+
+.view.container .external.meta .refs-container ul li.link {
+    background-color:  #e0f0f0;
+}
+
+.view.container .external.meta .refs-container ul li.jot {
+    background-color:  #f0e0f0;
+}
+
+.view.container .external.meta .refs-container ul li.ignore {
+    background-color:  #f0e0e0;
+
+}
+
+.view.container .external.meta .refs-container ul li.target span:after {
+    content:    "\00AB";
+}
+
+.view.container .external.meta .refs-container ul li.source span:after {
+    content:    "\00BB";
+}
+
+.view.container .external.meta .refs-container ul li.target.source span:after {
+    content:    "\00AB\00BB";
+}
+
+
+.view.container .external.meta .refs-container ul li.list,
+.view.container .external.meta .refs-container ul li.table, 
+.view.container .external.meta .refs-container ul li.link 
+
+{
+    background-color:  #f0f0e0;
+}

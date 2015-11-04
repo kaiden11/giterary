@@ -1,0 +1,90 @@
+body.giterary {
+    padding-bottom: 50px
+}
+
+.message pre {
+    /* max-width: 20rem; */
+    max-height: 4rem;
+}
+
+
+.history .commit-btn
+{
+    min-width: 105px;
+}
+
+.history .before-after-btn
+{
+    min-width: 80px;
+}
+
+.history .file-prior {
+    min-width: 39px;
+}
+
+.history .diff-btn
+{
+    min-width: 55px;
+}
+
+.history table tr.assoc td,
+.history table tr.alias td
+{
+    display:    none;
+}
+
+.history.enable-assoc table tr.assoc td,
+.history.enable-alias table tr.alias td
+{
+    display: table-cell;
+    opacity: 0.3;
+}
+
+.history.enable-assoc table tr.assoc:hover td,
+.history.enable-alias table tr.alias:hover td
+{
+    display: table-cell;
+    opacity: 1.0;
+}
+
+.history table tr td.filename .filename-box {
+    white-space:    nowrap;
+    max-width:      20rem;
+    text-overflow:  ellipsis;
+    overflow:       hidden;
+}
+
+.history table tr td,
+.history table tr th 
+{
+    width:          0px;
+    white-space:    nowrap;
+}
+
+.history table tr td.message,
+.history table tr th.message
+{
+    width:          100%;
+}
+
+@media only screen and (max-width: 768px ) {
+
+    .history .navbar .navbar-nav {
+        margin: 0px;
+
+    }
+
+    .history .navbar .navbar-nav.navbar-left,
+    .history .navbar .navbar-nav.navbar-left li
+    {
+        float: left !important;
+    }
+
+    .history .navbar .navbar-nav.navbar-right,
+    .history .navbar .navbar-nav.navbar-right li
+
+    {
+        float: right !important;
+    }
+
+}

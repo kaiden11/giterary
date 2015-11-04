@@ -1,0 +1,236 @@
+.meta.pane .navigation.header  {
+    display:    block;
+}
+
+/* Default site, login/logout */
+.meta.pane .navigation.header .defaults,
+    .meta.pane .navigation.header .login {
+
+    display:    inline;
+}
+
+.meta.pane .navigation.header ul li,
+    .meta.pane .navigation.activities ul li,
+    .meta.pane .navigation.breadcrumb ul li  {
+    display:            inline;
+    list-style-type:    none;
+    margin-right:       0.2rem;
+}
+
+/* Breadcrumb */
+.meta.pane .navigation.breadcrumb  {
+    display:    block;
+}
+
+/* Activities */
+.meta.pane .navigation.activities  {
+    display:    block;
+}
+
+.meta.pane .navigation.header ul,
+.meta.pane .navigation.breadcrumb ul,
+    .meta.pane .navigation.activities ul  {
+    display:    inline;
+    padding:    0;
+
+
+    list-style: none;
+}
+
+
+.meta.pane .navigation.activities .quick,
+    .meta.pane .navigation.activities .jot {
+    display:    inline;
+}
+
+
+
+.meta.pane .navigation.header,
+    .meta.pane .navigation.breadcrumb,
+    .meta.pane .navigation.activities  
+{
+
+    height:         1.2rem;
+    line-height:    1.2rem;
+    white-space:    nowrap;
+    font-size:      0.6rem;
+    padding-left:   1.0rem;
+}
+
+.meta.pane .navigation.activities input,
+.meta.pane .navigation.header input,
+.meta.pane .navigation.activities button ,
+.meta.pane .navigation.header button 
+{
+
+    font-size:      0.6rem;
+    border:         1px solid #ccc;
+
+}
+
+.meta.pane .navigation ul li {
+    padding-left:       0.5rem;
+    padding-right:      0.5rem;
+
+    background-color:   #e5e5eE;
+    border-radius:      0.2rem;
+    border:             1px solid #ccc;
+
+}
+
+.meta.pane .navigation ul li.default-file {
+    background-color:   #ffddc0;
+}
+
+.meta.pane .navigation.breadcrumb ul li a.wikilink {
+
+    display:    inline-block;
+}
+
+.meta.pane .navigation.breadcrumb ul li a.diff {
+
+    display:    none;
+}
+
+.meta.pane .navigation.breadcrumb ul li:hover a.diff {
+
+    display:    inline-block;
+}
+
+.meta.pane .navigation.header ul li:hover a.online {
+
+    display:    inline-block;
+}
+
+.meta.pane .navigation.header ul li a.online {
+
+    display:    none;
+}
+
+.meta.pane .navigation.activities ul li:hover a.import {
+
+    display:    inline-block;
+}
+
+.meta.pane .navigation.activities ul li a.import {
+
+    display:    none;
+}
+
+.meta.pane .navigation.breadcrumb ul li {
+
+    background-color:   #e5eee5;
+}
+
+.meta.pane .navigation.breadcrumb ul li.recent {
+
+    background-color:   #f5eea5;
+}
+
+
+.meta.pane .navigation.breadcrumb ul li a.edit {
+
+    color:              #ff0000;
+}
+
+
+.meta.pane .navigation a.new {
+    color:              #f00;
+    /* background-color:   #f5f5fE; */
+
+}
+
+/* Quick Nav */
+.quick-nav.container {
+    position:       fixed;
+    top:            1.2rem;
+    left:           0;
+    width:          100%;
+
+    padding-top:    1rem;
+
+    display:        none;
+    z-index:        2000;
+}
+
+.giterary.meta-on .quick-nav.container {
+    top:            4.8rem;
+}
+
+.quick-nav.container.quick-nav-on {
+    display:        block;
+}
+
+.quick-nav.display {
+    box-shadow:         0px 3px 5px #d0d0dd;
+
+    border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+ 
+    padding: 1em;
+    background-color: #FFFFFF;
+
+    width: auto;
+    margin-bottom: 1em;
+
+    border: 1px solid #E5E5EE;
+}
+
+.quick-nav table {
+    width: 100%;
+}
+
+.quick-nav table tr td:first-child {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+input#quick-nav {
+    width: 100%;
+}
+
+.ui-autocomplete {
+    display: inline-block;
+
+    margin-bottom: 1em;
+    border-bottom-right-radius: 0.5em;
+    -moz-border-bottom-right-radius: 0.5em;
+    -webkit-border-bottom-right-radius: 0.5em;
+    background-color: #ffffff;
+}
+
+.ui-state-focus {
+    color: #ff0000;
+}
+
+.ui-menu-item a span.match
+{
+    font-weight: bold;
+    background-color: #FFFFd0;
+
+}
+
+
+.navigation.quick-nav.container ul.ui-menu {
+    list-type: none;
+
+}
+
+.navigation.quick-nav.container ul.ui-menu li {
+    list-style-type:    none;
+    padding:            0.2rem;
+}
+
+.navigation.quick-nav.container ul.ui-menu li a {
+    background-color:   transparent !important;
+    border:             0 !important;
+
+}
+
+.footer.container {
+    padding:        1rem;
+    text-align:     right;
+}
+
+

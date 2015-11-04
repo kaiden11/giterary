@@ -1,0 +1,38 @@
+.drafts.container {
+    padding-left:   1rem;
+    padding-right:  1rem;
+}
+
+.drafts.display {
+    background-color:           #f9f9f9;
+    border:                     1px solid #999;
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding:                    1rem;
+}
+
+.drafts.display a.edit {
+    color: #f00;
+}
+
+.drafts.display table tr td.right {
+    text-align: right;
+}
+
+.drafts.commit .display textarea#commit_notes {
+    height:             3rem;
+    background-color:   #d0f0d0;
+    width:              100%;
+}
+
+.drafts.commit ul {
+    margin-bottom: 0.5rem;
+}
+
+.undue-spacing {
+    min-height: 10rem;
+}
+
+.confirmation {
+    font-size: 1.2rem;
+}

@@ -1,0 +1,38 @@
+.search.container td div span.match {
+    background-color: #FFFFD0;
+    font-weight: bold;
+}
+
+.search.container,
+.tags.container,
+.todos.container {
+    padding-left:   1rem;
+    padding-right:  1rem;
+
+}
+
+.search.container .display,
+.tags.container .display,
+.todos.container .display
+{
+    background-color:           #f9f9f9;
+    border:                     1px solid #999;
+    border-radius:              0.5rem;
+    padding:                    1rem;
+}
+
+.todos.display table tr.heading td,
+    .search.display table tr.heading td 
+{
+    background-color: #e5e5ee;
+}
+
+.todos.display code span.todo
+{
+    background-color: #ffcccc;
+    color: #000000;
+}
+
+.edit {
+    color: #f00;
+}

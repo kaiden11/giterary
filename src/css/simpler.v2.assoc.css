@@ -1,0 +1,25 @@
+.assoc.container {
+    margin-left:   1rem;
+    margin-right:  1rem;
+}
+
+.assoc.display {
+    background-color:           #f9f9f9;
+    border:                     1px solid #999;
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding:                    1rem;
+}
+
+.assoc.container table th.diff {
+    background-color: #E5E5EE;
+}
+
+div.assoc table tr:hover td
+{
+    background-color: #c5c5cE;
+}
+
+.assoc.display a.edit {
+    color:  #f00;
+}

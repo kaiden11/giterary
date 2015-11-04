@@ -1,0 +1,89 @@
+
+.history table th.diff,
+    .history table td.diff {
+
+    background-color: #E5E5EE;
+}
+
+.history.container {
+    padding-left:   1rem;
+    padding-right:  1rem;
+
+}
+
+.history.display {
+
+    border-radius:          0.2em;
+ 
+    padding:                1rem;
+    background-color:       #f9f9f9;
+
+    /* width:                  auto; */
+
+    /* overflow-x:             auto; */
+    border:                 1px solid #999;
+}
+
+
+.history.display table tr td {
+    border-bottom:       1px solid #e9e9e9;
+}
+
+
+.history.display table tr:hover td {
+    background-color:       #d9d9f9;
+}
+
+
+.history table tr.assoc td,
+.history table tr.alias td
+{
+    display:    none;
+}
+
+.history.enable-assoc table tr.assoc td,
+.history.enable-alias table tr.alias td
+{
+    display: table-cell;
+    opacity: 0.3;
+}
+
+.history.enable-assoc table tr.assoc:hover td,
+.history.enable-alias table tr.alias:hover td
+{
+    display: table-cell;
+    opacity: 1.0;
+}
+
+.history table {
+    width:  100%;
+}
+
+.history table tr td {
+    width:          0px;
+    white-space:    nowrap;
+}
+
+.history table tr td.message,
+    .history table tr th.message
+{
+    width:          100%;
+    white-space:    normal;
+}
+
+
+.history.display table tr td.filename a.edit {
+    color:       #ff0000;
+}
+
+.history.display .pager .previous {
+    text-align: left;
+}
+
+.history.display .pager .next {
+    text-align: right;
+}
+
+.response-exists {
+    background-color:    #ff9;
+}

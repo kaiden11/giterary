@@ -1,0 +1,67 @@
+
+
+.dir-view.container {
+    padding-left:   1rem;
+    padding-right:  1rem;
+}
+
+.dir-view.display {
+
+    border-radius:          0.2em;
+    padding:                1rem;
+    background-color:       #f9f9f9;
+    border:                 1px solid #999;
+}
+
+.dir-view.container.meta-on .meta.container {
+    width:  20rem !important;
+    background-color:   #e5e5ee;
+}
+
+.dir-view.display .title span .linkify {
+    font-size:  0.5rem;
+}
+
+.dir-view.display .title span.file-name .linkify  {
+    font-size:  1.2rem;
+}
+
+.dir-view.display .title > div {
+    height:         2rem;
+}
+
+.dir-view.display .view {
+
+    padding:                1rem;
+    background-color:       #e0e0e0;
+    border:                 1px solid #999;
+    border-radius:          0.2em;
+}
+
+.dir-view.display .view .search,
+.dir-view.display .view .ls_tree
+{
+
+    background-color:       #d6d6d6;
+    padding:                0.5rem;
+    border:                 1px solid #999;
+    border-radius:          0.2em;
+    margin-top:             0.5rem;
+    margin-bottom:          0.5rem;
+
+}
+
+
+
+.dir-view.display .view .ls_tree table {
+    width:                  100%;
+    background-color:       #dfdfdf;
+
+}
+
+.dir-view.display .view .ls_tree table tr th,
+    .dir-view.display .view .ls_tree table tr td {
+    border-bottom:          1px solid #ccc;
+    padding:                0.2rem;
+}
+

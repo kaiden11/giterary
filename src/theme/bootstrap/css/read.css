@@ -1,0 +1,28 @@
+body.read {
+    background: #0f0f0f;
+    color:      #ccc   ;
+}
+
+body.read .view.read p {
+    border-right: 3px solid #666;
+
+    -webkit-transition:     border 500ms ease-out;
+    -moz-transition:        border 500ms ease-out;
+    -o-transition:          border 500ms ease-out;
+    transition:             border 500ms ease-out;
+}
+
+body.read .view.read p {
+    text-align:     justify;
+    text-justify:   inter-word;
+
+    padding-right:  1rem;
+}
+
+body.read .view.read p.seen {
+    border-right: 3px solid #0f0f0f;
+}
+
+body.read .view.read p.recover {
+    border-right: 3px solid #0fcf0f !important;
+}

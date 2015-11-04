@@ -1,0 +1,222 @@
+.needs_rewrite  { background-color: #fff099; }
+.needs_review   { background-color: #f099ff; }
+.needs_edit     { background-color: #ff0099; }
+
+.status_none
+{
+    background-color: #c0c0c0;
+}
+
+.status_1,
+.status_2,
+.status_3,
+.status_4,
+.status_5,
+.status_6,
+.status_7,
+.status_8,
+.status_9,
+.status_10,
+.status_11,
+.status_12,
+.status_13,
+.status_14,
+.status_15,
+.status_16,
+.status_17,
+.status_18,
+.status_19  {   color: #f0f0f0 !important; background-color:   #cc3366;    }
+
+.status_20, 
+.status_21, 
+.status_22, 
+.status_23, 
+.status_24, 
+.status_25, 
+.status_26, 
+.status_27, 
+.status_28, 
+.status_29  {   color: #f0f0f0 !important; background-color:   #bb4466;    }
+
+.status_30, 
+.status_31, 
+.status_32, 
+.status_33, 
+.status_34, 
+.status_35, 
+.status_36, 
+.status_37, 
+.status_38, 
+.status_39  {   color: #f0f0f0 !important; background-color:   #aa5566;    }
+
+.status_40, 
+.status_41, 
+.status_42, 
+.status_43, 
+.status_44, 
+.status_45, 
+.status_46, 
+.status_47, 
+.status_48, 
+.status_49  {   color: #f0f0f0 !important; background-color:   #996666;    }
+
+.status_50, 
+.status_51, 
+.status_52, 
+.status_53, 
+.status_54, 
+.status_55, 
+.status_56, 
+.status_57, 
+.status_58, 
+.status_59  {   color: #f0f0f0 !important; background-color:   #887766;    }
+
+.status_60, 
+.status_61, 
+.status_62, 
+.status_63, 
+.status_64, 
+.status_65, 
+.status_66, 
+.status_67, 
+.status_68, 
+.status_69  {   color: #f0f0f0 !important; background-color:   #778866;    }
+
+.status_70, 
+.status_71, 
+.status_72, 
+.status_73, 
+.status_74, 
+.status_75, 
+.status_76, 
+.status_77, 
+.status_78, 
+.status_79  {   color: #f0f0f0 !important; background-color:   #669966;    }
+
+.status_80, 
+.status_81, 
+.status_82, 
+.status_83, 
+.status_84, 
+.status_85, 
+.status_86, 
+.status_87, 
+.status_88, 
+.status_89  {   color: #f0f0f0 !important; background-color:   #55aa66;    }
+
+.status_90, 
+.status_91, 
+.status_92, 
+.status_93, 
+.status_94, 
+.status_95, 
+.status_96, 
+.status_97, 
+.status_98, 
+.status_99  {   color: #f0f0f0 !important; background-color:   #55bb66;    }
+
+.status_100 {   color: #f0f0f0 !important; background-color:   #33cc66;    }
+
+.mark_10,
+.mark_11,
+.mark_12,
+.mark_13,
+.mark_14,
+.mark_15,
+.mark_16,
+.mark_17,
+.mark_18,
+.mark_19  {   color: #f0f0f0 !important; background-color:   #55bb66;   }
+
+.mark_20, 
+.mark_21, 
+.mark_22, 
+.mark_23, 
+.mark_24, 
+.mark_25, 
+.mark_26, 
+.mark_27, 
+.mark_28, 
+.mark_29  {   color: #f0f0f0 !important; background-color:   #55aa66;      }
+
+.mark_30, 
+.mark_31, 
+.mark_32, 
+.mark_33, 
+.mark_34, 
+.mark_35, 
+.mark_36, 
+.mark_37, 
+.mark_38, 
+.mark_39  {   color: #f0f0f0 !important; background-color:   #669966;    }
+
+.mark_40, 
+.mark_41, 
+.mark_42, 
+.mark_43, 
+.mark_44, 
+.mark_45, 
+.mark_46, 
+.mark_47, 
+.mark_48, 
+.mark_49  {   color: #f0f0f0 !important; background-color:    #778866;    }
+
+.mark_50, 
+.mark_51, 
+.mark_52, 
+.mark_53, 
+.mark_54, 
+.mark_55, 
+.mark_56, 
+.mark_57, 
+.mark_58, 
+.mark_59  {   color: #f0f0f0 !important; background-color:   #887766;    }
+
+.mark_60, 
+.mark_61, 
+.mark_62, 
+.mark_63, 
+.mark_64, 
+.mark_65, 
+.mark_66, 
+.mark_67, 
+.mark_68, 
+.mark_69  {   color: #f0f0f0 !important; background-color:   #996666;   }
+
+.mark_70, 
+.mark_71, 
+.mark_72, 
+.mark_73, 
+.mark_74, 
+.mark_75, 
+.mark_76, 
+.mark_77, 
+.mark_78, 
+.mark_79  {   color: #f0f0f0 !important; background-color:   #aa5566;   }
+
+.mark_80, 
+.mark_81, 
+.mark_82, 
+.mark_83, 
+.mark_84, 
+.mark_85, 
+.mark_86, 
+.mark_87, 
+.mark_88, 
+.mark_89  {   color: #f0f0f0 !important; background-color:   #bb4466;    }
+
+.mark_90, 
+.mark_91, 
+.mark_92, 
+.mark_93, 
+.mark_94, 
+.mark_95, 
+.mark_96, 
+.mark_97, 
+.mark_98, 
+.mark_99  {   color: #f0f0f0 !important; background-color:   #cc3366;    }
+
+.mark_100 {   color: #f0f0f0 !important; background-color:   #33cc66;    }
+
+
+

@@ -1,0 +1,10 @@
+
+.todos.display code span.todo
+{
+    background-color: #ffcccc;
+    color: #000000;
+}
+
+.edit {
+    color: #f00;
+}

@@ -1,0 +1,60 @@
+
+#import-source {
+    /*
+    height: 100%;
+    width:  100%;
+    overflow:   scroll;
+
+    background-color:   #f0f0f0;
+    border:             1px solid #333;
+    padding:            1rem;
+    */
+
+}
+
+
+/*
+.import.container .import.source, 
+    .import.target {
+    width: 45%;
+}
+
+
+#import-target {
+    width: 100%;
+    min-width: 300px;
+    max-width: 1000px;
+    max-height: 30rem;
+
+}
+
+.import.container {
+    padding-left:   1rem;
+    padding-right:  1rem;
+}
+
+
+.import.target {
+    background-color:           #F0D0D0;
+    height:                     100%;
+
+    border:                     1px solid #999999;
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding:                    1rem;
+
+}
+
+textarea#import-target {
+    font-family:    Menlo, Courier New, monospace;
+    font-size:      1.0rem;
+
+    height:         30rem;
+    margin-bottom:  1rem;
+    border-bottom:  1px solid #ccc;
+}
+
+.import a.edit {
+    color:  #f00;
+}
+*/

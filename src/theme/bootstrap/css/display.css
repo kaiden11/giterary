@@ -1,0 +1,312 @@
+
+.view.file h6 {
+    display: none;
+}
+
+ul.toc.funcify li {
+    list-style: none;
+}
+
+ul.toc.funcify li a {
+    color:  #428bca !important;
+}
+
+ul.toc.funcify li a.h1 {
+    padding-left: 0.0rem;
+}
+
+ul.toc.funcify li a.h2 {
+    padding-left: 1.0rem;
+}
+
+ul.toc.funcify li a.h3 {
+    padding-left: 2.0rem;
+}
+
+ul.toc.funcify li a.h4 {
+    padding-left: 3.0rem;
+}
+
+ul.toc.funcify li a.h6 {
+    padding-left: 4.0rem;
+}
+
+ul.toc.funcify li a.h6 {
+    padding-left: 5.0rem;
+}
+
+.enable-decorations .view.file h6 {
+    display: block;
+    background-color: #ffefef;
+    font-size: 1.0em;
+    text-align: right;
+}
+
+.enable-decorations .view.file h6.collection-file-boundary {
+    background-color: #ffefff;
+}
+
+.enable-decorations .view.file annotate,
+.preview-on .view.file annotate
+{
+    border-bottom: 1px dotted silver;
+    background-color: #FFFFd0;
+}
+
+annotate, comment {
+    display: inline;
+}
+
+.view.file comment,
+    .view.file annotate comment
+{
+    display: none;
+    background-color: #FFddc0;
+}
+
+.view.file annotate comment {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.enable-decorations .view.file comment {
+    display: inline;
+}
+
+.enable-decorations .view.file annotate comment,
+.preview-on .view.file annotate comment {
+    display: none;
+}
+
+.enable-decorations .view.file annotate:hover comment,
+.preview-on .view.file annotate:hover comment
+{
+    /* visibility: visible; */
+    display: inline;
+}
+
+.enable-decorations .view.file p span.dialog
+{
+    color: #009900;
+}
+
+.enable-decorations .view.file span.todo
+{
+    background-color: #ffcccc;
+    color: #000000;
+}
+
+.view.file span.todo.done
+{
+    text-decoration: line-through;
+}
+
+
+.enable-decorations .view.file span.tag {
+    display: block;
+    background-color: #ccccff;
+}
+
+.enable-decorations.only-dialog .view.file p
+{
+    color: #d0d0d0;
+}
+
+.enable-decorations.only-dialog .view.file .dialog {
+    /* visibility: visible; */
+}
+
+.view.file span.tag {
+    display: none;
+}
+
+
+.view.file a.edit,
+.view.file a.jot
+
+{
+    color:  #f00;
+}
+
+a.internal.annotation.highlight + annotate,
+    .annotations-container dt a.highlight {
+    background-color: #FF9999;
+}
+
+.view.file table.text-output pre {
+    white-space:    pre;
+}
+
+.view.file pre.wrap,
+    .view.file code.wrap,
+    .diff pre.wrap 
+    .diff code.wrap,
+    .view.file.markdown pre code,
+    .view.file.talk pre code,
+    .diff.markdown pre code
+{
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+
+.enable-decorations .view.file pre.wrap,
+.enable-decorations .view.file code.wrap,
+.enable-decorations .diff pre.wrap 
+.enable-decorations .diff code.wrap,
+.enable-decorations .view.file.markdown pre code,
+.enable-decorations .view.file.talk pre code,
+.enable-decorations .diff.markdown pre code 
+{
+    /* color:  #2222cc; */
+
+
+}
+
+.view.file p {
+    margin: 0.75rem 0;
+}
+
+.view.file ul {
+    margin-top:         1rem;
+    margin-bottom:      1rem;
+}
+
+.view.file li > ul {
+    margin-top:     0.2rem;
+    margin-bottom:  0.2rem;
+}
+
+
+.view.file input,
+    .view.file select
+{
+
+    /*
+    font-size:      0.8rem;
+    border:         1px solid #ccc;
+    margin:             0.2rem;
+    */
+    background-color:   #e0f0f0;
+    color:              #000000;
+
+}
+
+.view.file input[type=button],
+    .view.file input[type=submit] 
+{
+    padding:            0.1rem;
+}
+
+
+
+.view.file .audio {
+    padding: 1rem;
+}
+
+.view.file.markdown .flag {
+    background-color:   #D0F0D0;
+}
+
+.view.file.markdown .flag .flag {
+    background-color:   #f0F0c0;
+}
+
+
+.view.file blockquote {
+    font-size:  inherit;
+}
+
+.view.file code.list-excerpt {
+    word-wrap:      break-word;
+    white-space:    normal;
+}
+
+.view.file.storyboard .cards  {
+
+    background-color:   #f5f5f5;
+    display:            inline-block;
+
+    min-width:          200px;
+    min-height:         160px;
+
+    padding:            1rem;
+    border-radius:      1rem;
+}
+.view.file.storyboard .card  {
+    width:      200px !important;
+    height:     160px !important;
+    min-width:  200px !important;
+    min-height: 160px !important;
+    max-width:  200px !important;
+    max-height: 160px !important;
+
+}
+
+.view.file .cards .panel .panel-heading {
+    overflow:       hidden;
+    text-overflow:  ellipsis;
+    white-space:    nowrap;
+
+}
+
+.view.file .cards .panel .panel-body {
+    min-height: 100px;
+    max-height: 100px;
+    overflow-y: auto;
+
+    padding: 5px;
+}
+
+.view.file .cards .questioned .panel {
+
+    opacity:    0.2;
+    /*
+    -ms-transform:      rotate(90deg);
+    -webkit-transform:  rotate(90deg);
+    transform:          rotate(90deg);
+    */
+}
+
+.view.file .questioned .panel {
+    /*
+    min-width: 150px;
+    max-width: 150px;
+    overflow-x: auto;
+    */
+}
+
+
+.view.file .card.questioned {
+    width:  175px !important;
+}
+
+.view.file .card .panel-heading img {
+    width:  auto;
+    height: auto;
+    max-height:  43px;
+}
+
+
+.view.file .sortable.panel > .panel-body {
+    min-height: 200px;
+    background-color:   #d5d5d5;
+}
+
+.view.file.print {
+
+}
+
+.view.file img {
+    max-width: 100%;
+    height: auto;
+
+}
+
+.view.file hr {
+    border-top: 1px solid #666;
+}
+

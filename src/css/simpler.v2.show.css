@@ -1,0 +1,26 @@
+
+
+.commit.container {
+    padding-left:   1rem;
+    padding-right:  1rem;
+}
+
+.commit.display {
+
+    border-radius:          0.2em;
+    padding:                1rem;
+    background-color:       #f9f9f9;
+    border:                 1px solid #999;
+}
+
+.commit.display textarea#response {
+    height:             3rem;
+    background-color:   #d0f0d0;
+    width:              100%;
+}
+
+.commit.display pre {
+    background-color:   #f0f0f0;
+    border:             1px solid #a0a0a0;
+    padding: 0.5rem;
+}

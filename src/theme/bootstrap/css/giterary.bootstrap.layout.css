@@ -1,0 +1,164 @@
+
+body.giterary { padding-top: 110px; }
+
+.meta nav form.navbar-form {
+    display:   inline-block;
+}
+
+.meta nav form.navbar-form.login {
+    display:   block;
+}
+
+
+.meta nav .dropdown-menu .recent  a {
+    /*
+    background-color:   #fcf8e3;
+    color:              #000;
+    */
+}
+
+.meta nav .dropdown-menu .visited a {
+    /*
+    background-color:   #d9edf7;
+    color:              #000;
+    */
+}
+
+.meta nav .breadcrumb {
+/*     padding-left: 0.5rem; */
+}
+
+/* Quick Nav */
+.quick-nav.handle {
+    width:  20rem;
+    -webkit-transition: width 0.5s;
+    transition:         width 0.5s;
+
+}
+
+.quick-nav.handle.quick-nav-on {
+    width:  50rem;
+}
+
+
+.quick-nav.display {
+    box-shadow:         0px 3px 5px #d0d0dd;
+
+    border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+ 
+    padding: 1em;
+    background-color: #FFFFFF;
+
+    width: auto;
+    margin-bottom: 1em;
+
+    border: 1px solid #E5E5EE;
+}
+
+.quick-nav table {
+    width: 100%;
+}
+
+.quick-nav table tr td:first-child {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+input#quick-nav {
+    width: 100%;
+}
+
+.ui-autocomplete {
+    display:    inline-block;
+    position:   absolute;
+    z-index:    2000;
+
+    margin-bottom: 1em;
+    border-bottom-right-radius: 0.5em;
+    -moz-border-bottom-right-radius: 0.5em;
+    -webkit-border-bottom-right-radius: 0.5em;
+    background-color: #ffffff;
+}
+
+.ui-state-focus,
+.ui-state-focus a 
+{
+    /* color: #ff0000 ; */
+    background-color: #f5f5f5;
+}
+
+.ui-menu-item a span.match
+{
+    font-weight: bold;
+    background-color: #FFFFd0;
+
+}
+
+
+.navigation.quick-nav.container ul.ui-menu {
+    list-type: none;
+
+}
+
+.navigation.quick-nav.container ul.ui-menu li {
+    list-style-type:    none;
+    padding:            0.2rem;
+}
+
+.navigation.quick-nav.container ul.ui-menu li a {
+    background-color:   transparent !important;
+    border:             0 !important;
+
+}
+
+ul.dropdown-menu-form {
+    padding: 5px 10px 0;
+    max-height: 300px;
+    overflow-y: scroll;
+    white-space:    nowrap;
+}
+
+.ui-autocomplete li a + a {
+    padding-left: 1rem !important;
+}
+
+.navigation .nav-float-fix {
+    float: left;
+}
+
+.ui-helper-hidden-accessible {
+    display: none;
+}
+
+@media only screen and (max-width: 768px ) {
+
+    .meta .navbar .navbar-nav {
+        margin: 0px;
+
+    }
+
+    .quick-nav.handle {
+        width:  100% !important;
+    }
+
+    .meta nav form.navbar-form {
+        display:    block;
+    }
+
+}
+
+.badge.badge-first     {   color: #fff;    background-color:   #337ab7;}
+.badge.badge-second    {   color: #000;    background-color:   #dff0d8;}
+.badge.badge-third     {   color: #000;    background-color:   #d9edf7;}
+.badge.badge-fourth    {   color: #000;    background-color:   #fcf8e3;}
+.badge.badge-fifth     {   color: #000;    background-color:   #f2dede;}
+
+
+.meta .recent-files .dropdown-menu,
+.view .nav .dropdown-menu {
+    max-height: 400px;
+    overflow-y: scroll;
+
+}

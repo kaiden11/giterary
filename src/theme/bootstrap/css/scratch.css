@@ -1,0 +1,7 @@
+.flag {
+    background-color:   #D0F0D0;
+}
+
+.flag .flag {
+    background-color:   #f0F0c0;
+}

@@ -1,0 +1,37 @@
+.blame.display {
+    background-color:           #f9f9f9;
+    border:                     1px solid #999;
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding:                    1rem;
+}
+
+
+.blame.display table td  {
+    vertical-align: top;
+}
+
+.blame.display table td div.blame-line {
+    overflow: hidden; 
+    width: 500px;
+}
+
+.blame.display table td div.blame-line code {
+    white-space: pre; 
+}
+
+.blame.display.wrap table td div.blame-line code {
+    white-space: pre-wrap !important;
+}
+
+.blame.display table td div.blame-author {
+    white-space: nowrap; 
+}
+
+.blame.display.wrap table tr.alt1 td {
+    background-color: #ffffff;
+}
+
+.blame.display.wrap table tr.alt2 td {
+    background-color: #e5eee5;
+}

@@ -1,0 +1,107 @@
+.cm-s-giterary-codemirror span.cm-number, 
+.cm-s-giterary-codemirror span.cm-string, 
+.cm-s-giterary-codemirror span.cm-atom {
+    color: #762;
+}
+.cm-s-giterary-codemirror span.cm-comment {color: #262; line-height: 1em;}
+.cm-s-giterary-codemirror span.cm-meta {color: #555; font-style: italic; line-height: 1em;}
+.cm-s-giterary-codemirror span.cm-variable   {color: #000;}
+.cm-s-giterary-codemirror span.cm-variable-2 {color: #b11;}
+.cm-s-giterary-codemirror span.cm-variable-3 {color: #a22;}
+.cm-s-giterary-codemirror span.cm-qualifier {color: #555;}
+.cm-s-giterary-codemirror span.cm-keyword {color: #730;}
+.cm-s-giterary-codemirror span.cm-builtin {color: #30a;}
+.cm-s-giterary-codemirror span.cm-error {background-color: #fdd;}
+.cm-s-giterary-codemirror span.cm-link {color: #762;}
+.cm-s-giterary-codemirror span.cm-tag {color: #0077aa;}
+
+/* From the giterary_markdown overlay parser */
+.cm-s-giterary-codemirror span.cm-wikilink              {color: #99ff00;}
+
+.cm-s-giterary-codemirror span.cm-annotation            {color: #ff9900;}
+.cm-s-giterary-codemirror span.cm-annotation-comment    {color: #cc6600;}
+.cm-s-giterary-codemirror span.cm-annotation-ref        {color: #dd7700;}
+
+.cm-s-giterary-codemirror .CodeMirror-activeline-background {background: #e8f2ff !important;}
+.cm-s-giterary-codemirror .CodeMirror-matchingbracket {outline:1px solid grey; color:black !important;}
+
+.CodeMirror-dialog {
+  position: absolute;
+  left: 0; right: 0;
+  background: white;
+  z-index: 15;
+  padding: .1em .8em;
+  overflow: hidden;
+  color: #333;
+}
+
+.CodeMirror-dialog-top {
+  border-bottom: 1px solid #eee;
+  top: 0;
+}
+
+.CodeMirror-dialog-bottom {
+  border-top: 1px solid #eee;
+  bottom: 0;
+}
+
+.CodeMirror-dialog input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 20em;
+  color: inherit;
+  font-family: monospace;
+}
+
+.CodeMirror-dialog button {
+  font-size: 70%;
+}
+
+.CodeMirror-ruler {
+    display: none;
+}
+
+.CodeMirror pre {
+    /* font-size: 1.0rem !important; */
+}
+
+.CodeMirror-foldmarker {
+
+    color:          blue;
+    font-size:      1rem;
+    /* line-height:    1rem; */
+    cursor:         pointer;
+
+    /* text-shadow: #b9f 1px 1px 2px, #b9f -1px -1px 2px, #b9f 1px -1px 2px, #b9f -1px 1px 2px; */
+}
+
+.CodeMirror-foldgutter {
+    width: .7em;
+}
+
+.CodeMirror-foldgutter-open,
+.CodeMirror-foldgutter-folded {
+    color: #555;
+    cursor: pointer;
+}
+
+.CodeMirror-foldgutter-open:after {
+    content: "\25BE";
+}
+.CodeMirror-foldgutter-folded:after {
+    content: "\25B8";
+}
+
+.cm-s-giterary-codemirror .highlight {
+    background-color:   #d5d5d5;
+}
+
+.preview-on .CodeMirror .mod {
+    background-color:   #f0f0ff;
+    opacity:            0.8;
+}
+
+.edit.editor.draft-fail .CodeMirror {
+    background-color: #f99;
+}

@@ -1,0 +1,63 @@
+.diff.display {
+    background-color:           #f9f9f9;
+    border:                     1px solid #999;
+    border-top-right-radius:    0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding:                    1rem;
+
+}
+.cherrypick-diff .line-of-code,
+    .cherrypick-preview .line-of-code,
+    .diff.container .line-of-code,
+    .partition .line-of-code 
+{
+
+    font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+    font-size: 12px;
+    display: block;
+    min-height: 12px;
+    white-space: pre-wrap;
+
+}
+
+.diff.container .diff span.diff.add, 
+    .diff.container .diff span.diff.remove
+{
+    display: none;
+}
+
+.diff.container .diff.adds span.diff.add
+{
+    display: inline;
+    color: blue;
+}
+
+.diff.container .diff.removes span.diff.remove
+{
+    display: inline;
+    color: red;
+}
+
+
+.diff.container.meta-on .meta.container {
+    width:  20rem !important;
+}
+
+.diff.container .meta.container {
+    background-color:   #e5e5ee;
+
+}
+
+.diff.container span.diff.current {
+    border:             1px dotted #999;
+    background-color:   #ccc;
+
+}
+
+.diff.container .flag {
+    background-color:   #D0F0D0;
+}
+
+.diff.container .flag .flag {
+    background-color:   #f0F0c0;
+}
