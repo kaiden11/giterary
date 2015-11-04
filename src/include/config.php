@@ -4,7 +4,7 @@
 # is in "maintenance mode."
 define( 'MAINTENANCE_MODE', 0);
 
-define( 'APPLICATION_NAME', 'GITERARY' );   // Can use as bareword constant
+define( 'APPLICATION_NAME', 'giterary' );   // Can use as bareword constant
 $application_name = APPLICATION_NAME;       // Can use when referenced with GLOBAL
 
 

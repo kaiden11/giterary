@@ -6,10 +6,11 @@ $registered_userlist_calls = array();
 
 # register_login_call( new StaticUserList(), "validate_login" );
 
+GLOBAL $application_name;
 GLOBAL $instance_name;
 
 $authenticator = new PasswordFile( 
-    "/var/lib/giterary/auth/$instance_name/passfile.csv"
+    "/var/lib/$application_name/auth/$instance_name/passfile.csv"
 );
 
 
