@@ -1,6 +1,6 @@
 <?
 
-define(DEFAULT_THEME, 'bootstrap');
+define( 'DEFAULT_THEME', 'bootstrap');
 
 # Array of name-to-path associations for 'well-known'
 # iterable files, usually having some critical function

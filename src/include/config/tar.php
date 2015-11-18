@@ -1,5 +1,5 @@
 <?
 
-define( TAR_PATH,   '/bin/tar'  );
+define( 'TAR_PATH',   '/bin/tar'  );
 
 ?>

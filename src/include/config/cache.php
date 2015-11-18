@@ -6,12 +6,12 @@ $registered_cache_handlers = array();
 global $instance_name;
 
 # Memcached server / post
-define( CACHE_SERVER,   'localhost' );
-define( CACHE_PORT,     11211       );
+define( 'CACHE_SERVER',   'localhost' );
+define( 'CACHE_PORT',     11211       );
 
 # Prefix to use for memcached server to distinguish this
 # instance's keys from other potential instances
-define( CACHE_PREFIX, "$instance_name.giterary" );
+define( 'CACHE_PREFIX', "$instance_name.giterary" );
 
 
 # Default cache expirations       

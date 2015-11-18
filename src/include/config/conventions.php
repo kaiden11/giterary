@@ -39,37 +39,37 @@ $git_meta_header_pattern = '^(?<!\!)%([^%:]+?):\s*([^\s]+?.*)\s*$';
 
 
 # Determine whether to force inclusion of word count in commit notes
-define( INCLUDE_WORD_COUNT, 1 );
-define( WORD_COUNT_NOTES_REF, "giterary.word_count" );
+define( 'INCLUDE_WORD_COUNT', 1 );
+define( 'WORD_COUNT_NOTES_REF', "giterary.word_count" );
 
 # Determine whether to force inclusion of estimated work time in commit notes
-define( INCLUDE_WORK_TIME, 1        );
-define( INCLUDE_WORK_TIME_IN_LOG, 0 );
-define( WORKING_TIME_NOTES_REF, "giterary.working_time" );
+define( 'INCLUDE_WORK_TIME', 1        );
+define( 'INCLUDE_WORK_TIME_IN_LOG', 0 );
+define( 'WORKING_TIME_NOTES_REF', "giterary.working_time" );
 
 # Display EXIF/IPTC information with images
-define( IMAGE_META_DISPLAY, 1 );
+define( 'IMAGE_META_DISPLAY', 1 );
 
 # Use the fancier Perl regular expressions to perform Git greps
-define( USE_LIBPCRE_FOR_GIT_GREP, 1 );
+define( 'USE_LIBPCRE_FOR_GIT_GREP', 1 );
 
 # The page name used for "Talk" pages
-define( TALK_PAGE, "Talk.talk" );
+define( 'TALK_PAGE', "Talk.talk" );
 
 # The page name used for "Storyboard" pages
-define( STORYBOARD_PAGE, "Storyboard.storyboard" );
+define( 'STORYBOARD_PAGE', "Storyboard.storyboard" );
 
 # Whether to perform "does this exist" linking withinin wiki links
-define( WIKILINK_DETECT_EXISTS, false );
+define( 'WIKILINK_DETECT_EXISTS', false );
 
 # Note ref to be used for storing commit responses
-define( COMMIT_RESPONSE_REF, "giterary.response" );
+define( 'COMMIT_RESPONSE_REF', "giterary.response" );
 
 # Prefix for commit responses
-define( COMMIT_RESPONSE_PREFIX, "####" );
+define( 'COMMIT_RESPONSE_PREFIX', "####" );
 
 # Symbol for Table of Contents pre/post processing
-define( TOC_REPLACEME, "@@@TOC@@@" );
+define( 'TOC_REPLACEME', "@@@TOC@@@" );
 
 // Allowed tags during epub generation. Other tags
 // will be removed, but their contents will remain.

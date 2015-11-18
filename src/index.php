@@ -1,4 +1,4 @@
-<? 
+<?php
 require_once( dirname( __FILE__ ) . '/include/header.php');
 require_once( dirname( __FILE__ ) . '/include/footer.php');
 require_once( dirname( __FILE__ ) . '/include/util.php');
