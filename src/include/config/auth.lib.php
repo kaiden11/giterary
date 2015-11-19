@@ -25,6 +25,125 @@ function password_hash_compare( $pass_plaintext, $pass_hashed ) {
     }
 }
 
+class LDAPAuthenticator {
+
+    private $url            = null;
+    private $connection     = null;
+    private $user_prefix    = null;
+    private $username_attr  = null;
+    private $base_dn        = null;
+
+    function __construct( $ldap_url, $opts = array() ) {
+        $this->url = $ldap_url;
+
+        if( $opts[ 'domain' ] ) {
+            $this->user_prefix = $opts[ 'domain'] . '\\';
+        }
+
+        if( $opts[ 'username_attr' ] ) {
+            $this->username_attr = $opts[ 'username_attr'];
+        }
+
+        if( $opts[ 'base_dn' ] ) {
+            $this->base_dn = $opts[ 'base_dn'];
+        }
+    }
+
+
+    function validate_login($uname, $pass) {
+
+        if( !isset( $this->connection ) ) {
+            if( !$this->url ) {
+                die( "URL for LDAP connection is unset!" );
+            }
+
+            $this->connect = ldap_connect( $this->url );
+
+            if( !$this->connect ) {
+                return false;
+            }
+        }
+
+        $uname = trim( $uname );
+
+        if( !preg_match( '/^[a-zA-Z]+$/', $uname ) ) {
+            return false;
+        }
+
+        $bind_uname = $uname;
+
+        if( $this->user_prefix ) {
+            $bind_uname = $this->user_prefix . $uname;
+        }
+
+        $ret = ldap_bind( 
+            $this->connect, 
+            $bind_uname, 
+            $pass 
+        );
+
+        if( !$ret ) {
+            return false;
+        }
+
+        $default = array(
+            'name'      =>  $uname,
+            'git_user'  =>  array( 
+                "user.name"     => $uname,
+                "user.email"    => "$uname@giterary.com"
+            )
+        );
+
+
+        if( !( $this->base_dn && $this->username_attr ) ) {
+            return $default;
+        }
+
+        $filter = "($this->username_attr=$uname)";
+
+        $search = ldap_search( 
+            $this->connect,
+            $this->base_dn,
+            $filter,
+            array(
+                'cn',
+                'mail'
+            )
+        );
+
+        $first  = ldap_first_entry( $this->connect, $search );
+
+        if( !$first  ) {
+            return false;
+        }
+
+        $attributes = ldap_get_attributes( $this->connect, $first );
+
+        if( !$attributes ) {
+            return $default;
+        }
+
+        if( !$attributes['cn'] || !$attributes['mail'] ) {
+            return $default;
+        }
+
+        $ret = array(
+            'name'      =>  $uname,
+            'git_user'  =>  array( 
+                "user.name"     => $attributes['cn'][0],
+                "user.email"    => $attributes['mail'][0]
+            )
+        );
+
+        ldap_close( $this->connect );
+        $this->connect = null;
+
+        return $ret;
+
+    }
+
+}
+
 
 class PasswordFile {
 
