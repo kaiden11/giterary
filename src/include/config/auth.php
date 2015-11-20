@@ -9,15 +9,29 @@ $registered_userlist_calls = array();
 GLOBAL $application_name;
 GLOBAL $instance_name;
 
-$authenticator = new PasswordFile( 
+$pw_authenticator = new PasswordFile( 
     "/var/lib/$application_name/auth/$instance_name/passfile.csv"
 );
 
+$ad_authenticator = new LDAPAuthenticator( 
+    'ldap://ceav001.chugachelectric.com',
+    array(
+        'domain'        =>  'CHUGACHELECTRIC',
+        'username_attr' =>  'samaccountname',
+        'base_dn'       =>  'OU=CEA,DC=chugachelectric,DC=com'
+    )
+);
 
 register_login_call( 
-    $authenticator,
+    $ad_authenticator,
     "validate_login" 
 );
+
+register_login_call( 
+    $pw_authenticator,
+    "validate_login" 
+);
+
 
 register_userlist_call( 
     $authenticator,

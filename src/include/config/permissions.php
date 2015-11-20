@@ -4,8 +4,8 @@ require_once( dirname( __FILE__ ) . '/permissions.lib.php' );
 $registered_auth_calls = array();
 
 # All access to loggied in users
-# $must_be_logged_in = new MustBeLoggedIn();
-# register_auth_call( $work_areas, "can" );
+$must_be_logged_in = new MustBeLoggedInToWrite();
+register_auth_call( $must_be_logged_in, "can" );
 
 
 ###############################################################################
@@ -28,7 +28,7 @@ $work_areas = new WorkArea(
     )
 );
 
-register_auth_call( $work_areas, "can" );
+# register_auth_call( $work_areas, "can" );
 
 
 ###############################################################################

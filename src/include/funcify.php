@@ -1206,6 +1206,10 @@ function _handle_assoc( $current_file, $func, $params, $display ) {
     if( !in_array( $direction, array( "ascending","descending","asc","desc","forward","reverse" ) ) ) {
         $direction = "ascending";
     }
+
+    if( $file === false ) {
+        $file = file_or( $current_file, false );
+    }
     
     if( $file !== false ) {
     
