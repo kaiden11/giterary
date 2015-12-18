@@ -56,6 +56,7 @@ function funcify( $text, $current_file = null, $is_preview = false ) {
                     case "view":
                     case "stats":
                     case "new":
+                    case "form":
                     case "whatlinkshere":
                     case "timeline":
                         $replacement = '<a class="wikilink" href="' . "$func.php" . '?' . paramify( $func, $params, $current_file ) . '">' . $display . '</a>';

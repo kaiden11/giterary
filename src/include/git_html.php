@@ -1709,6 +1709,40 @@ function _gen_view( $opts = array() ) {
 
 }
 
+function _list_all_directories() {
+    // Return all directories in the repo...
+    $all_directories = git_ls_tree( null, null, true, true );
+    
+    $all_directories = array_filter(
+        $all_directories,
+        function( $a ) {
+            if( ASSOC_ENABLE && has_directory_prefix( ASSOC_DIR, $a['file'] ) ) {
+                return false;
+            }
+    
+            if( ALIAS_ENABLE && has_directory_prefix( ALIAS_DIR, $a['file'] ) ) {
+                return false;
+            }
+            
+            return true;
+        }
+    );
+    
+    $all_directories = array_map(
+        function( $a ) {
+            return undirify( $a['file'], true ) . "/";
+        },
+        $all_directories
+    );
+    
+    $all_directories = array_values(
+        $all_directories
+    );
+
+    return $all_directories;
+
+}
+
 function gen_new( $file = null, $template = null ) {
 
     perf_enter( "gen_new" );
@@ -1718,34 +1752,7 @@ function gen_new( $file = null, $template = null ) {
     } else {
 
         // Return all directories in the repo...
-        $all_directories = git_ls_tree( null, null, true, true );
-
-        $all_directories = array_filter(
-            $all_directories,
-            function( $a ) {
-                if( ASSOC_ENABLE && has_directory_prefix( ASSOC_DIR, $a['file'] ) ) {
-                    return false;
-                }
-
-                if( ALIAS_ENABLE && has_directory_prefix( ALIAS_DIR, $a['file'] ) ) {
-                    return false;
-                }
-                
-                return true;
-            }
-        );
-
-        $all_directories = array_map(
-            function( $a ) {
-                return undirify( $a['file'], true ) . "/";
-            },
-            $all_directories
-        );
-
-        $all_directories = array_values(
-            $all_directories
-        );
-
+        $all_directories = _list_all_directories();
 
         $puck = array(
             'file'          =>  $file,
@@ -1754,6 +1761,109 @@ function gen_new( $file = null, $template = null ) {
         );
 
         return render( 'gen_new', $puck ) .  perf_exit( "gen_new" );
+    }
+}
+
+function gen_form( $file = null, $template = null ) {
+    GLOBAL $php_meta_header_pattern;
+    GLOBAL $php_meta_empty_pattern;
+
+
+    perf_enter( "gen_form" );
+
+    if( !is_logged_in() ) {
+        return 'You are not logged in.';
+    } else {
+
+        $file       = dirify( $file );
+        $template   = dirify( $template );
+
+        if( !git_file_exists( $template ) ) {
+            return gen_error( "File '$template' does not exist" );
+        }
+
+        $contents = git_file_get_contents( $template );
+
+
+        $all_tags = git_all_tags();
+        $all_meta = git_all_meta();
+        $all_directories = _list_all_directories();
+
+
+        $selected_tags = array();
+        $selected_meta = array();
+
+        foreach( $all_tags as $tag => &$tagged_files ) {
+            if( in_array( $template, $tagged_files ) ) {
+
+                if( $tag != '~template' ) {
+                    $selected_tags[] = $tag;
+                }
+            }
+        }
+
+
+
+        // We have to detect both filled and empty meta headers
+        foreach( preg_split( "/\r?\n/", $contents ) as $line ) {
+
+            callback_replace( 
+                $php_meta_header_pattern,
+                $line, 
+                function( $match ) use( &$selected_meta ) {
+
+                    $escape     = $match[1][0];
+                    $wo_escape  = $match[2][0];
+
+                    if( $escape == "!" ) {
+                        return;
+                    }
+
+                    $key        = $match[3][0];
+                    $val        = $match[4][0];
+
+                    if( !isset( $selected_meta[ $key ] ) ) {
+                        $selected_meta[ $key ] = array();
+                    }
+
+                    $selected_meta[ $key ][] = $val;
+
+                    return '';
+
+                }
+            );
+
+            callback_replace( 
+                $php_meta_empty_pattern,
+                $line, 
+                function( $match ) use( &$selected_meta ) {
+
+                    $key        = $match[1][0];
+
+                    if( !isset( $selected_meta[ $key ] ) ) {
+                        $selected_meta[ $key ] = array();
+                    }
+
+                    $selected_meta[ $key ][] = null;
+
+                    return '';
+
+                }
+            );
+        }
+
+        $puck = array(
+            'file'              =>  $file,
+            'contents'          =>  &$contents,
+            'template'          =>  $template,
+            'all_tags'          =>  &$all_tags,
+            'all_meta'          =>  &$all_meta,
+            'directories'       =>  &$all_directories,
+            'selected_tags'     =>  &$selected_tags,
+            'selected_meta'     =>  &$selected_meta,
+        );
+
+        return render( 'gen_form', $puck ) .  perf_exit( "gen_form" );
     }
 }
 

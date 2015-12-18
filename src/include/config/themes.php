@@ -67,6 +67,7 @@ $renderables = array(
     'gen_wanted'            =>  'theme/bootstrap/renderable/gen_wanted.php',
     'gen_drafts'            =>  'theme/bootstrap/renderable/gen_drafts.php',
     'gen_new'               =>  'theme/bootstrap/renderable/gen_new.php',
+    'gen_form'              =>  'theme/bootstrap/renderable/gen_form.php',
     'gen_repo_stats'        =>  'theme/bootstrap/renderable/gen_repo_stats.php',
     'gen_draft_commit'      =>  'theme/bootstrap/renderable/gen_draft_commit.php',
     'gen_users_list'        =>  'theme/bootstrap/renderable/gen_users_list.php',
