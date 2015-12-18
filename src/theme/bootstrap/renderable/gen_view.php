@@ -112,6 +112,7 @@ if( isset( $p['annotations'][$commit_file] ) && count( $p['annotations'][$commit
                                         <? } ?>
                                         <li><a href="import.php?file=<?= $f  ?>">Import HTML into this document</a></li>
                                         <li><a href="template.php?template=<?= $f ?>">Use this document as a template</a></li>
+                                        <li><a href="form.php?template=<?= $f ?>">Use this document as a template (with form)</a></li>
                                     </ul>
                                 </div>
                             </li>
