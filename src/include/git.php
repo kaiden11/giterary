@@ -2725,7 +2725,8 @@ function _git_tags( $all_tags, $tags = array(), $pathspec = null, $cache = true 
 function git_tags( $tags = array(), $pathspec = null, $cache = true ) {
 
 
-    perf_enter( 'git_tags' );
+     perf_enter( 'git_tags' );
+    // perf_enter( 'git_tags.' . implode( ',', $tags ) . '.' . $pathspec  );
     $output = '';
 
     $matched_files = array();
@@ -2740,7 +2741,9 @@ function git_tags( $tags = array(), $pathspec = null, $cache = true ) {
                 $r = decache( 'git_tags', $memoize_key );
 
                 if( !is_null( $r ) ) {
-                    perf_exit( "git_tags" );
+
+                    perf_exit( 'git_tags.' . implode( ',', $tags ) . '.' . $pathspec  );
+                    // perf_exit( "git_tags" );
                     return $r;
                 }
 
@@ -2748,7 +2751,8 @@ function git_tags( $tags = array(), $pathspec = null, $cache = true ) {
                 $r = decache( $cache['tag'], $memoize_key );
 
                 if( !is_null( $r ) ) {
-                    perf_exit( "git_tags" );
+                    perf_exit( 'git_tags.' . implode( ',', $tags ) . '.' . $pathspec  );
+                    // perf_exit( "git_tags" );
                     return $r;
                 }
             }
@@ -2831,6 +2835,8 @@ function git_tags( $tags = array(), $pathspec = null, $cache = true ) {
     }
 
     perf_exit( 'git_tags' );
+
+    // perf_exit( 'git_tags.' . implode( ',', $tags ) . '.' . $pathspec  );
 
     return $matched_files;
 }

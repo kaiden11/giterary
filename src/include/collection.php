@@ -555,13 +555,13 @@ function collect_files( $lines = array(), $current_file = null ) {
 
                             if( count( $tags_to_search ) > 0 ) {
 
-                                foreach( $glob_matches as $glob_match ) {
+                                $match_results = git_tags( 
+                                    $tags_to_search, 
+                                    $matched_file
+                                );
 
-                                    $match_results = git_tags( $tags_to_search, $glob_match );
-
-                                    foreach ($match_results as $file => $result ) {
-                                        $file_collection[] = $file;
-                                    }
+                                foreach ($match_results as $file => $result ) {
+                                    $file_collection[] = $file;
                                 }
                             }
                         }
