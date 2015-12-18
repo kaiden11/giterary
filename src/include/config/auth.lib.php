@@ -32,6 +32,7 @@ class LDAPAuthenticator {
     private $user_prefix    = null;
     private $username_attr  = null;
     private $base_dn        = null;
+    private $required_group = null;
 
     function __construct( $ldap_url, $opts = array() ) {
         $this->url = $ldap_url;
@@ -47,6 +48,11 @@ class LDAPAuthenticator {
         if( $opts[ 'base_dn' ] ) {
             $this->base_dn = $opts[ 'base_dn'];
         }
+
+        if( $opts[ 'required_group' ] ) {
+            $this->required_group = $opts[ 'required_group'];
+        }
+
     }
 
 
@@ -107,7 +113,8 @@ class LDAPAuthenticator {
             $filter,
             array(
                 'cn',
-                'mail'
+                'mail',
+                'memberOf'
             )
         );
 
@@ -119,21 +126,52 @@ class LDAPAuthenticator {
 
         $attributes = ldap_get_attributes( $this->connect, $first );
 
-        if( !$attributes ) {
-            return $default;
+        if( isset( $this->required_group ) ) {
+
+            if( !$attributes ) {
+                return false;
+            }
+
+            if( !isset( $attributes['memberOf'] ) ) {
+                return false;
+            }
+
+            if( !in_array( $this->required_group, $attributes['memberOf'] ) ) {
+                return false;
+            }
+
+            if( !$attributes['cn'] || !$attributes['mail'] ) {
+                return $default;
+            }
+
+            $ret = array(
+                'name'      =>  $uname,
+                'git_user'  =>  array( 
+                    "user.name"     => $attributes['cn'][0],
+                    "user.email"    => $attributes['mail'][0],
+                    "user.group"    => $this->required_group
+                )
+            );
+
+        } else {
+            if( !$attributes ) {
+                return $default;
+            }
+
+            if( !$attributes['cn'] || !$attributes['mail'] ) {
+                return $default;
+            }
+
+            $ret = array(
+                'name'      =>  $uname,
+                'git_user'  =>  array( 
+                    "user.name"     => $attributes['cn'][0],
+                    "user.email"    => $attributes['mail'][0]
+                )
+            );
+
         }
 
-        if( !$attributes['cn'] || !$attributes['mail'] ) {
-            return $default;
-        }
-
-        $ret = array(
-            'name'      =>  $uname,
-            'git_user'  =>  array( 
-                "user.name"     => $attributes['cn'][0],
-                "user.email"    => $attributes['mail'][0]
-            )
-        );
 
         ldap_close( $this->connect );
         $this->connect = null;
