@@ -1034,8 +1034,6 @@ function _handle_stamp( $current_file, $func, $params, $display ) {
 
     $display = trim( strtolower( $display ) );
 
-    die( $file );
-
     $hc = git_file_head_commit( dirify( $file ) );
 
     if( commit_or( $hc, false ) === false ) {
