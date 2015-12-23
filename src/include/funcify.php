@@ -1028,16 +1028,18 @@ function _handle_stamp( $current_file, $func, $params, $display ) {
     if( !git_file_exists( $file ) ) {
         // File isn't committed yet, so we can't really provide any
         // timestamp / commit information for it
-        return '?';
+        return '!';
     }
 
 
     $display = trim( strtolower( $display ) );
 
-    $hc = git_file_head_commit( $file );
+    die( $file );
+
+    $hc = git_file_head_commit( dirify( $file ) );
 
     if( commit_or( $hc, false ) === false ) {
-        return '?';
+        return "$file?$hc?";
     }
 
     $commit = git_show( $hc );
