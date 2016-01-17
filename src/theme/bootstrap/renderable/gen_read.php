@@ -71,16 +71,6 @@ $stash['js'][] = 'read.js';
                         </button>
                     </li>
                     <li>
-                        <a 
-                            href="index.php?file=<?= urlencode( $f ) ?>"
-                        >
-                            Go Back
-                        </a>
-                    </li>
-                    <li>
-                        <span id="error" class="navbar-text text-warning" ></span>
-                    </li>
-                    <li>
 
                         <div class="navbar-right navbar-text progress" style="width: 100px";>
                             <div 
@@ -95,6 +85,16 @@ $stash['js'][] = 'read.js';
                             </div>
                         </div>
                     </li>
+                    <li>
+                        <a 
+                            href="index.php?file=<?= urlencode( $f ) ?>"
+                        >
+                            Go Back
+                        </a>
+                    </li>
+                    <li>
+                        <span id="error" class="navbar-text text-warning" ></span>
+                    </li>
                 </ul>
                 <? /*
                     <span id="read-percentage" title="Percent paragraphs read">-</span> /
@@ -103,7 +103,7 @@ $stash['js'][] = 'read.js';
                 </span>
                 */ ?>
                 <ul class="nav navbar-nav navbar-right">
-                        <?= render( 'gen_snippet_widget', array() ) ?>
+                    <?= render( 'gen_snippet_widget', array() ) ?>
                 </ul>
             </div>
         </nav>
