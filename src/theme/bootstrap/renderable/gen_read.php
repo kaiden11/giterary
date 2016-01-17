@@ -54,9 +54,6 @@ $stash['js'][] = 'read.js';
         <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
-                    <li>
-                    <li>
-
                     <li class="btn-group">
                         <button 
                             id="bookmark"
@@ -83,7 +80,21 @@ $stash['js'][] = 'read.js';
                     <li>
                         <span id="error" class="navbar-text text-warning" ></span>
                     </li>
-                    <?= render( 'gen_snippet_widget', array() ) ?>
+                    <li>
+
+                        <div class="navbar-right navbar-text progress" style="width: 100px";>
+                            <div 
+                                class="progress-bar progress-bar-success" 
+                                id="read-percentage"
+                                role="progressbar" 
+                                aria-valuemin="0" 
+                                aria-valuemax="100" 
+                                style="width: 3rem; min-width: 3rem;"
+                            >
+                              %
+                            </div>
+                        </div>
+                    </li>
                 </ul>
                 <? /*
                     <span id="read-percentage" title="Percent paragraphs read">-</span> /
@@ -91,18 +102,9 @@ $stash['js'][] = 'read.js';
 
                 </span>
                 */ ?>
-                <div class="navbar-right navbar-text progress" style="width: 100px";>
-                    <div 
-                        class="progress-bar progress-bar-success" 
-                        id="read-percentage"
-                        role="progressbar" 
-                        aria-valuemin="0" 
-                        aria-valuemax="100" 
-                        style="width: 3rem; min-width: 3rem;"
-                    >
-                      %
-                    </div>
-                </div>
+                <ul class="nav navbar-nav navbar-right">
+                        <?= render( 'gen_snippet_widget', array() ) ?>
+                </ul>
             </div>
         </nav>
         <div class="view container-fluid meta-off <?= implode( " ", $path_components  ) ?>" id="<?= $m ?>">

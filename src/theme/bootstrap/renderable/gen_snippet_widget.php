@@ -22,6 +22,24 @@ $snippet_types = array(
         class="input-group" 
         style="width: 100px"
     >
+        <span class="input-group-btn">
+            <button
+                id="add-to-snippets"
+                class="btn btn-primary navbar-btn"
+                title="Add selected text to 'snippets' for later review"
+            >
+                Snip!
+                <span id="add-to-snippets-word-count"></span>
+            </button>
+        </span>
+        <input 
+            id="snippet-type" 
+            type="text" 
+            class="form-control navbar-btn" 
+            aria-label="Text input with segmented button dropdown"
+            style="width: 200px;"
+            placeholder="Optional snippet tag..."
+        />
         <span id="snippet-dropdown" class="input-group-btn dropup">
             <button 
                 type="button" 
@@ -52,23 +70,6 @@ $snippet_types = array(
                 <? } ?>
             </ul>
         </span>
-        <input 
-            id="snippet-type" 
-            type="text" 
-            class="form-control navbar-btn" 
-            aria-label="Text input with segmented button dropdown"
-            style="width: 200px;"
-            placeholder="Optional snippet tag..."
-        />
-        <span class="input-group-btn">
-            <button
-                id="add-to-snippets"
-                class="btn btn-primary navbar-btn"
-                title="Add selected text to 'snippets' for later review"
-            >
-                Snip!
-                <span id="add-to-snippets-word-count"></span>
-            </button>
-        </span>
+
     </div>
 </li>
