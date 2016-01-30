@@ -1252,10 +1252,11 @@ function valid_file_or( $file, $or = null, $current_file = null ) {
 
             return $ret;
         } else {
+            $_err_file = $file;
             $file = interpolate_relative_path( $file, $current_file );
 
             if( $file === false ) {
-                echo "Path interpolation issue!";
+                echo "Path interpolation issue: $current_file / $_err_file";
                 return $or;
             }
 

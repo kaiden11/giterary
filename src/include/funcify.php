@@ -590,7 +590,7 @@ function _handle_meta( $current_file, $func, $params, $display ) {
 
     } elseif( $args['list'] ) {
 
-        $list = file_or( $args['list'], false );
+        $list = file_or( $args['list'], false, $current_file );
 
         if( !git_file_exists( $list ) ) {
             return "List '$list' does not exist";
