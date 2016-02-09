@@ -31,13 +31,16 @@ if( !is_logged_in() ) {
     if( $file == null || $file == "" ) {
         die( layout( 
                 array( 
-                    'content' => '
-                        <form action="template.php" method="get">
-                            <input type="hidden"    name="template" value="' . he( $template ) . '"/>
-                            <input type="text"      name="file"     value="NewFileName"/>
-                            <input type="submit"                    value="Create file with this template">
-                        </form>
-                    '
+                    'content'   => gen_new( 
+                        // Suggest new name based on path to template
+                        dirname( 
+                            undirify( 
+                                $template,
+                                true
+                            )
+                        ) . '/NewFileName',
+                        $template 
+                    )
                 )
         ) );
 
