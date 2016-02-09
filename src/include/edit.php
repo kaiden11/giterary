@@ -138,6 +138,46 @@ function _gen_edit_donotuse( $opts = array() ) {
 }
 */
 
+function _preview( $file, $extension, $contents ) {
+
+    $meta = array();
+    // Pre-rendering processing
+    if( in_array( $extension, array( "markdown", "text", "print","read" ) ) ) {
+    
+        $contents = metaify( 
+            $contents,
+            $file,
+            $meta
+        );
+    
+        $contents = metaify_empty_strip( $contents );
+    }
+
+
+    $ret = _display( 
+        $file, 
+        $contents, 
+        null,   // Extension override
+        false,  // No caching
+        true    // Is preview
+    );
+
+    // Post-rendering processing
+    if( in_array( $extension, array( "markdown", "text", "print","read" ) ) ) {
+
+        $ret = metaify_import_strip( // Strip any [[%Tag]] variables that haven't been replaced
+            metaify_postprocess( 
+                $ret,
+                $file,
+                $meta
+            )
+        );
+    }
+
+    return $ret;
+}
+
+
 function _gen_edit( $opts = array() ) {
     perf_enter( "_gen_markdown_edit" );
 
@@ -167,8 +207,6 @@ function _gen_edit( $opts = array() ) {
 
         if( isset( $view_contents["$head_commit:$dirified_file"] ) ) {
             $existing_contents = $view_contents["$head_commit:$dirified_file"];
-
-
         }
     }
 
@@ -191,12 +229,12 @@ function _gen_edit( $opts = array() ) {
     $rendered_contents = '';
 
     if( isset( $parameters['edit_contents'] ) && $parameters['edit_contents'] != "" ) {
-        $rendered_contents = _display( $parameters['file'], $parameters['edit_contents'], null, false, true ) ;
+        $rendered_contents = _preview( $parameters['file'], $extension, $parameters['edit_contents'] );
 
     } else {
 
         if( $do_preview ) {
-            $rendered_contents = _display( $parameters['file'], $existing_contents, null, false, true ) ;
+            $rendered_contents = _preview( $parameters['file'], $extension, $existing_contents );
         }
     }
 
