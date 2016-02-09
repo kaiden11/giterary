@@ -8,6 +8,21 @@ require_once( dirname( __FILE__ ) . '/include/edit.php');
 $file       = file_or( $_GET['file'], null );
 $template   = file_or( $_GET['template'], null );
 
+function suggest_filename( $template ) {
+
+    $ret = "NewFileName";
+
+    if( dirname( $template ) == "." ) {
+        return $ret;
+    }
+
+    return dirname( 
+        undirify( 
+            $template,
+            true
+        )
+    ) . "/$ret";
+}
 
 # Single editing for the time being...
 
@@ -33,12 +48,7 @@ if( !is_logged_in() ) {
                 array( 
                     'content'   => gen_new( 
                         // Suggest new name based on path to template
-                        dirname( 
-                            undirify( 
-                                $template,
-                                true
-                            )
-                        ) . '/NewFileName',
+                        suggest_filename( $template ),
                         $template 
                     )
                 )
