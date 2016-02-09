@@ -26,6 +26,7 @@ if( $template !== false ) { $template = undirify( $template ); }
                 create a new file using the autocompleting form below.
             </p>
             <form 
+                id="new-form"
                 action="edit.php"
                 method="post"
                 class="form-group"
@@ -54,10 +55,11 @@ if( $template !== false ) { $template = undirify( $template ); }
                             name="file" 
                             class="form-control" 
                             id="new_file_path"
+                            data-original="<?= he( $file ) ?>"
                             value="<?= he( $file ) ?>"
                         />
                         <span class="help-block">
-                            Enter the path for the file you wish to create.
+                            Enter the new path for the file you wish to create (do not leave as the suggested value).
                         </span>
 
                     </fieldset>
@@ -257,6 +259,31 @@ if( $template !== false ) { $template = undirify( $template ); }
                     } 
                 } );
             } );
+
+            $( 'form#new-form' ).submit(
+                function( evt ) {
+
+                    var new_file = $(this).find( '#new_file_path' );
+
+                    if( new_file ) {
+                        if( $( new_file ).val() == new_file.data( 'original' ) ) {
+
+                            evt.stopPropagation();
+                            new_file
+                                .parent().parent()
+                                .addClass( 'has-error' )
+                            ;
+
+                            new_file
+                                .focus()
+                            ;
+                            // alert( 'Please enter a new name for the file you wish to be created.' );
+                            return false;
+                        }
+                    }
+                }
+            );
+
 
             setTimeout(
                 form.update,
