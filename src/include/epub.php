@@ -110,12 +110,42 @@ function _epub_display( $epub, $file, $contents ) {
         );
         // $contents = $doc->saveHTML();
 
-        /* <?= '<?' ?>xml version="1.0" encoding="UTF-8" <?= '?>' ?> */
 
         libxml_clear_errors();
     }
     
     return $contents;
+}
+
+function _image_to_file( &$zip, &$mime_type, &$content ) {
+
+    $ext = 'jpg';
+
+    switch( $mime_type ) {
+        case "image/png":
+            $ext = "png";
+            break;
+        case "image/jpeg":
+        case "image/jpg":
+            $ext = "jpg";
+            break;
+        case "image/gif":
+            $ext = "gif";
+            break;
+        default:
+            break;
+    }
+
+    $md5 = md5( $content );
+
+    $new_file = path_to_filename( "$md5.$ext" );
+
+    $zip->addFromString(
+        "OEBPS/" . $new_file,
+        $content
+    );
+
+    return $new_file;
 }
 
 function epub_archive( $file, $contents ) {
@@ -180,6 +210,7 @@ function epub_archive( $file, $contents ) {
 
     // files
     foreach( $ret['files'] as $f ) {
+
         $content = _epub_display( 
             $ret,
             $f,
@@ -212,50 +243,52 @@ function epub_archive( $file, $contents ) {
                             list( $mime, $dummy ) = explode( ';', $c, 2 );
                             $dummy = '';
 
-                            $ext = 'jpg';
-
-                            switch( $mime ) {
-                                case "image/png":
-                                    $ext = "png";
-                                    break;
-                                case "image/jpeg":
-                                case "image/jpg":
-                                    $ext = "jpg";
-                                    break;
-                                case "image/gif":
-                                    $ext = "gif";
-                                    break;
-                                default:
-                                    break;
-                            }
-
                             $c = file_get_contents( "data://$c" );
 
-                            $md5 = md5( $c );
-
-                            $new_file = path_to_filename( "$md5.$ext" );
-
-                            $zip->addFromString(
-                                "OEBPS/" . $new_file,
-                                $c
-                            );
+                            $new_file = _image_to_file( $zip, $mime_type, $c );
 
                             $img_node->setAttribute( 'src', $new_file );
                         
                             continue;
                         }
 
+
+                        // Wiki-local image
+                        if( preg_match( '/^raw\.php\?/', $attr->textContent ) ) {
+
+                            $qs = parse_url( $attr->textContent, PHP_URL_QUERY );
+
+                            $params = proper_parse_str( $qs );
+
+                            if( isset( $params['file'] ) ) {
+
+                                if( ( file_or( $params['file'], false ) ) !== false ) {
+                               
+                                    if( git_file_exists( $params['file'] ) ) {
+                                        $c = git_file_get_contents( dirify( $params['file'] ) );
+
+                                        $finfo = new finfo(FILEINFO_MIME);
+                                        $mime_type = array_shift( explode( ";", $finfo->buffer( $c ) ) );
+
+                                        $new_file = _image_to_file( $zip, $mime_type, $c );
+
+                                        $img_node->setAttribute( 'src', $new_file );
+
+                                    }
+                                }
+                            }
+
+                            continue;
+                        }
+
                         // Externally sourced image
                         if( preg_match( '/^http:\/\//', $attr->textContent ) ) {
 
-                            continue;
+                            // Do nothing, we don't know what kind of behavior to
+                            // expect here, and just going out to the web to get
+                            // an image seems more insecurely than helpful.
                         }
 
-                        // Wiki-local image
-                        if( preg_match( '/raw.php?/', $attr->textContext ) ) {
-
-                            continue;
-                        }
 
                         // We don't know how to handle the image, so we will
                         // remove it from the output
