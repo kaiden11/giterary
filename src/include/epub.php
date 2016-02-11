@@ -180,13 +180,101 @@ function epub_archive( $file, $contents ) {
 
     // files
     foreach( $ret['files'] as $f ) {
+        $content = _epub_display( 
+            $ret,
+            $f,
+            git_file_get_contents( $f['file'] )
+        );
+
+        // Check output for <img> tags, and make an attempt
+        // to tuck away the images into the contents folder, rewriting
+        // the src attribute to something that is a single, deduplicated
+        // file within the epub
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument();
+        $doc->preserveWhiteSpace = true;
+
+        $doc->loadHTML( $content );
+        $xpath = new DOMXPath( $doc );
+
+        foreach( $xpath->query( "//img" ) as $img_node ) {
+            // $node->parentNode->removeChild( $node );
+            if( $img_node->hasAttributes() ) {
+                foreach( $img_node->attributes as $attr_name => $attr ) {
+                    if( $attr_name != "src" ) {
+                        continue;
+                    } else {
+                        // Data URI image / screenshot
+                        if( preg_match( '/^data:/', $attr->textContent )  ) {
+
+                            list( $dummy, $c ) = explode( ':', $attr->textContent, 2 );
+
+                            list( $mime, $dummy ) = explode( ';', $c, 2 );
+                            $dummy = '';
+
+                            $ext = 'jpg';
+
+                            switch( $mime ) {
+                                case "image/png":
+                                    $ext = "png";
+                                    break;
+                                case "image/jpeg":
+                                case "image/jpg":
+                                    $ext = "jpg";
+                                    break;
+                                case "image/gif":
+                                    $ext = "gif";
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            $c = file_get_contents( "data://$c" );
+
+                            $md5 = md5( $c );
+
+                            $new_file = path_to_filename( "$md5.$ext" );
+
+                            $zip->addFromString(
+                                "OEBPS/" . $new_file,
+                                $c
+                            );
+
+                            $img_node->setAttribute( 'src', $new_file );
+                        
+                            continue;
+                        }
+
+                        // Externally sourced image
+                        if( preg_match( '/^http:\/\//', $attr->textContent ) ) {
+
+                            continue;
+                        }
+
+                        // Wiki-local image
+                        if( preg_match( '/raw.php?/', $attr->textContext ) ) {
+
+                            continue;
+                        }
+
+                        // We don't know how to handle the image, so we will
+                        // remove it from the output
+                        $img_node->parentNode->removeChild( $img_node );
+                    }
+                }
+            }
+        }
+
+        $content = $doc->saveXML( 
+            null, 
+            LIBXML_HTML_NODEFDTD 
+        );
+        libxml_clear_errors();
+
+
         $zip->addFromString(
             "OEBPS/" . $f['path'] . '.xhtml',
-            _epub_display( 
-                $ret,
-                $f,
-                git_file_get_contents( $f['file'] )
-            )
+            $content
         );
     }
 
