@@ -13,10 +13,15 @@ $stash['css'][] = 'epub.css';
         </li>
         <li>
             <h4>
+                <span class="glyphicon glyphicon-download-alt"></span> 
                 Download:
                     <a href="raw.php?as=epub&file=<?= he( $p['file'] ) ?>">
-                        <span class="glyphicon glyphicon-download-alt"></span> <em>EPUB</em>
+                        <em>EPUB</em>
+                    </a>,
+                    <a href="raw.php?as=epub&file=<?= he( $p['file'] ) ?>&versioned=yes">
+                        <em>Timestamped EPUB</em>
                     </a>
+
             </h4>
         </li>
 

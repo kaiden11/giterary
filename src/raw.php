@@ -8,7 +8,9 @@ require_once( dirname( __FILE__ ) . '/include/download.php');
 
 $file       = file_or( $_GET['file'], null );
 $download   = $_GET['download'] == "yes" ? true : false;
+$versioned  = set_or( $_GET['versioned'], false );
 
+$versioned  = ( $versioned === false ? false : ( strtolower( trim( $versioned ) ) == "yes" ) );
 
 
 # $mode = mode_or( $_GET['mode'], null );
@@ -135,7 +137,18 @@ if( $download === true || $content_type == "application/epub+zip" ) {
         $to_file_name = preg_replace( '/\.pub$/', '\.epub', $to_file_name );
     }
 
+    if( $versioned === true ) { 
+
+        $hc = git_head_commit();
+        $hc = commit_excerpt( $hc );
+        $dt = strftime( "%Y%m%d.%H%M%S", time() );
+
+        $to_file_name = preg_replace( '/(\.[a-z]+)$/', ".$dt.$hc\\1", $to_file_name );
+
+    }
+
     header( 'Content-Disposition: attachment; filename="' . $to_file_name . '"' );
+
 }
 
 header( "Content-Type: $content_type" );
