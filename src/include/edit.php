@@ -2,6 +2,7 @@
 require_once( dirname( __FILE__ ) . '/util.php');
 require_once( dirname( __FILE__ ) . '/display.php');
 require_once( dirname( __FILE__ ) . '/drafts.php');
+require_once( dirname( __FILE__ ) . '/meta.php');
 
 function gen_help( $file ) {
     perf_enter( "gen_help" );
@@ -140,41 +141,14 @@ function _gen_edit_donotuse( $opts = array() ) {
 
 function _preview( $file, $extension, $contents ) {
 
-    $meta = array();
-    // Pre-rendering processing
-    if( in_array( $extension, array( "markdown", "text", "print","read" ) ) ) {
-    
-        $contents = metaify( 
-            $contents,
-            $file,
-            $meta
-        );
-    
-        $contents = metaify_empty_strip( $contents );
-    }
-
-
-    $ret = _display( 
+    return metaify_prepost( 
         $file, 
+        $extension, 
         $contents, 
-        null,   // Extension override
-        false,  // No caching
-        true    // Is preview
+        false,      // No caching
+        true        // Is preview
     );
 
-    // Post-rendering processing
-    if( in_array( $extension, array( "markdown", "text", "print","read" ) ) ) {
-
-        $ret = metaify_import_strip( // Strip any [[%Tag]] variables that haven't been replaced
-            metaify_postprocess( 
-                $ret,
-                $file,
-                $meta
-            )
-        );
-    }
-
-    return $ret;
 }
 
 

@@ -2,6 +2,48 @@
 require_once( dirname( __FILE__ ) . "/config/conventions.php");
 require_once( dirname( __FILE__ ) . "/util.php");
 
+function metaify_prepost( $file, $extension, $contents, $caching = true, $is_preview = false ) {
+
+    $metaify_enabled_extensions = array( "markdown", "text", "print","read" );
+
+    $meta = array();
+    // Pre-rendering processing
+    if( in_array( $extension, $metaify_enabled_extensions  ) ) {
+    
+        $contents = metaify( 
+            $contents,
+            $file,
+            $meta
+        );
+    
+        $contents = metaify_empty_strip( $contents );
+    }
+
+
+    $ret = _display( 
+        $file, 
+        $contents, 
+        null,       // Extension override
+        $caching,   // Caching
+        $is_preview // Is preview
+    );
+
+    // Post-rendering processing
+    if( in_array( $extension, $metaify_enabled_extensions  ) ) {
+
+        $ret = metaify_import_strip( // Strip any [[%Tag]] variables that haven't been replaced
+            metaify_postprocess( 
+                $ret,
+                $file,
+                $meta
+            )
+        );
+    }
+
+    return $ret;
+
+}
+
 function metaify( $contents, $file, &$headers = array() ) {
     GLOBAL $php_meta_header_pattern;
 

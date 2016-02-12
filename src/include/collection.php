@@ -638,12 +638,29 @@ function collection_display( $file, &$contents, $as = "collection", $is_preview 
 
                     if( $f == $matched_file ) {
                         if( $as == "collection" ) {
-                            $ret .= _display( $matched_file,  $contents, null, true, $is_preview );
+                            # $ret .= _display( $matched_file,  $contents, null, true, $is_preview );
+
+                            $ret .= metaify_prepost( 
+                                $matched_file, 
+                                $extension, 
+                                $contents, 
+                                true,       // Caching
+                                $is_preview 
+                            );
+
                         } elseif( $as == "raw" ) {
                             if( $extension == "collection" ) {
 
-                                $ret .= _display( $matched_file,  $contents, $as, true, $is_preview );
-                                
+                                # $ret .= _display( $matched_file,  $contents, $as, true, $is_preview );
+
+                                $ret .= metaify_prepost( 
+                                    $matched_file, 
+                                    $extension, 
+                                    $contents, 
+                                    true,       // Caching
+                                    $is_preview 
+                                );
+                                 
                             } else {
                                 $ret .= $contents;
                             }
