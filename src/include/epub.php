@@ -79,15 +79,15 @@ function _epub_display( $epub, $file, $contents ) {
         )
     );
 
+    libxml_use_internal_errors(true);
+    $doc = new DOMDocument();
+    $doc->preserveWhiteSpace = true;
 
+    $doc->loadHTML( $contents );
+
+    // Remove any tags not allowed in epub XHTML docs
     if( $epub_removed_tags && count( $epub_removed_tags ) > 0 ) {
 
-
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->preserveWhiteSpace = true;
-
-        $doc->loadHTML( $contents );
         $xpath = new DOMXPath( $doc );
 
         foreach( $epub_removed_tags as $t ) {
@@ -104,15 +104,90 @@ function _epub_display( $epub, $file, $contents ) {
             }
         }
 
-        $contents = $doc->saveXML( 
-            null, 
-            LIBXML_HTML_NODEFDTD 
-        );
-        // $contents = $doc->saveHTML();
+        libxml_clear_errors();
+    }
 
+
+    // Image processing...
+    if( true ) {
+
+        foreach( $xpath->query( "//img" ) as $img_node ) {
+            // $node->parentNode->removeChild( $node );
+            if( $img_node->hasAttributes() ) {
+                foreach( $img_node->attributes as $attr_name => $attr ) {
+                    if( $attr_name != "src" ) {
+                        continue;
+                    } else {
+                        // Data URI image / screenshot
+                        if( preg_match( '/^data:/', $attr->textContent )  ) {
+
+                            list( $dummy, $c ) = explode( ':', $attr->textContent, 2 );
+
+                            list( $mime, $dummy ) = explode( ';', $c, 2 );
+                            $dummy = '';
+
+                            $c = file_get_contents( "data://$c" );
+
+                            $new_file = _image_to_file( $zip, $mime_type, $c );
+
+                            $img_node->setAttribute( 'src', $new_file );
+                        
+                            continue;
+                        }
+
+
+                        // Wiki-local image
+                        if( preg_match( '/^raw\.php\?/', $attr->textContent ) ) {
+
+                            $qs = parse_url( $attr->textContent, PHP_URL_QUERY );
+
+                            $params = proper_parse_str( $qs );
+
+                            if( isset( $params['file'] ) ) {
+
+                                if( ( file_or( $params['file'], false ) ) !== false ) {
+                               
+                                    if( git_file_exists( $params['file'] ) ) {
+                                        $c = git_file_get_contents( dirify( $params['file'] ) );
+
+                                        $finfo = new finfo(FILEINFO_MIME);
+                                        $mime_type = array_shift( explode( ";", $finfo->buffer( $c ) ) );
+
+                                        $new_file = _image_to_file( $zip, $mime_type, $c );
+
+                                        $img_node->setAttribute( 'src', $new_file );
+
+                                    }
+                                }
+                            }
+
+                            continue;
+                        }
+
+                        // Externally sourced image
+                        if( preg_match( '/^http:\/\//', $attr->textContent ) ) {
+
+                            // Do nothing, we don't know what kind of behavior to
+                            // expect here, and just going out to the web to get
+                            // an image seems more insecurely than helpful.
+                        }
+
+
+                        // We don't know how to handle the image, so we will
+                        // remove it from the output
+                        $img_node->parentNode->removeChild( $img_node );
+                    }
+                }
+            }
+        }
 
         libxml_clear_errors();
     }
+
+    $contents = $doc->saveXML( 
+        null, 
+        LIBXML_HTML_NODEFDTD
+    );
     
     return $contents;
 }
@@ -216,94 +291,6 @@ function epub_archive( $file, $contents ) {
             $f,
             git_file_get_contents( $f['file'] )
         );
-
-        // Check output for <img> tags, and make an attempt
-        // to tuck away the images into the contents folder, rewriting
-        // the src attribute to something that is a single, deduplicated
-        // file within the epub
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->preserveWhiteSpace = true;
-
-        $doc->loadHTML( $content );
-        $xpath = new DOMXPath( $doc );
-
-        foreach( $xpath->query( "//img" ) as $img_node ) {
-            // $node->parentNode->removeChild( $node );
-            if( $img_node->hasAttributes() ) {
-                foreach( $img_node->attributes as $attr_name => $attr ) {
-                    if( $attr_name != "src" ) {
-                        continue;
-                    } else {
-                        // Data URI image / screenshot
-                        if( preg_match( '/^data:/', $attr->textContent )  ) {
-
-                            list( $dummy, $c ) = explode( ':', $attr->textContent, 2 );
-
-                            list( $mime, $dummy ) = explode( ';', $c, 2 );
-                            $dummy = '';
-
-                            $c = file_get_contents( "data://$c" );
-
-                            $new_file = _image_to_file( $zip, $mime_type, $c );
-
-                            $img_node->setAttribute( 'src', $new_file );
-                        
-                            continue;
-                        }
-
-
-                        // Wiki-local image
-                        if( preg_match( '/^raw\.php\?/', $attr->textContent ) ) {
-
-                            $qs = parse_url( $attr->textContent, PHP_URL_QUERY );
-
-                            $params = proper_parse_str( $qs );
-
-                            if( isset( $params['file'] ) ) {
-
-                                if( ( file_or( $params['file'], false ) ) !== false ) {
-                               
-                                    if( git_file_exists( $params['file'] ) ) {
-                                        $c = git_file_get_contents( dirify( $params['file'] ) );
-
-                                        $finfo = new finfo(FILEINFO_MIME);
-                                        $mime_type = array_shift( explode( ";", $finfo->buffer( $c ) ) );
-
-                                        $new_file = _image_to_file( $zip, $mime_type, $c );
-
-                                        $img_node->setAttribute( 'src', $new_file );
-
-                                    }
-                                }
-                            }
-
-                            continue;
-                        }
-
-                        // Externally sourced image
-                        if( preg_match( '/^http:\/\//', $attr->textContent ) ) {
-
-                            // Do nothing, we don't know what kind of behavior to
-                            // expect here, and just going out to the web to get
-                            // an image seems more insecurely than helpful.
-                        }
-
-
-                        // We don't know how to handle the image, so we will
-                        // remove it from the output
-                        $img_node->parentNode->removeChild( $img_node );
-                    }
-                }
-            }
-        }
-
-        $content = $doc->saveXML( 
-            null, 
-            LIBXML_HTML_NODEFDTD 
-        );
-        libxml_clear_errors();
-
 
         $zip->addFromString(
             "OEBPS/" . $f['path'] . '.xhtml',
