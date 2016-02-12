@@ -11,9 +11,7 @@ require_once( dirname( __FILE__ ) . '/include/git_html.php');
 $confirm =  ( isset( $_POST['confirm'] ) && $_POST['confirm'] == "yes" ? $_POST['confirm'] : "no" );
 $snippet    = file_or(  $_POST['snippets'], false );
 
-$give       = set_or(   $_POST['give'], false );
-$delete     = set_or(   $_POST['delete'], false );
-
+$action     = set_or(   $_POST['action'], false );
 
 if( !is_logged_in() ) {
 
@@ -25,25 +23,49 @@ if( !is_logged_in() ) {
     );
 } else {
 
-    $action = false;
-
-    if( $delete !== false ) {
-
-        $action = "delete";
-
-
-    } elseif( $give !== false ) {
-
-
-        $action = "give";
-
-    }
-
-
     switch( $action ) {
 
         case "delete":
-            die( "Delete" );
+            $to_delete = array();
+
+            foreach( $snippet as $s ) {
+                $snippet = snippet_get( $s );
+
+                if( is_null( $snippet ) ) {
+                    die( "Can't find: '$s'" );
+                }
+
+                if( $snippet[ 'username' ] != $_SESSION['usr']['name'] ) {
+                    die( "Unable to open '$s'" );
+                }
+
+                $to_delete[] = $s;
+            }
+
+            if( count( $to_delete ) > 0 ) {
+
+                $counter = 0;
+                foreach( $to_delete as $filename ) {
+                    
+                    if( !snippet_delete( $_SESSION['usr']['name'], $filename ) ) {
+                        die( "Unable to delete snippet: '$filename'" );
+                    } else {
+                        $counter++;
+                    }
+                }
+
+                echo layout(
+                    array(
+                        'header'    => gen_header( "Batch delete snippet" ), 
+                        'content'   => note( 
+                            "Deleted Snippets",
+                            "Deleted " . plural( $counter, "snippet" )
+                        )
+                    )
+                );
+
+            }
+
             break;
         case "give":
 

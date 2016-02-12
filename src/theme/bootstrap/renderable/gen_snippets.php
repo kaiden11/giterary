@@ -54,158 +54,168 @@ uasort(
 $time = time();
 
 ?>
-<div class="row snippets">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Snippets Contents
-                (<span id="snippet-count">
-                    <?= plural( count( $p['snippets'] ), 'snippet' ) ?>
-                </span>)
-            </div>
-            <div class="panel-body">
-                <p>
-                    The &quot;snippet&quot; area is storage for highlights that
-                    you would like to review at a later date. A snippet is 
-                    generated from either the "Readable" interface, or the main
-                    document viewing interface after hitting the "Add to 
-                    Snippets" button after highlighting a section of text.
-                </p>
-                <form method="post" action="snippet_action.php">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <label
-                                        class="btn btn-info snippet-select-all"
-                                    >
-                                        <span 
-                                            class="glyphicon glyphicon-ok-circle"
-                                            title="Select/Deselect All"
-                                        />
-                                    </label>
-                                </th>
-                                <th>Snippet</th>
-                                <th>Time</th>
-                                <th>File</th>
-                                <th>Type</th>
-                                <th>Commit</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?foreach( $p['snippets'] as $f => $snippet ) { ?>
-                                <tr 
-                                    data-row-id="<?= he( $f ) ?>"
-                                >
-                                    <td>
-                                        <label
-                                            class="btn btn-info snippet-selection snippet-select"
-                                        >
-                                            <input 
-                                                type="checkbox" 
-                                                name="snippets[]" 
-                                                value="<?= he( $f ) ?>"
-                                            />
-                                            <span class="glyphicon glyphicon-check"></span>
-                                            <span class="glyphicon glyphicon-unchecked"></span>
-                                        </label>
-                                    </td>
-
-                                    <td>
-                                        <?= isset( $snippet['from'] )
-                                            ? "<kbd>" . $snippet['from'] . "</kbd>"
-                                            : '' 
-                                        ?>
-                                        <samp>
-                                            <?= context_highlight( 
-                                                $snippet['snippet'], 
-                                                $snippet['context'],
-                                                $snippet['type']
-                                            ) ?>
-                                        </samp>
-                                    </td>
-                                    <td>
-                                        <?= html_short_time_diff( 
-                                            $snippet['time'], 
-                                            $time,
-                                            array( 'title' => strftime( '%Y-%m-%d %H:%M:%S', $snippet['time' ] ) )
-                                        ) ?>
-                                    </td>
-                                    <td><?= linkify( '[[' . $snippet['file'] . '|' . basename( $snippet['file'] ) . ']]' ) ?></td>
-                                    <td><?= he( $snippet['type'] ? $snippet['type'] : '-' ) ?></td>
-                                    <td><code><?= commit_excerpt( $snippet['commit'] ) ?></code></td>
-                                    <td>
-                                        <div class="btn-group-vertical">
-                                            <button 
-                                                class="btn btn-success show-context"
-                                                data-row-id="<?= he( $f ) ?>"
-                                            >
-                                                Show
-                                            </button>
-                                            <a 
-                                                class="btn btn-danger"
-                                                href="delete_snippet.php?snippet=<?= urlencode( $f ) ?>"
-                                            >
-                                                Delete
-                                            </a>
-                                        </div>
-                                        <textarea class="context" style="display: none;"><?= he( $snippet['context'] ) ?></textarea>
-                                        <textarea class="snippet" style="display: none;"><?= he( $snippet['snippet'] ) ?></textarea>
-                                    </td>
-
-                                </tr>
-                            <? } ?>
-                        <tbody>
-                    </table>
-                    <div>
-                        <div>
-                            <div class="btn-group">
+<div class="snippets">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+            <?
+                $next_skip = $p['skip'] + count( $p['history'] );
+                $prev_skip = max( $p['skip'] - $p['num'], 0 );
+            ?>
+            <ul class="nav navbar-nav navbar-left activities" >
+                <li class="dropdown">
+                    <div class="btn-group">
+                        <button 
+                            class="btn btn-default navbar-btn dropdown-toggle" 
+                            type="button" 
+                            data-toggle="dropdown" 
+                            aria-haspopup="true" 
+                            aria-expanded="false"
+                        >
+                            <span id="selected-snippets">No snippets selected</span>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" style="min-width: 400px;">
+                            <li>
                                 <button 
-                                    class="btn btn-default dropdown-toggle" 
+                                    class="btn btn-danger" 
                                     type="button" 
-                                    data-toggle="dropdown" 
-                                    aria-haspopup="true" 
-                                    aria-expanded="false"
+                                    id="delete_selected"
+                                    value="delete" 
                                 >
-                                    <span id="selected-snippets">No snippets selected</span>
-                                    <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
+                                    Delete
                                 </button>
-                                <ul class="dropdown-menu" style="min-width: 400px;">
-                                    <li>
-                                        <button 
-                                            class="btn btn-danger" 
-                                            type="submit" 
-                                            name="delete" 
-                                            value="delete" 
-                                        >
-                                            Delete
-                                        </button>
-                                        these snippets
-                                    </li>
-                                    <?php foreach( $p['userlist'] as $u ) { ?>
-                                        <li>
-                                            <button 
-                                                class="btn btn-info" 
-                                                type="submit" 
-                                                name="give" 
-                                                value="<?= he( $u ) ?>" 
-                                            >
-                                                Give 
-                                            </button>
-                                            these snippets to <?= he( $u ) ?>
-                                        </li>
-                                    <?php } ?>
-                                </ul>
-                            </div>
-                        </div>
+                                these snippets
+                            </li>
+                            <?php foreach( $p['userlist'] as $u ) { ?>
+                                <li>
+                                    <button 
+                                        class="btn btn-info give-selected" 
+                                        type="button" 
+                                        value="<?= he( $u ) ?>" 
+                                    >
+                                        Give 
+                                    </button>
+                                    these snippets to <?= he( $u ) ?>
+                                </li>
+                            <?php } ?>
+                        </ul>
                     </div>
-                </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Snippets Contents
+                    (<span id="snippet-count">
+                        <?= plural( count( $p['snippets'] ), 'snippet' ) ?>
+                    </span>)
+                </div>
+                <div class="panel-body">
+                    <p>
+                        The &quot;snippet&quot; area is storage for highlights that
+                        you would like to review at a later date. A snippet is 
+                        generated from either the "Readable" interface, or the main
+                        document viewing interface after hitting the "Add to 
+                        Snippets" button after highlighting a section of text.
+                    </p>
+                    <form method="post" action="snippet_action.php" id="snippet_form">
+                        <input type="hidden" name="action"  value="" id="action"/>
+                        <input type="hidden" name="give"    value="" id="give"/>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <label
+                                            class="btn btn-info snippet-select-all"
+                                        >
+                                            <span 
+                                                class="glyphicon glyphicon-ok-circle"
+                                                title="Select/Deselect All"
+                                            />
+                                        </label>
+                                    </th>
+                                    <th>Snippet</th>
+                                    <th>Time</th>
+                                    <th>File</th>
+                                    <th>Type</th>
+                                    <th>Commit</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?foreach( $p['snippets'] as $f => $snippet ) { ?>
+                                    <tr 
+                                        data-row-id="<?= he( $f ) ?>"
+                                    >
+                                        <td>
+                                            <label
+                                                class="btn btn-info snippet-selection snippet-select"
+                                            >
+                                                <input 
+                                                    type="checkbox" 
+                                                    name="snippets[]" 
+                                                    value="<?= he( $f ) ?>"
+                                                />
+                                                <span class="glyphicon glyphicon-check"></span>
+                                                <span class="glyphicon glyphicon-unchecked"></span>
+                                            </label>
+                                        </td>
+    
+                                        <td>
+                                            <?= isset( $snippet['from'] )
+                                                ? "<kbd>" . $snippet['from'] . "</kbd>"
+                                                : '' 
+                                            ?>
+                                            <samp>
+                                                <?= context_highlight( 
+                                                    $snippet['snippet'], 
+                                                    $snippet['context'],
+                                                    $snippet['type']
+                                                ) ?>
+                                            </samp>
+                                        </td>
+                                        <td>
+                                            <?= html_short_time_diff( 
+                                                $snippet['time'], 
+                                                $time,
+                                                array( 'title' => strftime( '%Y-%m-%d %H:%M:%S', $snippet['time' ] ) )
+                                            ) ?>
+                                        </td>
+                                        <td><?= linkify( '[[' . $snippet['file'] . '|' . basename( $snippet['file'] ) . ']]' ) ?></td>
+                                        <td><?= he( $snippet['type'] ? $snippet['type'] : '-' ) ?></td>
+                                        <td><code><?= commit_excerpt( $snippet['commit'] ) ?></code></td>
+                                        <td>
+                                            <div class="btn-group-vertical">
+                                                <button 
+                                                    class="btn btn-success show-context"
+                                                    data-row-id="<?= he( $f ) ?>"
+                                                >
+                                                    Show
+                                                </button>
+                                                <a 
+                                                    class="btn btn-danger"
+                                                    href="delete_snippet.php?snippet=<?= urlencode( $f ) ?>"
+                                                >
+                                                    Delete
+                                                </a>
+                                            </div>
+                                            <textarea class="context" style="display: none;"><?= he( $snippet['context'] ) ?></textarea>
+                                            <textarea class="snippet" style="display: none;"><?= he( $snippet['snippet'] ) ?></textarea>
+                                        </td>
+    
+                                    </tr>
+                                <? } ?>
+                            <tbody>
+                        </table>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 <style type="text/css">
 
     .snippets tr tr samp {
@@ -312,6 +322,24 @@ $time = time();
                         );
                     }
                 );
+
+                $('#delete_selected').on(
+                    'click',
+                    function() {
+                        $('#action').val( 'delete' );
+                        $('#snippet_form').submit();
+                    }
+                );
+
+                $('.give-selected').on(
+                    'click',
+                    function() {
+                        $('#action').val( 'give' );
+                        $('#give').val( $(this).val() );
+                        $('#snippet_form').submit();
+                    }
+                );
+
 
                 if( typeof( layout ) != 'undefined' && layout != null && layout.modal != null ) {
                     $( '.snippets tr .show-context' ).on( 
