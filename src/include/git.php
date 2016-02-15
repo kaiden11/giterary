@@ -298,6 +298,9 @@ function git_file_get_contents( $file, $as_of_commit = null ) {
 
     perf_enter( 'git_file_get_contents' );
     $ret = false;
+
+    if( !isset( $file ) || $file == "" ) { die( "Cannot pass unset file into git_file_get_contents" ); }
+
     $file = dirify( $file );
 
     $lazy = true;

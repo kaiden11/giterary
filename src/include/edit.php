@@ -3,6 +3,7 @@ require_once( dirname( __FILE__ ) . '/util.php');
 require_once( dirname( __FILE__ ) . '/display.php');
 require_once( dirname( __FILE__ ) . '/drafts.php');
 require_once( dirname( __FILE__ ) . '/meta.php');
+require_once( dirname( __FILE__ ) . '/diff3.php');
 
 function gen_help( $file ) {
     perf_enter( "gen_help" );
@@ -61,83 +62,6 @@ function gen_edit( $parameters = array()  )  {
     }
 }
 
-/*
-function _gen_edit_donotuse( $opts = array() ) {
-    perf_enter( "_gen_edit" );
-
-    $parameters =       ( isset( $opts['parameters'] ) ? $opts['parameters'] : array() );
-    $extension  =       ( isset( $opts['extension'] ) ? $opts['extension'] : "markdown" );
-    $renderer   =       ( isset( $opts['renderer'] ) ? $opts['renderer'] : 'gen_edit'); 
-
-    # We only ever want to edit one file at once...
-    if( is_array( $parameters['file'] ) ) {
-        $parameters['file'] = array_pop( $parameters['file'] );
-    }
-
-    $dirified_file      = dirify( $parameters['file'] );
-    $position           = numeric_or( $parameters['position'], 0 );
-    $preview_position   = numeric_or( $parameters['preview_position'], 0 );
-
-    $already_exists = false;
-    $existing_contents = '';
-    $existing_commit = '';
-    if( file_or( $dirified_file, null) && git_file_exists( $dirified_file ) ) {
-        $already_exists = true;
-
-        $head_commit = git_file_head_commit( $dirified_file );
-        $existing_commit = $head_commit;
-
-        $view_contents = git_view( $dirified_file, $head_commit );
-
-        if( isset( $view_contents["$head_commit:$dirified_file"] ) ) {
-            $existing_contents = $view_contents["$head_commit:$dirified_file"];
-        }
-    }
-
-    if( 
-        $already_exists &&
-        isset( $parameters['existing_commit'] ) && 
-        $parameters['existing_commit'] != $existing_commit 
-    )  {
-        return _gen_cherrypick(
-            array( 
-                "file"                  =>  $dirified_file,
-                "conflicting_contents"  =>  $parameters['edit_contents'] 
-            )
-        );
-
-
-        # die( "You are committing to a different version than what you started with! ($existing_commit != " . $parameters['existing_commit'] . ")" );
-    }
-
-    # $show = gen_show( $existing_commit );
-    $rendered_contents = '';
-    if( $parameters['edit_contents'] ) {
-        $rendered_contents = _display( $parameters['file'], $parameters['edit_contents'], null, false, true ) ;
-    }
-
-
-    if( $already_exists && !$parameters['edit_contents']  ) {
-        $parameters['edit_contents'] = $existing_contents;
-    }
-
-
-    $puck = array(
-        'parameters'                    =>  &$parameters,
-        'extension'                     =>  &$extension,
-        'already_exists'                =>  &$already_exists,
-        'existing_contents'             =>  &$existing_contents,
-        'existing_commit'               =>  &$existing_commit,
-        # 'rendered_existing_contents'    =>  _display( $parameters['file'], $existing_contents ),
-        'rendered_edit_contents'        =>  &$rendered_contents,
-    );
-
-
-
-    return render( $renderer, $puck ) .  perf_exit( "_gen_edit" );
-
-}
-*/
 
 function _preview( $file, $extension, $contents ) {
 
@@ -190,13 +114,29 @@ function _gen_edit( $opts = array() ) {
         $parameters['existing_commit'] != $existing_commit 
     ) {
 
-        return _gen_cherrypick(
-            array( 
-                "file"                  =>  $dirified_file,
-                "conflicting_contents"  =>  $parameters['edit_contents'] 
-            )
+        // Attempt resolution using diff3
+        $diff3 = diff3( 
+            $parameters['edit_contents'], 
+            git_file_get_contents( 
+                $dirified_file, 
+                $parameters['existing_commit']
+            ),
+            $existing_contents
         );
-        // die( "You are committing to a different version than what you started with! ($existing_commit != " . $parameters['existing_commit'] . ")" );
+
+        if( $diff3 === false ) { // Not configured, failed, or could not resolve
+
+            return _gen_cherrypick(
+                array( 
+                    "file"                  =>  $dirified_file,
+                    "conflicting_contents"  =>  $parameters['edit_contents'] 
+                )
+            );
+        }
+
+        // Update the editor window with the merge-resolved
+        // contents
+        $parameters['edit_contents'] = $diff3;
     }
 
     # $show = gen_show( $existing_commit );
