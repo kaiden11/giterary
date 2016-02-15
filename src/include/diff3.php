@@ -29,7 +29,7 @@ function diff3( $my_file, $old_file, $your_file ) {
     $res = file_put_contents( $path_your_file, $your_file );
     if( $res === false || $res == 0 ) { die( "Unable to write old '$path_your_file'" ); }
 
-
+    
 
     $cmd = DIFF3_PATH . " -m " 
         .  escapeshellarg( $path_my_file ) 

@@ -303,14 +303,14 @@ function git_file_get_contents( $file, $as_of_commit = null ) {
 
     $file = dirify( $file );
 
-    $lazy = true;
+    $being_lazy = false;
     if( is_null( $as_of_commit ) ) {
-        $lazy = false;
+        $being_lazy = true;
         $as_of_commit = git_head_commit();
     }
 
     if( git_file_exists( $file, $as_of_commit ) ) {
-        $hc = ( $lazy ? git_file_head_commit( $file ) : $as_of_commit );
+        $hc = ( $being_lazy ? git_file_head_commit( $file ) : $as_of_commit );
 
         $view = git_view( $file, $hc );
 

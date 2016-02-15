@@ -116,11 +116,14 @@ function _gen_edit( $opts = array() ) {
 
         // Attempt resolution using diff3
         $diff3 = diff3( 
-            $parameters['edit_contents'], 
+             // My file
+            $parameters['edit_contents'],
+            // Old file
             git_file_get_contents( 
                 $dirified_file, 
                 $parameters['existing_commit']
             ),
+            // Your file
             $existing_contents
         );
 
