@@ -11,6 +11,9 @@ define('SRC_DIR',"/var/lib/$application_name/instance/$instance_name/src/");
 # Path to Git binary
 define('GIT_PATH',"/usr/bin/git");
 
+# Path to diff3 binary
+define('DIFF3_PATH',"/usr/bin/diff3");
+
 define('GIT_REPO_DIR',"/var/lib/$application_name/repo/$instance_name/");
 define('TMP_DIR',"/var/lib/$application_name/temp/$instance_name/");
 define('DRAFT_DIR',"/var/lib/$application_name/draft/$instance_name/");
