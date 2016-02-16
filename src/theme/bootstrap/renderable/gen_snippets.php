@@ -87,17 +87,19 @@ $time = time();
                                 </button>
                                 these snippets
                             </li>
-                            <?php foreach( $p['userlist'] as $u ) { ?>
-                                <li>
-                                    <button 
-                                        class="btn btn-info give-selected" 
-                                        type="button" 
-                                        value="<?= he( $u ) ?>" 
-                                    >
-                                        Give 
-                                    </button>
-                                    these snippets to <?= he( $u ) ?>
-                                </li>
+                            <?php if( is_array( $p['userlist'] ) && count( $p['userlist'] ) > 0 ) { ?>
+                                <?php foreach( $p['userlist'] as $u ) { ?>
+                                    <li>
+                                        <button 
+                                            class="btn btn-info give-selected" 
+                                            type="button" 
+                                            value="<?= he( $u ) ?>" 
+                                        >
+                                            Give 
+                                        </button>
+                                        these snippets to <?= he( $u ) ?>
+                                    </li>
+                                <?php } ?>
                             <?php } ?>
                         </ul>
                     </div>
