@@ -372,9 +372,9 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                     <div class="btn-group commit-btn">
                                         <button
                                             class="btn btn-<?= number_to_helper_class( $response_exists ) ?> btn-xs clickable" 
-                                            value="show_commit.php?commit=<?= $commit['commit'] ?>" title="Show details on this commit." 
+                                            value="show_commit.php?commit=<?= $commit['commit'] ?>" 
+                                            title="<?= commit_excerpt( $commit['commit'] ) ?>: Show details on this commit." 
                                         >
-                                            <samp><?= commit_excerpt( $commit['commit'] ) ?></samp>
                                             <? if( $response_exists > 0 ) { ?>
                                                 <span 
                                                     class="badge"

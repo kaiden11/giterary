@@ -2965,8 +2965,8 @@ function cmp_git_date( $a_dt, $b_dt ) {
     return ( $a_epoch == $b_epoch ? 0 : ( $a_epoch < $b_epoch ? -1 : 1 ) );
 }
 
-function commit_excerpt( $commit ) {
-    return substr( $commit, 0, 6 );
+function commit_excerpt( $commit, $len = 6 ) {
+    return substr( $commit, 0, $len );
 }
 
 function file_or( $file, $or = null, $current_file = null, $redirect = true ) {
