@@ -10,7 +10,12 @@ body.giterary {
 
 .history .commit-btn
 {
-    min-width: 55px;
+    min-width: 120px;
+}
+
+.history .commit-btn .combo-btn {
+    width:  60px;
+
 }
 
 .history .before-after-btn

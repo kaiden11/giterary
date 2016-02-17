@@ -265,12 +265,12 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th>&nbsp;</th>
                                 <th>
-                                    &nbsp;
+                                    &Delta; between
                                 </th>
-                                <th>&nbsp;</th>
-                                <th>date</th>
+                                <th>
+                                    commit / diff
+                                </th>
                                 <th class="author">author</th>
                                 <th class="filename">page(s)</th>
                                 <th class="message">message</th>
@@ -368,72 +368,6 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                     
                         ?>
                             <tr class="<?= implode( " ", $row_classes ) ?>">
-                                <td class="dropdown">
-                                    <div class="btn-group commit-btn">
-                                        <button
-                                            class="btn btn-<?= number_to_helper_class( $response_exists ) ?> btn-xs clickable" 
-                                            value="show_commit.php?commit=<?= $commit['commit'] ?>" 
-                                            title="<?= commit_excerpt( $commit['commit'] ) ?>: Show details on this commit." 
-                                        >
-                                            <? if( $response_exists > 0 ) { ?>
-                                                <span 
-                                                    class="badge"
-                                                >
-                                                    <?= $response_exists ?>
-                                                </span>
-                                            <? } else { ?>
-                                                <span 
-                                                    class="badge"
-                                                >
-                                                    0
-                                                </span>
-                                            <? } ?>
-                                        </button>
-                                        <button
-                                            class="btn btn-default btn-xs dropdown-toggle" 
-                                            <? if( false ) { ?>
-                                                style="background-color: #<?= $author_hash ?>"
-                                            <? } ?>
-                                            data-toggle="dropdown"
-                                        >
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <? if( $response_exists ) { ?>
-                                            <li class="dropdown-header">
-                                                <span class="label label-info">A note has been made on this commit</span>
-                                            </li>
-                                            <? } ?>
-                                            <li>
-                                                <a href="view.php?commit=<?= $commit['commit'] ?>" title="View all files in this commit" >View Commit Contents</a>
-                                            </li>
-                                            <? if( is_array( $commit['pages'] ) && count( $commit['pages'] ) >= 0 ) { ?>
-                                                <? if( count( $commit['pages'] ) > 1 ) {
-                                                    $tmp_a = array();
-                                                    foreach( $commit['pages'] as $page ) {
-                                                        $tmp_a[] = "file[]=" . undirify( $page );
-                                                    }
-                                                ?>
-                                                    <li>
-                                                        <a href="history.php?<?= join('&', $tmp_a ) ?>" title="History for files in this commit." >History for files in this commit</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="stats.php?<?= join('&', $tmp_a ) ?>" title="Stats for files in this commit" >Stats for files in this commit</a>
-                                                    </li>
-                                                <?  } elseif( count( $commit['pages'] ) == 1 ) { ?>
-                                                    <li>
-                                                        <a href="history.php?file=<?= undirify( join( '',  $commit['pages'] ) ) ?>" title="History for files in this commit" >History for files in this commit</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="stats.php?file=<?= undirify( join( '',  $commit['pages'] ) ) ?>&commit=<?= $commit['commit'] ?>" title="Stats for files in this commit" >Stats for files in this commit</a>
-                                                    </li>
-                                                <? } ?>
-                                            <? } ?>
-        
-                                        </ul>
-                                    </div>
-        
-                                </td>
                                 <td>
                                     <div class="btn-group before-after-btn" data-toggle="buttons">
                                         <label class="btn btn-default btn-xs before-after-radio">
@@ -488,9 +422,35 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                             </span>
         
                                         </label>
+                                    </div>
                                 </td>
                                 <td class="dropdown">
-                                    <div class="btn-group diff-btn">
+                                    <div class="btn-group commit-btn">
+                                        <button
+                                            class="btn btn-<?= number_to_helper_class( $response_exists ) ?> btn-xs clickable combo-btn" 
+                                            value="show_commit.php?commit=<?= $commit['commit'] ?>" 
+                                            title="<?= commit_excerpt( $commit['commit'] ) ?>: Show details on this commit." 
+                                        >
+                                            <samp><?= html_short_time_diff( 
+                                                $commit['epoch'], 
+                                                time(),
+                                                array( 'title' => strftime( '%Y-%m-%d %H:%M:%S', $commit['epoch' ] ) )
+                                            ) ?></samp>
+
+                                            <? if( $response_exists > 0 ) { ?>
+                                                <span 
+                                                    class="badge"
+                                                >
+                                                    <?= $response_exists ?>
+                                                </span>
+                                            <? } else { ?>
+                                                <span 
+                                                    class="badge"
+                                                >
+                                                    0
+                                                </span>
+                                            <? } ?>
+                                        </button>
                                         <button
                                             class="btn btn-default btn-xs clickable" 
                                             value="<?= diff_url( $commit['parent_commit'], $commit['commit'], $commit['pages'], 'yes' ) ?>" 
@@ -500,11 +460,45 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                         </button>
                                         <button
                                             class="btn btn-default btn-xs dropdown-toggle" 
+                                            <? if( false ) { ?>
+                                                style="background-color: #<?= $author_hash ?>"
+                                            <? } ?>
                                             data-toggle="dropdown"
                                         >
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
+                                            <? if( $response_exists ) { ?>
+                                            <li class="dropdown-header">
+                                                <span class="label label-info">A note has been made on this commit</span>
+                                            </li>
+                                            <? } ?>
+                                            <li>
+                                                <a href="view.php?commit=<?= $commit['commit'] ?>" title="View all files in this commit" >View Commit Contents</a>
+                                            </li>
+                                            <? if( is_array( $commit['pages'] ) && count( $commit['pages'] ) >= 0 ) { ?>
+                                                <? if( count( $commit['pages'] ) > 1 ) {
+                                                    $tmp_a = array();
+                                                    foreach( $commit['pages'] as $page ) {
+                                                        $tmp_a[] = "file[]=" . undirify( $page );
+                                                    }
+                                                ?>
+                                                    <li>
+                                                        <a href="history.php?<?= join('&', $tmp_a ) ?>" title="History for files in this commit." >History for files in this commit</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="stats.php?<?= join('&', $tmp_a ) ?>" title="Stats for files in this commit" >Stats for files in this commit</a>
+                                                    </li>
+                                                <?  } elseif( count( $commit['pages'] ) == 1 ) { ?>
+                                                    <li>
+                                                        <a href="history.php?file=<?= undirify( join( '',  $commit['pages'] ) ) ?>" title="History for files in this commit" >History for files in this commit</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="stats.php?file=<?= undirify( join( '',  $commit['pages'] ) ) ?>&commit=<?= $commit['commit'] ?>" title="Stats for files in this commit" >Stats for files in this commit</a>
+                                                    </li>
+                                                <? } ?>
+                                            <? } ?>
+                                            <li role="separator" class="divider"></li>
                                             <li>
                                                 <?= diff_anchor( 'Difference between this commit and previous', $commit['parent_commit'], $commit['commit'], $commit['pages'], "yes", "Difference between this commit and its parent" ) ?>
                                             </li>
@@ -513,13 +507,6 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                             </li>
                                         </ul>
                                     </div>
-                                </td>
-                                <td>
-                                    <?= html_short_time_diff( 
-                                        $commit['epoch'], 
-                                        time(),
-                                        array( 'title' => strftime( '%Y-%m-%d %H:%M:%S', $commit['epoch' ] ) )
-                                    ) ?>
                                 </td>
                                 <td class="author <?= he( $commit['author'] ) ?>">
                                     <a 
