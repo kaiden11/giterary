@@ -265,11 +265,13 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th>
+                                <th class="before-after-btn">
                                     &Delta; between
                                 </th>
                                 <th>
-                                    commit / diff
+                                    <div class="commit-btn">
+                                        commit / diff
+                                    </div>
                                 </th>
                                 <th class="author">author</th>
                                 <th class="filename">page(s)</th>
@@ -368,8 +370,8 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                     
                         ?>
                             <tr class="<?= implode( " ", $row_classes ) ?>">
-                                <td>
-                                    <div class="btn-group before-after-btn" data-toggle="buttons">
+                                <td class="before-after-btn">
+                                    <div class="btn-group" data-toggle="buttons">
                                         <label class="btn btn-default btn-xs before-after-radio">
                                             <input 
                                                 type="radio" 
@@ -429,27 +431,20 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                         <button
                                             class="btn btn-<?= number_to_helper_class( $response_exists ) ?> btn-xs clickable combo-btn" 
                                             value="show_commit.php?commit=<?= $commit['commit'] ?>" 
-                                            title="<?= commit_excerpt( $commit['commit'] ) ?>: Show details on this commit." 
+                                            title="<?= commit_excerpt( $commit['commit'] ) ?> @ <?= strftime( '%Y-%m-%d %H:%M:%S', $commit['epoch' ] ) ?>: Show details on this commit." 
                                         >
-                                            <samp><?= html_short_time_diff( 
+                                            <samp><?= short_time_diff( 
                                                 $commit['epoch'], 
-                                                time(),
-                                                array( 'title' => strftime( '%Y-%m-%d %H:%M:%S', $commit['epoch' ] ) )
+                                                time()
                                             ) ?></samp>
 
-                                            <? if( $response_exists > 0 ) { ?>
+                                            <?php if( $response_exists > 0 ) { ?>
                                                 <span 
                                                     class="badge"
                                                 >
                                                     <?= $response_exists ?>
                                                 </span>
-                                            <? } else { ?>
-                                                <span 
-                                                    class="badge"
-                                                >
-                                                    0
-                                                </span>
-                                            <? } ?>
+                                            <?php } ?>
                                         </button>
                                         <button
                                             class="btn btn-default btn-xs clickable" 

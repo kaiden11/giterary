@@ -18,9 +18,12 @@ body.giterary {
 
 }
 
-.history .before-after-btn
-{
-    min-width: 80px;
+.history .before-after-btn {
+    min-width: 90px;
+}
+
+.history td.before-after-btn {
+    border-right: 2px solid #ddd;
 }
 
 .history .file-prior {
