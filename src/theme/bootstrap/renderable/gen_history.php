@@ -268,10 +268,8 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                 <th class="before-after-btn">
                                     &Delta; between
                                 </th>
-                                <th>
-                                    <div class="commit-btn">
-                                        commit / diff
-                                    </div>
+                                <th class="commit-btn">
+                                    commit / diff
                                 </th>
                                 <th class="author">author</th>
                                 <th class="filename">page(s)</th>
@@ -426,11 +424,11 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                         </label>
                                     </div>
                                 </td>
-                                <td class="dropdown">
-                                    <div class="btn-group commit-btn">
-                                        <button
-                                            class="btn btn-<?= number_to_helper_class( $response_exists ) ?> btn-xs clickable combo-btn" 
-                                            value="show_commit.php?commit=<?= $commit['commit'] ?>" 
+                                <td class="dropdown commit-btn">
+                                    <div class="btn-group">
+                                        <a
+                                            class="btn btn-<?= number_to_helper_class( $response_exists ) ?> btn-xs combo-btn" 
+                                            href="show_commit.php?commit=<?= $commit['commit'] ?>" 
                                             title="<?= commit_excerpt( $commit['commit'] ) ?> @ <?= strftime( '%Y-%m-%d %H:%M:%S', $commit['epoch' ] ) ?>: Show details on this commit." 
                                         >
                                             <samp><?= short_time_diff( 
@@ -445,14 +443,14 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                                     <?= $response_exists ?>
                                                 </span>
                                             <?php } ?>
-                                        </button>
-                                        <button
-                                            class="btn btn-default btn-xs clickable" 
-                                            value="<?= diff_url( $commit['parent_commit'], $commit['commit'], $commit['pages'], 'yes' ) ?>" 
+                                        </a>
+                                        <a
+                                            class="btn btn-default btn-xs" 
+                                            href="<?= diff_url( $commit['parent_commit'], $commit['commit'], $commit['pages'], 'yes' ) ?>" 
                                             title="Difference between this commit and its parent"
                                         >
                                             diff
-                                        </button>
+                                        </a>
                                         <button
                                             class="btn btn-default btn-xs dropdown-toggle" 
                                             <? if( false ) { ?>
