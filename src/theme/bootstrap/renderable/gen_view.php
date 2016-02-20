@@ -82,7 +82,8 @@ if( isset( $p['annotations'][$commit_file] ) && count( $p['annotations'][$commit
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="move.php?file=<?= $f  ?>">Move</a></li>
+                                        <li><a href="edit.php?file=<?= urlencode( $f ) ?>"><kbd>E</kbd>dit this file</a></li>
+                                        <li><a href="move.php?file=<?= urlencode( $f ) ?>">Move this file</a></li>
                                         <? if( in_array( $p['extension'], array( 'talk','storyboard' ) ) ) { ?>
                                             <? if( $p['extension'] == "talk" ) { ?>
                                                 <li>
