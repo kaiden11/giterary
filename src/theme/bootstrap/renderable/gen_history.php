@@ -431,7 +431,10 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                             href="show_commit.php?commit=<?= $commit['commit'] ?>" 
                                             title="<?= commit_excerpt( $commit['commit'] ) ?> @ <?= strftime( '%Y-%m-%d %H:%M:%S', $commit['epoch' ] ) ?>: Show details on this commit." 
                                         >
-                                            <samp><?= short_time_diff( 
+                                            <samp
+                                                class="live-timestamp"
+                                                data-time="<?= $commit['epoch'] ?>"
+                                            ><?= short_time_diff( 
                                                 $commit['epoch'], 
                                                 time()
                                             ) ?></samp>

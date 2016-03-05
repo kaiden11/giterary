@@ -53,7 +53,7 @@ $(document).ready( function() {
 
     var update_live_timestamps = function() {
 
-        $( 'span.live-timestamp' ).each( function( k,v ) {
+        $( '.live-timestamp' ).each( function( k,v ) {
             var $v = $( v );
 
             $v.html( 
