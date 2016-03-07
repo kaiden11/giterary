@@ -2,6 +2,7 @@ var edit = {
     editor: null,
     initial_position: null,
     extension:  null,
+    existing_wc:  0,
     meta_toggle: function() {
         $('.edit.root').toggle_class( 'meta-on meta-off' );
     },
@@ -604,6 +605,11 @@ var edit = {
             );
         }
 
+        if( opts.existing_wc ) {
+            edit.existing_wc = opts.existing_wc;
+        } else {
+            edit.existing_wc = edit.wordcounter( edit.get_content() );    
+        }
 
         $('body.giterary').trigger( 'giterary_edit_ready' );
 
@@ -727,8 +733,9 @@ var edit = {
 
         return edit.wordcount_helper( edit.get_content() );    
     },
-    wordcount_helper: function( content ) {
-    
+    wordcounter: function( content ) {
+
+
         var word = null;
         var count = 0;
         
@@ -736,12 +743,34 @@ var edit = {
             count++;
         }
 
-        edit.wordcount_update( count );
+        edit.wordcount_regex.lastIndex = 0;
+
+        return count;
+
+    },
+    wordcount_helper: function( content ) {
+
+        edit.wordcount_update( 
+            edit.wordcounter( content )
+        );
         
     },
     wordcount_update: function( count ) {
+
+        var result = count + " word" + ( count == 1 ? "" : "s" );
+
+        if( edit.existing_wc && edit.existing_wc > 0 ) {
+
+            var diff = count - edit.existing_wc;
+
+            if( diff != 0 ) {
+
+                result = result + ' (' + ( diff < 0 ? '' : '+' ) + diff + ')';
+            }
+        }
+
         $('.edit.root nav .wordcount')
-            .html( count + " word" + ( count == 1 ? "" : "s" ) )
+            .html( result  )
         ;
     },
     preview:    function() {
