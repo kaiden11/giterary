@@ -1877,5 +1877,12 @@ function proper_parse_str($str) {
     return $arr;
 }
 
+function giterary_word_count( $str ) {
+    
+    $pattern = '/\b([\w\']+)\b/m';
+
+    return preg_match_all( $pattern, $str );
+}
+
 
 ?>

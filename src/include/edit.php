@@ -235,10 +235,10 @@ function _gen_commit( $opts = array() ) {
             }
         }
 
-        $orig_word_count = str_word_count( $existing_contents );
+        $orig_word_count = giterary_word_count( $existing_contents );
     }
 
-    $new_word_count = str_word_count( $parameters['edit_contents'] );
+    $new_word_count = giterary_word_count( $parameters['edit_contents'] );
 
     $word_count_text = ( $new_word_count - $orig_word_count > 0 ? "+" : "-" ) . abs( $new_word_count - $orig_word_count ) . " word" . ( ( $new_word_count - $orig_word_count ) == 1 ? "" : "s" );
 

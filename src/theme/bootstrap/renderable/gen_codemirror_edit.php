@@ -391,7 +391,8 @@ Shift-Ctrl-R / Shift-Cmd-Option-F: Replace all
                     already_exists:     <?= json_encode( $p['already_exists'] == true ) ?>,
                     filename:           <?= json_encode( $p['parameters']['file'] ) ?>,
                     cancel_to:          '<?= urlencode( ( $p['already_exists'] ? $p['parameters']['file'] : DEFAULT_FILE ) ) ?>',
-                    talk_append:        <?= json_encode( set_or( $p['parameters']['talk_append'], false ) ) ?>
+                    talk_append:        <?= json_encode( set_or( $p['parameters']['talk_append'], false ) ) ?>,
+                    existing_wc:        <?= json_encode( giterary_word_count( $p['existing_contents'] ) ) ?>
 
                 }
             );
