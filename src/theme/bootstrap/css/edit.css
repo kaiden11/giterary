@@ -22,6 +22,11 @@ body.giterary {
     width:  50% !important;
 }
 
+.edit textarea#commit_notes, .edit textarea#edit_contents {
+    font-family: "Inconsolata", monospace;
+
+}
+
 .edit textarea#commit_notes {
     height:             50px;
     background-color:   #d0f0d0;
