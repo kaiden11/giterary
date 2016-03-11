@@ -215,6 +215,8 @@ class memcacheCache {
     private $memcache_obj   =   null;
 
     private $tag_expirations    = null;
+    private $max_value_size = 1000000;
+
 
     function __construct( $tag_expirations, $cache_prefix, $cache_server, $cache_port ) {
         $this->cache_prefix     =   $cache_prefix;
@@ -311,12 +313,19 @@ class memcacheCache {
         # perf_log( "encache.memcacheCache.$tag.key.$key" );
         # perf_log( "encache.memcacheCache.$tag.value.$value" );
 
-        $success = $this->memcache_obj->set( 
-            $key, 
-            serialize( $value ),
-            0,  //  No flags
-            $expire 
-        );
+        $s = serialize( $value );
+
+        $success = false;
+        if( strlen( $s ) > $this->max_value_size  ) {
+            $success = false;
+        } else {
+            $success = $this->memcache_obj->set( 
+                $key, 
+                serialize( $value ),
+                0,  //  No flags
+                $expire 
+            );
+        }
 
         if( !$success ) {
             perf_log( "encache.memcacheCache.failure" );

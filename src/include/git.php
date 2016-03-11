@@ -348,7 +348,6 @@ function git_view( $file, $commit = null, $retrieve_contents = true, $cache = tr
     }
 
 
-
     # $file = dirify( $file );
 
 
@@ -380,9 +379,10 @@ function git_view( $file, $commit = null, $retrieve_contents = true, $cache = tr
     sort( $commit_file_array );
     $memoize_key = serialize( $commit_file_array );
 
+
     if( CACHE_ENABLE ) {
         if( !is_null( $cache ) ) {
-            if( is_bool( $cache ) ) {
+            if( is_bool( $cache ) && $cache === true ) {
                 $r = decache( 'git_view', $memoize_key );
 
                 if( !is_null( $r ) ) {
@@ -415,6 +415,7 @@ function git_view( $file, $commit = null, $retrieve_contents = true, $cache = tr
 
         if( $retrieve_contents === true ) {
             $ret[$t] = git_view_show_helper( $c, $f );
+
         } else {
             $ret[$t] = '';
         }
@@ -429,7 +430,7 @@ function git_view( $file, $commit = null, $retrieve_contents = true, $cache = tr
     if( CACHE_ENABLE ) {
         if( !is_null( $cache ) ) {
 
-            if( is_bool( $cache ) ) {
+            if( is_bool( $cache ) && $cache === true ) {
                 encache( 'git_view', $memoize_key, $ret );
 
             } elseif( is_array( $cache ) ) {
@@ -484,10 +485,10 @@ function git_view_show_helper( $commit, $file, $cache = true ) {
 
     // Try to cache our results if we're being
     // asked to do so
-    if( CACHE_ENABLE ) {
+    if( CACHE_ENABLE && strlen( $output ) < 1000000 ) {
         if( !is_null( $cache ) ) {
 
-            if( is_bool( $cache ) ) {
+            if( is_bool( $cache ) && $cache === true ) {
                 encache( 'git_view_show_helper', "$commit:$file", $output );
 
             } elseif( is_array( $cache ) ) {
