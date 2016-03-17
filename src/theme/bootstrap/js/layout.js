@@ -41,6 +41,7 @@ $(document).ready( function() {
         pad_top();
     } ).defer();
 
+    /*
     // Programmatically set scale according to device's pixel ratio
     // https://coderwall.com/p/ikrswg/bootstrap-3-grid-system-and-hi-density-small-screens-detected-as-xs
     var scale = 1 / (window.devicePixelRatio || 1);
@@ -49,7 +50,7 @@ $(document).ready( function() {
     var content = 'width=device-width, initial-scale=' + scale + ', minimum-scale=' + scale;
 
     $('meta[name="viewport"]').attr('content', content);
-
+    */
 
     var update_live_timestamps = function() {
 
