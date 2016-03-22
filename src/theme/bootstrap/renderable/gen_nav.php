@@ -46,7 +46,7 @@ function bootstrap_helper_class( $i, $helper_type ) {
                 name="term" 
                 type="text" 
                 id="term" 
-                maxlength="30" 
+                maxlength="50" 
                 size="15" 
                 accesskey="s" 
                 tabindex="4"
