@@ -90,7 +90,20 @@ function gen_search( $term ) {
 
     if( $term != null && $term != "" ) {
 
-        $search = git_grep( $term ); 
+        $matches = array();
+        if( preg_match( '@^/(.+)/$@', $term, $matches ) === 1 ) {
+
+            $search = git_grep( 
+                $matches[ 1 ],
+                true    // as_regex = true
+            ); 
+        } else {
+            $search = git_grep( 
+                $term, 
+                false    // as_regex = true
+            ); 
+        }
+
 
         $filename_matches = git_search( $term );
 
