@@ -619,6 +619,10 @@ function _display_pipeline( $file, $contents, $handlers = array(), $preview = fa
             # case "dialogify":
             #     $contents = dialogify( $contents );
             #     break;
+            case "htmlentity":
+                $contents = preg_replace( '@\\.\\.\\.@', '&hellip;', $contents );
+
+                break;
             case "text": 
                 $contents = text_display( $contents );
                 break;
@@ -695,6 +699,7 @@ function _display( $file, &$contents, $extension_override = null, $cache = true,
                 $file, 
                 $contents, 
                 array( 
+                    'htmlentity',
                     'funcify',
                     'todoify',
                     'tagify',
@@ -785,6 +790,7 @@ function _display( $file, &$contents, $extension_override = null, $cache = true,
                 $file, 
                 $contents, 
                 array( 
+                    'htmlentity',
                     'funcify',
                     'todoify',
                     'tagify',
