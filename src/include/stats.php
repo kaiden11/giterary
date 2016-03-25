@@ -130,7 +130,7 @@ function _calc_stats( &$contents, $opts = array( ) ) {
     $stats['gerund'] = $count_gerund;
     $stats['filter_words'] = $count_filter_words;
 
-    $stats['page_count'] = round( $total_words / 550 ) . '-' . round( $total_words / 450 );
+    $stats['page_count'] = round( $total_words / 550 ) . '-' . round( $total_words / 350 );
     $stats['manuscript_page_count'] = round( $total_words / 250 );
 
     /*
