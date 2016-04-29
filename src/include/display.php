@@ -620,7 +620,7 @@ function _display_pipeline( $file, $contents, $handlers = array(), $preview = fa
             #     $contents = dialogify( $contents );
             #     break;
             case "htmlentity":
-                $contents = preg_replace( '@\\.\\.\\.@', '&hellip;', $contents );
+                $contents = preg_replace( '@\\.\\.\\.@', '…', $contents );
 
                 break;
             case "text": 
