@@ -620,7 +620,13 @@ function _display_pipeline( $file, $contents, $handlers = array(), $preview = fa
             #     $contents = dialogify( $contents );
             #     break;
             case "htmlentity":
+
+                // Ellipsis
                 $contents = preg_replace( '@\\.\\.\\.@', '…', $contents );
+
+                // Quotation marks
+                $contents = preg_replace( '@(^|\s)"@', '\1“', $contents );
+                $contents = preg_replace( '@"($|\s)@', '”\1', $contents );
 
                 break;
             case "text": 
