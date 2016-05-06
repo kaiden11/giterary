@@ -625,8 +625,8 @@ function _display_pipeline( $file, $contents, $handlers = array(), $preview = fa
                 $contents = preg_replace( '@\\.\\.\\.@', '…', $contents );
 
                 // Quotation marks
-                $contents = preg_replace( '@(^|\s)"@', '\1“', $contents );
-                $contents = preg_replace( '@"($|\s)@', '”\1', $contents );
+                $contents = preg_replace( '@(^|\s)[*_]{0,2}"@', '\1“', $contents );
+                $contents = preg_replace( '@"[*_]{0,2}($|\s)@', '”\1', $contents );
 
                 break;
             case "text": 
