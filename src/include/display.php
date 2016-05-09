@@ -631,7 +631,7 @@ function _display_pipeline( $file, $contents, $handlers = array(), $preview = fa
                 $contents = preg_replace( '@-(["*])@',      '—\1',  $contents ); // Hyphen at the end of a quote
                 $contents = preg_replace( '@(["*])-@',      '\1—',  $contents ); // Hyphen at the beginning of a quote
 
-                $contents = preg_replace( '@ - @',          ' — ',  $contents ); // Standalone dash
+                $contents = preg_replace( '@\b - \b@',          ' — ',  $contents ); // Standalone dash
 
 
                 // Quotation marks
