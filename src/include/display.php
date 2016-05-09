@@ -624,9 +624,22 @@ function _display_pipeline( $file, $contents, $handlers = array(), $preview = fa
                 // Ellipsis
                 $contents = preg_replace( '@\\.\\.\\.@', '…', $contents );
 
+                // Dashes (need to be done before quotation marks)
+                $contents = preg_replace( '@\b--\b@',       '—',    $contents ); // Double hypen / minus for explicit em dash
+                $contents = preg_replace( '@(^|\s)-\b@',    '\1—',  $contents ); // Hyphen at the beginning of a word / line
+                $contents = preg_replace( '@\b-($|\s)@',    '—\1',  $contents ); // Hyphen at the end of a word / line
+                $contents = preg_replace( '@-(["*])@',      '—\1',  $contents ); // Hyphen at the end of a quote
+                $contents = preg_replace( '@(["*])-@',      '\1—',  $contents ); // Hyphen at the beginning of a quote
+
+                $contents = preg_replace( '@ - @',          ' — ',  $contents ); // Standalone dash
+
+
                 // Quotation marks
                 $contents = preg_replace( '@(^|\s)([*_]{0,2})"@', '\1\2“', $contents );
                 $contents = preg_replace( '@"([*_]{0,2})($|\s)@', '”\1\2', $contents );
+                $contents = preg_replace( '@``@', '”', $contents ); // TeX style, explicitly left-quote
+                $contents = preg_replace( "@''@", '”', $contents ); // TeX style, explicitly right-quote
+
 
                 break;
             case "text": 
