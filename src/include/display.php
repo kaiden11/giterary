@@ -629,6 +629,7 @@ function _display_pipeline( $file, $contents, $handlers = array(), $preview = fa
                 $contents = preg_replace( '@(^|\s)-\b@',    '\1—',  $contents ); // Hyphen at the beginning of a word / line
                 $contents = preg_replace( '@\b-($|\s)@',    '—\1',  $contents ); // Hyphen at the end of a word / line
                 $contents = preg_replace( '@-(["*])@',      '—\1',  $contents ); // Hyphen at the end of a quote
+                $contents = preg_replace( '@-([!?]{1,2}")@','—\1',  $contents ); // Special case, hypen at end of quote with exclamation or question mark
                 $contents = preg_replace( '@(["*])-@',      '\1—',  $contents ); // Hyphen at the beginning of a quote
 
                 $contents = preg_replace( '@\b - \b@',          ' — ',  $contents ); // Standalone dash
