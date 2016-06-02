@@ -22,8 +22,10 @@ var nav = {
     head_tags_cache:        [],
     reverse_head_tags_cache:{},
     remote_search_mutex:    false,
-    local_search_regex:   function( term, files ) {
+    regex_match_cache:      {},
+    local_search_regex:     function( term, files ) {
         var ret = [];
+        var remains = [];
         var regex = '';
 
         term = term.replace( / /g, '' );
@@ -36,6 +38,38 @@ var nav = {
         // regex = regex + '(.*)';
         
         regex = new RegExp( regex, 'i' );
+
+        if( term in nav.regex_match_cache ) {
+            return nav.regex_match_cache[ term ];
+        } else {
+
+            // Find  the key in the cache that is a) a substring of
+            // the current term and b) has the least number of cached
+            // records
+
+            var least_matching_entry = null;
+            for( var k in nav.regex_match_cache ) {
+                if( nav.regex_match_cache.hasOwnProperty( k ) ) {
+
+                    if( term.indexOf( k ) == -1 ) {
+                        continue;
+                    }
+
+                    if( least_matching_entry == null ) {
+                        least_matching_entry = k;
+                        continue;
+                    }
+
+                    if( nav.regex_match_cache[ k ].length < nav.regex_match_cache[ least_matching_entry ].length ) {
+                        least_matching_entry = k;
+                    }
+                }
+            }
+
+            if( least_matching_entry != null ) {
+                files = nav.regex_match_cache[ least_matching_entry ].map( function( a, i ) { return a.value; } );
+            }
+        }
 
         for( var i = 0; i < files.length; i++ ) {
 
@@ -52,17 +86,21 @@ var nav = {
                 // TODO: Label manipulation to allow for
                 // matching highlights.
 
-                ret.push(
-                    {
-                        label:  value,
-                        value:  value,
-                        weight: weight
-                    }
-                );
+                ret.push({
+                    label:  value,
+                    value:  value,
+                    weight: weight
+                });
 
                 regex.lastIndex = 0;
-            }
+
+            } 
         }
+
+        // We cache our successes, as well as
+        // our values, in the likely event that the
+        // next keystroke will need 
+        nav.regex_match_cache[ term ] = ret;
 
         return ret;
 
@@ -226,7 +264,7 @@ var nav = {
         var cache = {};
 
         $( nav.quick_nav_id ).autocomplete({
-            minLength: 2,
+            minLength: 1,
             delay:  50,
             source: function( request, response ) {
                 var term = request.term.toLowerCase();
