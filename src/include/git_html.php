@@ -973,8 +973,19 @@ function _gen_diff( $opts = array() ) {
     # $diff_after = '';
 
     if( is_array( $file ) &&  count( $file ) > 1 ) {
-        // Do nothing, we can't really render this file
-        // well
+
+
+        // Present user with choice of files to diff
+        return render( 
+            'gen_diff_select', 
+            array(
+                'files'             =>  &$file,
+                'commit_before'     =>  &$commit_before,
+                'commit_after'      =>  &$commit_after,
+            )
+        ) .  perf_exit( "_gen_diff" );
+
+
     } elseif( is_array( $file ) && count( $file ) == 1 ) {
         // Try to render based on file name
         $file = array_shift( $file );

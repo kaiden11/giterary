@@ -41,6 +41,7 @@ $renderables = array(
     'gen_history'           =>  'theme/bootstrap/renderable/gen_history.php',
     'gen_show'              =>  'theme/bootstrap/renderable/gen_show.php',
     'gen_diff'              =>  'theme/bootstrap/renderable/gen_diff.php',
+    'gen_diff_select'       =>  'theme/bootstrap/renderable/gen_diff_select.php',
     'gen_file_diff'         =>  'theme/bootstrap/renderable/gen_file_diff.php',
     'gen_search'            =>  'theme/bootstrap/renderable/gen_search.php',
     'gen_todos'             =>  'theme/bootstrap/renderable/gen_todos.php',
