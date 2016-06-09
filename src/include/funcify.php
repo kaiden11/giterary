@@ -682,7 +682,7 @@ function _handle_lookup( $current_file, $func, $params, $display, $cache = true 
         }
     }
 
-    $lookup = _handle_lookup_helper( $file, false );
+    $lookup = _handle_lookup_helper( $file, $cache );
 
     $properties = null;
 
