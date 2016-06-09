@@ -61,6 +61,10 @@ function funcify( $text, $current_file = null, $is_preview = false ) {
                     case "timeline":
                         $replacement = '<a class="wikilink" href="' . "$func.php" . '?' . paramify( $func, $params, $current_file ) . '">' . $display . '</a>';
                         break;
+                    case "lookup":
+                        $replacement = _handle_lookup( $current_file, $func, $params, $display );
+                        break;
+
                     case "todo":
                     case "todos":
                         $replacement = _handle_todos( $func, $params, $display );
@@ -537,6 +541,173 @@ function _handle_progress( $func, $params, $display ) {
     }
 
     return $ret;
+}
+
+function _handle_lookup_helper( $file, $cache = true ) {
+
+    perf_enter( '_handle_lookup.helper' );
+
+    $memoize_key = path_to_filename( $file ) . '.' . git_file_head_commit( $file );
+
+    # echo $memoize_key;
+
+
+    if( CACHE_ENABLE ) {
+        if( !is_null( $cache ) ) {
+            if( is_bool( $cache ) && $cache === true ) {
+                $r = decache( 'lookup', $memoize_key );
+
+                if( !is_null( $r ) ) {
+                    perf_exit( "_handle_lookup.helper" );
+                    return $r;
+                }
+
+            } elseif( is_array( $cache ) ) {
+                $r = decache( $cache['tag'], $memoize_key );
+
+                if( !is_null( $r ) ) {
+                    perf_exit( "_handle_lookup.helper" );
+                    return $r;
+                }
+            }
+        }
+    }
+
+    if( CACHE_ENABLE ) {
+        perf_enter( "_handle_lookup.helper.cache_miss" );
+    }
+
+    $lookup = array();
+
+    $c = git_file_get_contents( $file );
+
+    $lines = preg_split( '/\r?\n/', $c );
+
+    if( count( $lines ) <= 1 ) {
+        // We need at least a header row
+        return array();
+    }
+
+    $header = array_shift( $lines );
+
+    $properties = str_getcsv( $header );
+
+    // Trip all header properties
+    foreach( $properties as $i => $p ) {
+        $properties[$i] = trim( $p );
+    }
+
+    foreach( $lines as $line ) {
+
+        if( trim( $line) == '' ) {
+            continue;
+        }
+
+        $l = str_getcsv( $line );
+
+        if( count( $l ) < 2 ) {
+            // A line's key without a property is the same as
+            // the line being missing
+            continue;
+        }
+
+        $k = trim( $l[0] );
+
+        $lookup[ $k ] = array();
+
+
+        foreach( $properties as $i => $p ) {
+
+            if( isset( $l[ $i ] ) ) {
+                $lookup[ $k ][ $p ] = trim( $l[ $i ] );
+            }
+        }
+    }
+
+    // Try to cache our results if we're being
+    // asked to do so
+    if( CACHE_ENABLE ) {
+        if( !is_null( $cache ) ) {
+            if( is_bool( $cache ) ) {
+                encache( 'lookup', $memoize_key, $lookup );
+
+            } elseif( is_array( $cache ) ) {
+                encache( $cache['tag'], $memoize_key, $lookup );
+            }
+        }
+    }
+
+    if( CACHE_ENABLE ) {
+        perf_exit( "_handle_lookup.helper.cache_miss" );
+    }
+
+    perf_exit( '_handle_lookup.helper' );
+
+    return $lookup;
+
+}
+
+function _handle_lookup( $current_file, $func, $params, $display, $cache = true ) {
+
+    perf_enter( "_handle_lookup" );
+    $ret = '?';
+
+    $args = argify( $params );
+
+    $file = null;
+    $key = null;
+
+    if( !isset( $args['file'] ) ) {
+        return 'Parameter "file" is required';
+    }
+
+    if( file_or( $args['file'], false ) === false ) {
+        return "File '$file' is not valid";
+    }
+
+    if( !git_file_exists( $args['file'] ) ) {
+        return "File '$file' does not exist";
+    }
+
+    $file = $args['file'];
+
+    if( !isset( $args['key'] ) ) {
+        $key = $current_file;
+
+    } else {
+        if( is_array( $args['key'] ) ) {
+            $key = array_shift( $args['key'] );
+        } else {
+            $key = $args['key'];
+        }
+    }
+
+    $lookup = _handle_lookup_helper( $file, false );
+
+    $properties = null;
+
+    if( isset( $lookup[ $key ] ) ) {
+        $properties = $lookup[ $key ];
+    } else {
+        if( file_or( $key, false ) !== false ) {
+            
+            if( isset( $lookup[ dirify( $key ) ] ) ) {
+                $properties = $lookup[ dirify( $key ) ];
+            }
+        }
+    }
+
+    if( !is_null( $properties  ) ) {
+        if( isset( $properties[ $display ] ) ) {
+            $ret = $properties[ $display ];
+        }
+    }
+
+
+    perf_exit( "_handle_lookup" );
+
+    return $ret;
+
 }
 
 function _handle_meta( $current_file, $func, $params, $display ) {
