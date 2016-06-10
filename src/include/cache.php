@@ -191,17 +191,19 @@ function clear_all_caches( $file ) {
     $extension = detect_extension( $file, null );
 
     $cleared = array();
-    $cleared = array_merge( $cleared, clear_cache( 'file_head_commit',   path_to_filename( $file )  ) );
-    $cleared = array_merge( $cleared, clear_cache( 'git_view_helper',    "$head_commit:$file"       ) );
-    $cleared = array_merge( $cleared, clear_cache( 'git_view_helper',    "$file_head_commit:$file"  ) );
-    $cleared = array_merge( $cleared, clear_cache( 'git_view_helper',    "HEAD:$file"               ) );
-    $cleared = array_merge( $cleared, clear_cache( 'git_file_exists',    "$head_commit:$file"       ) );
-    $cleared = array_merge( $cleared, clear_cache( 'git_file_exists',    "$file_head_commit:$file"  ) );
-    $cleared = array_merge( $cleared, clear_cache( 'git_file_exists',    "HEAD:$file"               ) );
-    $cleared = array_merge( $cleared, clear_cache( 'git_view_show_helper',    "$file_head_commit:$file"  ) );
-    $cleared = array_merge( $cleared, clear_cache( 'git_view_show_helper',    "HEAD:$file"               ) );
+    $cleared = array_merge( $cleared, clear_cache( 'file_head_commit',  path_to_filename( $file )  ) );
+    $cleared = array_merge( $cleared, clear_cache( 'git_view_helper',   "$head_commit:$file"       ) );
+    $cleared = array_merge( $cleared, clear_cache( 'git_view_helper',   "$file_head_commit:$file"  ) );
+    $cleared = array_merge( $cleared, clear_cache( 'git_view_helper',   "HEAD:$file"               ) );
+    $cleared = array_merge( $cleared, clear_cache( 'git_file_exists',   "$head_commit:$file"       ) );
+    $cleared = array_merge( $cleared, clear_cache( 'git_file_exists',   "$file_head_commit:$file"  ) );
+    $cleared = array_merge( $cleared, clear_cache( 'git_file_exists',   "HEAD:$file"               ) );
 
+    $cleared = array_merge( $cleared, clear_cache( 'git_view_show_helper', "$file_head_commit:$file"    ) );
+    $cleared = array_merge( $cleared, clear_cache( 'git_view_show_helper', "$head_commit:$file"         ) );
 
+    $cleared = array_merge( $cleared, clear_cache( 'lookup',            "$file_head_commit:$file"  ) );
+    $cleared = array_merge( $cleared, clear_cache( 'lookup',            "$head_commit:$file"       ) );
 
     $cleared = array_merge( $cleared, clear_cache( 'display',            "$extension::$content"     ) );
 

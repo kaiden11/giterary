@@ -363,19 +363,19 @@ function _epub_parse( $file, $contents ) {
                 $ret['css'][] = $b;
                 break;
             case "title":
-                $ret['title'] = $b;
+                $ret['title'] = funcify( $b, $file );
                 break;
             case "cover":
                 $ret['cover'] = dirify( $b );
                 break;
             case "authors":
             case "author":
-                $ret['authors'][] = $b;
+                $ret['authors'][] = funcify( $b, $file );
                 break;
             default:
                 $ret['files'][] = array(
                     'file'  =>  dirify( $a ),
-                    'title' =>  $b,
+                    'title' =>  funcify( $b, $file ),
                     'path'  =>  path_to_filename( dirify( $a ) )
                 );
                 break;

@@ -547,7 +547,9 @@ function _handle_lookup_helper( $file, $cache = true ) {
 
     perf_enter( '_handle_lookup.helper' );
 
-    $memoize_key = path_to_filename( $file ) . '.' . git_file_head_commit( $file );
+    $file = dirify( $file );
+
+    $memoize_key = git_file_head_commit( $file ) . ':' . $file ;
 
     # echo $memoize_key;
 
@@ -684,6 +686,7 @@ function _handle_lookup( $current_file, $func, $params, $display, $cache = true 
 
     $lookup = _handle_lookup_helper( $file, $cache );
 
+
     $properties = null;
 
     if( isset( $lookup[ $key ] ) ) {
@@ -698,6 +701,7 @@ function _handle_lookup( $current_file, $func, $params, $display, $cache = true 
     }
 
     if( !is_null( $properties  ) ) {
+
         if( isset( $properties[ $display ] ) ) {
             $ret = $properties[ $display ];
         }
