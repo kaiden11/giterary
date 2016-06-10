@@ -198,6 +198,9 @@ function clear_all_caches( $file ) {
     $cleared = array_merge( $cleared, clear_cache( 'git_file_exists',    "$head_commit:$file"       ) );
     $cleared = array_merge( $cleared, clear_cache( 'git_file_exists',    "$file_head_commit:$file"  ) );
     $cleared = array_merge( $cleared, clear_cache( 'git_file_exists',    "HEAD:$file"               ) );
+    $cleared = array_merge( $cleared, clear_cache( 'git_view_show_helper',    "$file_head_commit:$file"  ) );
+    $cleared = array_merge( $cleared, clear_cache( 'git_view_show_helper',    "HEAD:$file"               ) );
+
 
 
     $cleared = array_merge( $cleared, clear_cache( 'display',            "$extension::$content"     ) );

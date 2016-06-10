@@ -294,7 +294,7 @@ function git_blame( $file ) {
     return $ret;
 }
 
-function git_file_get_contents( $file, $as_of_commit = null ) {
+function git_file_get_contents( $file, $as_of_commit = null, $cache = true ) {
 
     perf_enter( 'git_file_get_contents' );
     $ret = false;
@@ -310,9 +310,15 @@ function git_file_get_contents( $file, $as_of_commit = null ) {
     }
 
     if( git_file_exists( $file, $as_of_commit ) ) {
+
         $hc = ( $being_lazy ? git_file_head_commit( $file ) : $as_of_commit );
 
-        $view = git_view( $file, $hc );
+        $view = git_view( 
+            $file, 
+            $hc, 
+            true, 
+            $cache 
+        );
 
         $ret = $view[ "$hc:$file" ];
     }

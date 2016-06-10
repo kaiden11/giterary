@@ -277,9 +277,18 @@ function epub_archive( $file, $contents ) {
             render( 'gen_epub_cover', $ret )
         );
 
+        $y = git_file_get_contents( $ret['cover'] );
+
         $zip->addFromString(
             "OEBPS/" . path_to_filename( $ret['cover'] ),
-            git_file_get_contents( $ret['cover'] )
+            // More explicit file_get_contents to account for
+            // potential of caching mechanism to fail for larger
+            // files. Skip caching for this particular call.
+            git_file_get_contents( 
+                $ret['cover'], 
+                null,  // Latest commit
+                false  // Do not cache
+            )
         );
     }
 
@@ -357,7 +366,7 @@ function _epub_parse( $file, $contents ) {
                 $ret['title'] = $b;
                 break;
             case "cover":
-                $ret['cover'] = $b;
+                $ret['cover'] = dirify( $b );
                 break;
             case "authors":
             case "author":
