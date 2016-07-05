@@ -28,6 +28,12 @@ $stash['js'][] = 'view.annotations.js';
         * {
             -webkit-print-color-adjust: exact;
         }
+
+        @media only print {
+            a[href]:after {
+                content: "" !important;
+            }
+        }
     </style>
     <div class="view">
         <div class="view container-fluid meta-off <?= implode( " ", $path_components  ) ?>" id="<?= $m ?>">
