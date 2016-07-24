@@ -681,7 +681,7 @@ var edit = {
 
         if( 
             navigator.userAgent.indexOf( 'MSIE' ) > -1 
-            || navigator.userAgent.indexOf( 'rv:' ) > -1 
+//            || navigator.userAgent.indexOf( 'rv:' ) > -1 
         ) {
 
             if(e) {
