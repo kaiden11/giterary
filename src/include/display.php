@@ -621,6 +621,13 @@ function _display_pipeline( $file, $contents, $handlers = array(), $preview = fa
             #     break;
             case "htmlentity":
 
+                die( "The 'htmlentity' pipeline element should be unused" );
+
+                break;
+
+                /* 
+                    Unused, see Markdown parser
+
                 // Ellipsis
                 $contents = preg_replace( '@\\.\\.\\.@', '…', $contents );
 
@@ -643,6 +650,8 @@ function _display_pipeline( $file, $contents, $handlers = array(), $preview = fa
 
 
                 break;
+                */
+
             case "text": 
                 $contents = text_display( $contents );
                 break;
@@ -719,7 +728,7 @@ function _display( $file, &$contents, $extension_override = null, $cache = true,
                 $file, 
                 $contents, 
                 array( 
-                    'htmlentity',
+                    // 'htmlentity',
                     'funcify',
                     'todoify',
                     'tagify',
@@ -810,7 +819,7 @@ function _display( $file, &$contents, $extension_override = null, $cache = true,
                 $file, 
                 $contents, 
                 array( 
-                    'htmlentity',
+                    // 'htmlentity',
                     'funcify',
                     'todoify',
                     'tagify',

@@ -246,13 +246,15 @@ class Markdown_Parser {
 	var $predef_urls = array();
 	var $predef_titles = array();
 
-        var $dialogify = true;
+        var $dialogify      = true;
+        var $htmlentities   = true;
 
 	function Markdown_Parser() {
 	#
 	# Constructor function. Initialize appropriate member variables.
 	#
-                $this->dialogify = true;
+                $this->dialogify    = true;
+                $this->htmlentities = true;
 
 		$this->_initDetab();
 		$this->prepareItalicsAndBold();
@@ -701,6 +703,9 @@ class Markdown_Parser {
 		"doAutoLinks"         =>  30,
 		"encodeAmpsAndAngles" =>  40,
 
+                # Replacing quote, dash, and ellipsis characters with
+                # their proper glyphs
+		"doHtmlEntities"      =>  44,
                 # Custom highlighting of dialog-ish segments
 		"doDialogify"         =>  45,
 
@@ -730,6 +735,34 @@ class Markdown_Parser {
 		return $this->hashPart("<br$this->empty_element_suffix\n");
 	}
 
+        // Process quotation, dash, and ellipsis characters into their
+        // proper glyphs
+        function _htmlentities( $contents ) {
+
+            // Ellipsis
+            $contents = preg_replace( '@\\.\\.\\.@', '…', $contents );
+
+            // Dashes (need to be done before quotation marks)
+            $contents = preg_replace( '@\b--\b@',       '—',    $contents ); // Double hypen / minus for explicit em dash
+            $contents = preg_replace( '@(^|\s)-\b@',    '\1—',  $contents ); // Hyphen at the beginning of a word / line
+            $contents = preg_replace( '@\b-($|\s)@',    '—\1',  $contents ); // Hyphen at the end of a word / line
+            $contents = preg_replace( '@-(["*])@',      '—\1',  $contents ); // Hyphen at the end of a quote
+            $contents = preg_replace( '@-([!?]{1,2}")@','—\1',  $contents ); // Special case, hypen at end of quote with exclamation or question mark
+            $contents = preg_replace( '@(["*])-@',      '\1—',  $contents ); // Hyphen at the beginning of a quote
+
+            $contents = preg_replace( '@\b - \b@',          ' — ',  $contents ); // Standalone dash
+
+
+            // Quotation marks
+            $contents = preg_replace( '@(^|\s)([*_]{0,2})"@', '\1\2“', $contents );
+            $contents = preg_replace( '@"([*_]{0,2})($|\s)@', '”\1\2', $contents );
+            $contents = preg_replace( '@``@', '”', $contents ); // TeX style, explicitly left-quote
+            $contents = preg_replace( "@''@", '”', $contents ); // TeX style, explicitly right-quote
+
+            return $contents;
+
+        }
+
         function _dialogify( $text ) {
             // echo "dialogify!";
             return preg_replace( 
@@ -752,6 +785,14 @@ class Markdown_Parser {
             }
             return $text;        
         }
+
+	function doHtmlEntities($text) {
+            if( $this->htmlentities ) { 
+                return $this->_htmlentities( $text );
+            }
+            return $text;        
+        }
+
 
 	function doAnnotations($text) {
 	#
