@@ -759,6 +759,13 @@ class Markdown_Parser {
             $contents = preg_replace( '@``@', '”', $contents ); // TeX style, explicitly left-quote
             $contents = preg_replace( "@''@", '”', $contents ); // TeX style, explicitly right-quote
 
+            // Single quote (') should be ‘ (left) or ’ (right)
+
+            // Contractions or possessives
+            $contents = preg_replace( '@\b([a-zA-Z]+)\'([a-zA-Z]+)\b@', '\1’\2', $contents );
+            // Single quotes around word-ish things.
+            $contents = preg_replace( '@(^|\s)\'([^\']+)\'@', '\1‘\2’', $contents );
+
             return $contents;
 
         }
