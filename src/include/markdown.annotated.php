@@ -757,7 +757,7 @@ class Markdown_Parser {
             $contents = preg_replace( '@(^|\s)([*_]{0,2})"@', '\1\2“', $contents );
             $contents = preg_replace( '@"([*_]{0,2})($|\s)@', '”\1\2', $contents );
             $contents = preg_replace( '@``@', '”', $contents ); // TeX style, explicitly left-quote
-            $contents = preg_replace( "@''@", '”', $contents ); // TeX style, explicitly right-quote
+            $contents = preg_replace( "@''@", '“', $contents ); // TeX style, explicitly right-quote
 
             // Single quote (') should be ‘ (left) or ’ (right)
 
@@ -765,6 +765,11 @@ class Markdown_Parser {
             $contents = preg_replace( '@\b([a-zA-Z]+)\'([a-zA-Z]+)\b@', '\1’\2', $contents );
             // Single quotes around word-ish things.
             $contents = preg_replace( '@(^|\s)\'([^\']+)\'@', '\1‘\2’', $contents );
+
+            // End-of-word apostrophes
+            $contents = preg_replace( '@(\w)\'(\W|$)@', '\1’\2', $contents );
+            // Beginning-of-word apostrophes
+            $contents = preg_replace( '@(^|\W)\'(\w)@', '\1’\2', $contents );
 
             return $contents;
 
