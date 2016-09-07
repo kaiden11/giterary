@@ -226,6 +226,8 @@ function _image_to_file( &$zip, &$mime_type, &$content ) {
 function epub_archive( $file, $contents ) {
 
     global $epub_allowed_tags;
+    global $application_name;
+    global $instance_name;
 
     if( ( $temp_archive = tempnam( TMP_DIR, "conflict" ) ) == false ) {
         die( "Unable to create $temp_archive" );
@@ -251,6 +253,19 @@ function epub_archive( $file, $contents ) {
         "mimetype",
         'application/epub+zip'
     );
+
+    // Required
+    $zip->addFromString(
+        "giterary.metadata",
+        "
+            Application Name:   $application_name
+            Instance Name:      $instance_name
+            ePub Definition:    $file
+            Querystring:        " . $_SERVER['QUERY_STRING'] . "
+            Time:               " . gmdate( "c" ) . "
+        "
+    );
+
 
     // META-INF
     $zip->addFromString(
