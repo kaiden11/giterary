@@ -43,7 +43,7 @@ function _calc_stats( &$contents, $opts = array( ) ) {
     $count_gerund = 0;
 
 
-    if( preg_match_all( '/\b([\w\']+)\b/', $contents , $matches ) ) {
+    if( preg_match_all( '/\b([\w\'’‘]+)\b/', $contents , $matches ) ) {
 
         # echo "word matches: " . count( $matches[0] );
         # print_r( $matches );
