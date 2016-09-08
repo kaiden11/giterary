@@ -761,6 +761,11 @@ class Markdown_Parser {
 
             // Single quote (') should be ‘ (left) or ’ (right)
 
+            // Single quotes immediately within double quotes (assuming 
+            // previous double-quote replacements have matched correctly.
+            $contents = preg_replace( "@“'@", '“‘', $contents );
+            $contents = preg_replace( "@'”@", '’”', $contents );
+
             // Contractions or possessives
             $contents = preg_replace( '@\b([a-zA-Z]+)\'([a-zA-Z]+)\b@', '\1’\2', $contents );
             // Single quotes around word-ish things.
