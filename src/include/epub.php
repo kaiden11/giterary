@@ -2,7 +2,7 @@
 require_once( dirname( __FILE__ ) . "/config.php");
 require_once( dirname( __FILE__ ) . "/util.php");
 
-function _epub_display( $epub, $file, $contents ) {
+function _epub_display( $epub, $file, $contents, &$zip ) {
     global $epub_allowed_tags;
     global $epub_removed_tags;
     global $php_tag_pattern;
@@ -148,7 +148,7 @@ function _epub_display( $epub, $file, $contents ) {
                                 if( ( file_or( $params['file'], false ) ) !== false ) {
                                
                                     if( git_file_exists( $params['file'] ) ) {
-                                        $c = git_file_get_contents( dirify( $params['file'] ) );
+                                        $c = git_file_get_contents( dirify( $params['file'] ), null, false );
 
                                         $finfo = new finfo(FILEINFO_MIME);
                                         $mime_type = array_shift( explode( ";", $finfo->buffer( $c ) ) );
@@ -313,7 +313,8 @@ function epub_archive( $file, $contents ) {
         $content = _epub_display( 
             $ret,
             $f,
-            git_file_get_contents( $f['file'] )
+            git_file_get_contents( $f['file'] ),
+            $zip
         );
 
         $zip->addFromString(
