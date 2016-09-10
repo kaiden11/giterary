@@ -40,6 +40,14 @@
             />
 
         <? } ?>
+        <? foreach( $p['images']  as $f ) { ?>
+            <item 
+                id="<?= he( _epub_xml_name( $f['file'] ) ) ?>" 
+                href="<?= he( $f['file'] ) ?>" 
+                media-type="<?= $f['mimetype'] ?>"
+            />
+        <? } ?>
+
         <? /*
         <item id="stylesheet" href="style.css" media-type="text/css"/>
         <item id="ch1-pic" href="ch1-pic.png" media-type="image/png"/>
@@ -70,6 +78,7 @@
             <itemref idref="<?= he( _epub_xml_name( $f['file'] ) ) ?>" />
 
         <? } ?>
+
     </spine>
     
 </package>

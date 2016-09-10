@@ -2,7 +2,7 @@
 require_once( dirname( __FILE__ ) . "/config.php");
 require_once( dirname( __FILE__ ) . "/util.php");
 
-function _epub_display( $epub, $file, $contents, &$zip ) {
+function _epub_display( &$epub, $file, $contents, &$zip ) {
     global $epub_allowed_tags;
     global $epub_removed_tags;
     global $php_tag_pattern;
@@ -128,9 +128,19 @@ function _epub_display( $epub, $file, $contents, &$zip ) {
 
                             $c = file_get_contents( "data://$c" );
 
+                            $finfo = new finfo(FILEINFO_MIME);
+                            $mime_type = array_shift( explode( ";", $finfo->buffer( $c ) ) );
+
+
                             $new_file = _image_to_file( $zip, $mime_type, $c );
 
                             $img_node->setAttribute( 'src', $new_file );
+                            $img_node->setAttribute( 'alt', $new_file );
+
+                            $epub['images'][] = array(
+                                'file'      =>  $new_file,
+                                'mimetype'  =>  $mime_type
+                            );
                         
                             continue;
                         }
@@ -156,7 +166,12 @@ function _epub_display( $epub, $file, $contents, &$zip ) {
                                         $new_file = _image_to_file( $zip, $mime_type, $c );
 
                                         $img_node->setAttribute( 'src', $new_file );
+                                        $img_node->setAttribute( 'alt', $new_file );
 
+                                        $epub['images'][] = array(
+                                            'file'      =>  $new_file,
+                                            'mimetype'  =>  $mime_type
+                                        );
                                     }
                                 }
                             }
@@ -273,11 +288,6 @@ function epub_archive( $file, $contents ) {
         render( 'gen_epub_container_xml', $ret )
     );
 
-    // content.opf
-    $zip->addFromString(
-        "OEBPS/content.opf",
-        render( 'gen_epub_content_opf', $ret )
-    );
 
     // toc.ncx
     $zip->addFromString(
@@ -310,6 +320,8 @@ function epub_archive( $file, $contents ) {
     // files
     foreach( $ret['files'] as $f ) {
 
+        // render all content, and any requisite sub-files
+        // necessary (images, etc.)
         $content = _epub_display( 
             $ret,
             $f,
@@ -332,6 +344,13 @@ function epub_archive( $file, $contents ) {
         }
     }
 
+    // content.opf
+    $zip->addFromString(
+        "OEBPS/content.opf",
+        render( 'gen_epub_content_opf', $ret )
+    );
+
+
     $zip->close();
 
     $ret = file_get_contents( $temp_archive );
@@ -347,7 +366,8 @@ function _epub_parse( $file, $contents ) {
         'title'     =>  '',
         'cover'     =>  '',
         'authors'   =>  array(),
-        'files'     =>  array()
+        'files'     =>  array(),
+        'images'    =>  array()
     );
 
 
