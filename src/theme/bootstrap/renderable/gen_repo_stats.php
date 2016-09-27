@@ -29,8 +29,8 @@ function percent( $amount, $total ) {
                     <div>Number of normal files: <?= to_si( $p['normal_count'] ) ?></div>
                     <div>Number of association files: <?= to_si( $p['assoc_count'] ) ?></div>
                     <div>Number of alias files: <?= to_si( $p['alias_count'] ) ?></div>
-                    <div>First Commit: <?= $p['first_commit' ]['author_date'] ?></div>
-                    <div>Last Commit: <?= $p['last_commit' ]['author_date'] ?></div>
+                    <div>First Commit: <?= $p['first_commit' ]['author_date'] ?> (<?= short_time_diff( $p['first_commit' ]['author_date_epoch'], time() ) ?>)</div>
+                    <div>Last Commit: <?= $p['last_commit' ]['author_date'] ?> (<?= short_time_diff( $p['last_commit' ]['author_date_epoch'], time() ) ?>)</div>
                 </div>
             </div>
         </div>
