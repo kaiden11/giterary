@@ -648,7 +648,7 @@ function gen_diff( $commit_before = null, $commit_after = null, $file = null, $p
     perf_enter( "gen_diff" );
 
     if( !can( "diff", implode( ":", array( $commit_before, $commit_after, $file ) ) ) ) {
-        return render( 'not_logged_in', array() );
+        return render( 'not_allowed', array() );
     }
 
 

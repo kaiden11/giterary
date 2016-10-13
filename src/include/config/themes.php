@@ -77,6 +77,7 @@ $renderables = array(
     'gen_snippet_widget'    =>  'theme/bootstrap/renderable/gen_snippet_widget.php',
     'gen_users_online'      =>  'theme/bootstrap/renderable/gen_users_online.php',
     'not_logged_in'         =>  'theme/bootstrap/renderable/not_logged_in.php',
+    'not_allowed'           =>  'theme/bootstrap/renderable/not_allowed.php',
     'gen_csv'               =>  'theme/bootstrap/renderable/gen_csv.php',
     'gen_image'             =>  'theme/bootstrap/renderable/gen_image.php',
     'gen_audio'             =>  'theme/bootstrap/renderable/gen_audio.php',
