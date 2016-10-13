@@ -155,7 +155,7 @@ renderable( $p )
                                 <td colspan="4">
                                     <form enctype="multipart/form-data" action="upload.php" method="POST">
                                         <input type="hidden" name="directory" value="<?= undirify( $p['file'], true ) ?>" />
-                                        <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
+                                        <input type="hidden" name="MAX_FILE_SIZE" value="5000000" />
                                         <input name="file_upload" type="file" />
                                         <input type="submit" value="Upload File" />
                                     </form>
