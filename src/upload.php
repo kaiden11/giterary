@@ -44,7 +44,7 @@ if( !is_logged_in() ) {
         }
     }
 
-    if($_FILES[$upload_name]['error'] == 2 ) {
+    if( $_FILES[$upload_name]['error'] == 1 || $_FILES[$upload_name]['error'] == 2  ) {
         err( "Uploaded file is too large." );
     }
 
