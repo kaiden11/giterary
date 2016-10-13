@@ -230,10 +230,12 @@ function _image_to_file( &$zip, &$mime_type, &$content ) {
 
     $new_file = path_to_filename( "$md5.$ext" );
 
-    $zip->addFromString(
-        "OEBPS/" . $new_file,
-        $content
-    );
+    if( $zip != null ) {
+        $zip->addFromString(
+            "OEBPS/" . $new_file,
+            $content
+        );
+    }
 
     return $new_file;
 }
