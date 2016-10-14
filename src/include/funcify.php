@@ -1045,6 +1045,8 @@ function _handle_metrics( $func, $params, $display ) {
             }
 
             if( $m == "work_time" ) {
+
+                $values[ 'work_time_seconds' ] = $stats['work_time_seconds'];
                 $values[ 'work_time' ] = "<a
                     href=\"work_stats.php?file=" .
                         urlencode( $uf ) 
@@ -1107,6 +1109,16 @@ function _handle_metrics( $func, $params, $display ) {
         $ret .= '</thead>';
         $ret .= '<tbody>';
 
+        $totals = array();
+
+        $summation_metrics = array( 
+            'total_words', 
+            'work_time', 
+            'manuscript_page_count',
+            'work_time',
+            'work_time_seconds' 
+        );
+
         foreach( $measured_stats as $mf => &$s ) {
             $ret .= '<tr>';
             
@@ -1118,12 +1130,68 @@ function _handle_metrics( $func, $params, $display ) {
                 $ret .= '<td>';
                 $ret .= $s[ $m ];
                 $ret .= '</td>';
+
+                if( in_array( $m, $summation_metrics ) ) {
+
+                    if( $m == 'work_time' ) {
+
+                        $totals[ 'work_time_seconds' ] += $s[ 'work_time_seconds' ];
+
+                    } else {
+
+                        $totals[ $m ] += $s[ $m ];
+
+                    }
+                }
+
             }
 
             $ret .= '</tr>';
         }
 
         $ret .= '</tbody>';
+
+        $ret .= '<tfoot>';
+
+        $ret .= '<tr>';
+        
+        $ret .= '<td>';
+        $ret .= 'Summary';
+        $ret .= '</td>';
+
+        foreach( $metric as $m ) {
+            $ret .= '<td>';
+
+
+            if( in_array( $m, $summation_metrics ) ) {
+
+                if( $m == 'work_time' ) {
+
+                    
+                    $ret .= plural( 
+                        sprintf( 
+                            "%.1f", 
+                            $totals[ 'work_time_seconds' ] / 3600 
+                        ),
+                        "hour"
+                    );
+
+                } else {
+
+                    $ret .= to_si( $totals[ $m ] );
+                }
+
+            } else {
+                $ret .= '&nbsp;';
+            }
+            $ret .= '</td>';
+        }
+
+        $ret .= '</tr>';
+
+        $ret .= '</tfoot>';
+        
+
         $ret .= '</table>';
     }
 
