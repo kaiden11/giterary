@@ -99,6 +99,9 @@ $stash['css'][] = 'epub.css';
                             <? } else { ?>
                                 (<span style="color: red">WARNING: Does not exist</span>)
                             <? } ?>
+                            <code>
+                                <?= ( $file['params'] ? json_encode( $file['params'] ) : "(no parameters)" ) ?>
+                            </code>
                         </h5>
                     </li>
                 <? } ?>
@@ -141,8 +144,11 @@ $stash['css'][] = 'epub.css';
             <pre><code><?= he( render( 'gen_epub_toc_ncx', $p['epub'] ) ) ?></code></pre>
         </li>
 
-        <? if( $p['epub']['files'] && count( $p['epub']['files'] ) ) { ?>
-            <? $test = $p['epub']['files'][ array_rand( $p['epub']['files'] ) ]; ?>
+        <?php if( $p['epub']['files'] && count( $p['epub']['files'] ) ) { ?>
+            <?php 
+                $test = $p['epub']['files'][ array_rand( $p['epub']['files'] ) ]; 
+                $dummy_zip = null;
+            ?>
             <li>
                 Test Chapter
                 <pre><code><?= 
@@ -150,7 +156,8 @@ $stash['css'][] = 'epub.css';
                         _epub_display( 
                             $p['epub'], 
                             $test, 
-                            git_file_get_contents( $test['file'] )
+                            git_file_get_contents( $test['file'] ),
+                            $dummy_zip
                         )
                     ) 
                 ?></code></pre>

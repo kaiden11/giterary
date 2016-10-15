@@ -151,6 +151,7 @@ class WorkArea extends MustBeLoggedInToWrite {
                 }
 
                 if( is_callable( $p ) ) {
+
                     if( $p( $u, $verb, $thing ) ) {
                         return true;
                     }
@@ -178,6 +179,15 @@ class WorkArea extends MustBeLoggedInToWrite {
                         }
                     }
                 }
+
+                // TODO: Handling for diffs, and being able to
+                // calculate diffs for files that you can read,
+                // but not others.
+
+                if( $verb == "diff" ) {
+                    return true;
+                }
+
             }
         } else {
             // Non-critical verb, allow

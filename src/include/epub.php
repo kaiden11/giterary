@@ -412,9 +412,10 @@ function _epub_parse( $file, $contents ) {
                 break;
             default:
                 $ret['files'][] = array(
-                    'file'  =>  dirify( $a ),
-                    'title' =>  funcify( $b, $file ),
-                    'path'  =>  path_to_filename( dirify( $a ) )
+                    'file'      =>  dirify( $a ),
+                    'title'     =>  funcify( $b, $file ),
+                    'path'      =>  path_to_filename( dirify( $a ) ),
+                    'params'    =>  ( trim( $c ) == "" ? null : proper_parse_str( $c ) )
                 );
                 break;
         }
