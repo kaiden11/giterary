@@ -6,6 +6,120 @@ require_once( dirname( __FILE__ ) . "/transclude.php");
 require_once( dirname( __FILE__ ) . "/stats.php");
 
 
+
+function funcify_clean( $text, $current_file = null, $is_preview = false ) {
+
+    GLOBAL $functionlink_pattern;
+
+    perf_enter( 'funcify_clean' );
+
+
+    $text = callback_replace( 
+        $functionlink_pattern,
+        $text,
+        function( $match ) use( $current_file, $is_preview ) {
+            $orig = $match[0][0];
+
+            $escape = $match[1][0];
+
+            $func = $match[3][0];
+            $params = $match[5][0];
+            $display = $match[11][0];
+
+            $replacement = '';
+
+            if( $escape == "\\" || $escape == "!" ) {
+                $replacement = substr( $orig, 1 );
+            } else {
+
+                switch( $func ) {
+                    case "ref":
+                        $replacement = '';
+                        break;
+                    case "todo":
+                    case "todos":
+                    case "meta":
+                    case "metadata":
+                    case "metrics":
+                    case "metric":
+                    case "progress":
+                    case "tags":
+                    case "tag":
+                    case "associations":
+                    case "assoc":
+                    case "relationships":
+                    case "relations":
+                    case "list":
+                    case "edit":
+                    case "jot":
+                    case "template":
+                    case "churn":
+                    case "image":
+                    case "toc":
+                    case "tableofcontents":
+                        // Squelch all non-Markdown bits.
+                        $replacement = '';
+                        break;
+                    case "include":
+                    case "transclude":
+
+                        $args       = argify( $params );
+                        // Force the 'as' for the transclude to be 'clean'
+                        $args['as'] = 'clean';
+
+                        $replacement =  _handle_transclude( $current_file, $func, $args, $display );
+                        break;
+                    case "stamp":
+                        $replacement =  _handle_stamp( $current_file, $func, $params, $display );
+                        break;
+                    case "blame":
+                    case "cherrypick":
+                    case "clear_cache":
+                    case "diff":
+                    case "history":
+                    case "index":
+                    case "partition":
+                    case "move":
+                    case "revert":
+                    case "search":
+                    case "show_commit":
+                    case "users":
+                    case "view":
+                    case "stats":
+                    case "new":
+                    case "form":
+                    case "whatlinkshere":
+                    case "timeline":
+                    case "raw":
+                        $replacement = '[' . $display . '](' . "$func.php" . '?' . paramify( $func, $params, $current_file ) . ')';
+                        break;
+                    case "lookup":
+                        $replacement = _handle_lookup( $current_file, $func, $params, $display );
+                        break;
+
+                    case "table":
+                    case "csv":
+                        $replacement =  _handle_table( $current_file, $func, $params, $display );
+                        break;
+
+
+                    default:
+                        $replacement = $orig;
+                        break;
+
+                }
+            }
+            
+            return $replacement;
+        }
+    );
+    
+
+    return $text . perf_exit( 'funcify_clean' );
+
+
+}
+
 function funcify( $text, $current_file = null, $is_preview = false ) {
 
     GLOBAL $functionlink_pattern;
@@ -59,6 +173,7 @@ function funcify( $text, $current_file = null, $is_preview = false ) {
                     case "form":
                     case "whatlinkshere":
                     case "timeline":
+                    case "raw":
                         $replacement = '<a class="wikilink" href="' . "$func.php" . '?' . paramify( $func, $params, $current_file ) . '">' . $display . '</a>';
                         break;
                     case "lookup":
@@ -1327,7 +1442,16 @@ function _handle_stamp( $current_file, $func, $params, $display ) {
 }
 
 function _handle_transclude( $current_file, $func, $params, $display ) {
-    $args       = argify( $params );
+
+    // Allow sending args explicitly 
+    // $args       = argify( $params );
+    $args = array();
+    if( is_array( $params ) ) {
+        $args = $params;
+    } else {
+        $args = argify( $params );
+    }
+
     $file       = file_or(  $args['file'],  false,  $current_file   );
     
     $strip      = set_or(   $args['strip'], null                    );
@@ -1343,7 +1467,7 @@ function _handle_transclude( $current_file, $func, $params, $display ) {
         return "Invalid transclude file '$file'";
     }
     
-    if( !in_array( $extension, array( "raw" ) ) ) {
+    if( !in_array( $extension, array( "raw", "clean" ) ) ) {
     
         $replacement .= '<h6>' . linkify( '[[' . undirify( $file ) . '|' . he( $display ) . ']]' ) . "</h6>";
     }

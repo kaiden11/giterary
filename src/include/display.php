@@ -678,6 +678,19 @@ function epub_display( $file, $contents, $as_archive = false ) {
 }
 
 
+function _display_clean( $file, &$contents ) {
+
+    $contents = funcify_clean( $contents, $file );
+
+
+    $contents = _strip_giterary_tags( $contents );
+
+    $contents = _strip( $contents );
+
+    return $contents;
+}
+
+
 function _display( $file, &$contents, $extension_override = null, $cache = true, $preview = false ) {
 
     perf_enter( '_display.' . basename( $file ) );
@@ -696,16 +709,22 @@ function _display( $file, &$contents, $extension_override = null, $cache = true,
             $ret = _display_pipeline( $file, $contents, array( 'text' ), $preview );
             break;
         case "raw": 
+        case "clean": 
 
             switch( $orig_extension ) {
                 case "collection":
-                    $ret = collection_display( $file, $contents, "raw" );
+                    $ret = collection_display( $file, $contents, $extension );
                     break;
                 case "pub":
                     $ret = epub_display( $file, $contents, true );
                     break;
                 default:
-                    $ret = $contents;
+
+                    $ret = ( 
+                        $extension == "clean" 
+                        ? _display_clean( $file, $contents )
+                        : $contents 
+                    );
             }
             break;
         case "print": 
@@ -907,6 +926,17 @@ function tagify( $text ) {
         $text 
     );
 }
+
+function _strip_giterary_tags( $text ) {
+    GLOBAL $php_tag_pattern;
+
+    return preg_replace( 
+        "/$php_tag_pattern/m", 
+        '',
+        $text 
+    );
+}
+
 
 function get_highlightify_content() {
 

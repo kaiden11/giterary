@@ -1,6 +1,10 @@
 <?
 require_once( dirname( __FILE__ ) . '/config.php' );
 require_once( dirname( __FILE__ ) . '/util.php' );
+require_once( dirname( __FILE__ ) . '/display.php' );
+require_once( dirname( __FILE__ ) . '/funcify.php' );
+
+
 
 function collection_operand( $op, &$cur, &$tag_counts ) {
     $ret = false;
@@ -664,6 +668,23 @@ function collection_display( $file, &$contents, $as = "collection", $is_preview 
                             } else {
                                 $ret .= $contents;
                             }
+                        } elseif( $as == "clean" ) {
+
+                            if( $extension == "collection" ) {
+
+                                $ret .= metaify_prepost( 
+                                    $matched_file, 
+                                    $extension, 
+                                    $contents, 
+                                    true,       // Caching
+                                    $is_preview 
+                                );
+                                 
+                            } else {
+                                $ret .= _collect_display_clean( $matched_file, $contents );
+                            }
+
+
                         }
                         break;
                     }
@@ -680,5 +701,12 @@ function collection_display( $file, &$contents, $as = "collection", $is_preview 
 
 
 }
+
+
+function _collect_display_clean( $file, &$contents ) {
+
+    return _display_clean( $file, $contents );
+}
+
 
 ?>

@@ -1680,7 +1680,7 @@ function detect_extension( $file, $extension_override ) {
     # based on original extension
     if( in_array( $extension, array( 'list', 'collection' ) ) ) {
         
-        if( !is_null( $extension_override ) && in_array( $extension_override, array( "list", "collection","collect","raw","text","wrap","csv" ) ) ) {
+        if( !is_null( $extension_override ) && in_array( $extension_override, array( "list", "collection","collect","raw","clean","text","wrap","csv" ) ) ) {
             $extension = $extension_override;
         }
     } else {
@@ -1749,6 +1749,9 @@ function detect_extension( $file, $extension_override ) {
             break;
         case "raw": 
             $extension = "raw";
+            break;
+        case "clean": 
+            $extension = "clean";
             break;
         case "read": 
         case "readable": 
