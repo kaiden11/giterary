@@ -102,7 +102,6 @@ function funcify_clean( $text, $current_file = null, $is_preview = false ) {
                         $replacement =  _handle_table( $current_file, $func, $params, $display );
                         break;
 
-
                     default:
                         $replacement = $orig;
                         break;

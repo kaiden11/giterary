@@ -137,11 +137,6 @@ if( $download === true || $content_type == "application/epub+zip" ) {
 
 header( "Content-Type: $content_type" );
 
-$contents = git_file_get_contents( $file );
+echo gen_clean( $file );
 
-echo _display( 
-    $file, 
-    $contents, 
-    "clean"
-);
 ?>

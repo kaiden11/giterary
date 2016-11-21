@@ -1767,6 +1767,53 @@ function _list_all_directories() {
 
 }
 
+function gen_clean( $file ) {
+
+    global $metaify_enabled_extensions;
+
+    $meta = array();
+
+    $contents = git_file_get_contents( $file );
+
+    $extension = detect_extension( $file, null );
+
+    // Pre-rendering processing
+    if( in_array( $extension, $metaify_enabled_extensions  ) ) {
+
+        $contents = metaify( 
+            $contents,
+            $file,
+            $meta
+        );
+
+        $contents = metaify_empty_strip( $contents );
+
+    }
+
+    $contents = _display( 
+        $file, 
+        $contents, 
+        "clean"
+    );
+
+
+    if( in_array( $extension, $metaify_enabled_extensions  ) ) {
+
+        $contents = metaify_postprocess( 
+            $contents,
+            $file,
+            $meta
+        );
+
+        // Strip any [[%Tag]] variables that haven't been replaced
+        $contents = metaify_import_strip( $contents);
+
+    }
+
+    return $contents;
+
+}
+
 function gen_new( $file = null, $template = null ) {
 
     perf_enter( "gen_new" );

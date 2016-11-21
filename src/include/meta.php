@@ -4,12 +4,13 @@ require_once( dirname( __FILE__ ) . "/util.php");
 
 function metaify_prepost( $file, $extension, $contents, $caching = true, $is_preview = false ) {
 
-    $metaify_enabled_extensions = array( "markdown", "text", "print","read" );
+    global $metaify_enabled_extensions;
 
     $meta = array();
+
     // Pre-rendering processing
     if( in_array( $extension, $metaify_enabled_extensions  ) ) {
-    
+
         $contents = metaify( 
             $contents,
             $file,
@@ -17,10 +18,10 @@ function metaify_prepost( $file, $extension, $contents, $caching = true, $is_pre
         );
     
         $contents = metaify_empty_strip( $contents );
+
     }
 
-
-    $ret = _display( 
+    $contents = _display( 
         $file, 
         $contents, 
         null,       // Extension override
@@ -31,16 +32,16 @@ function metaify_prepost( $file, $extension, $contents, $caching = true, $is_pre
     // Post-rendering processing
     if( in_array( $extension, $metaify_enabled_extensions  ) ) {
 
-        $ret = metaify_import_strip( // Strip any [[%Tag]] variables that haven't been replaced
+        $contents = metaify_import_strip( // Strip any [[%Tag]] variables that haven't been replaced
             metaify_postprocess( 
-                $ret,
+                $contents,
                 $file,
                 $meta
             )
         );
     }
 
-    return $ret;
+    return $contents;
 
 }
 

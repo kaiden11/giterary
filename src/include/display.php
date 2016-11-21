@@ -4,6 +4,7 @@ require_once( dirname( __FILE__ ) . "/util.php");
 require_once( dirname( __FILE__ ) . "/collection.php");
 # require_once( dirname( __FILE__ ) . "/transclude.php");
 require_once( dirname( __FILE__ ) . "/funcify.php");
+require_once( dirname( __FILE__ ) . "/meta.php");
 require_once( dirname( __FILE__ ) . '/cache.php' );
 require_once( dirname( __FILE__ ) . '/config/conventions.php' );
 
@@ -497,6 +498,32 @@ function _strip( $text ) {
     return strip_tags( $text, join('', $allowed_tags ) );
 }
 
+
+function _strip_giterary_meta_headers( &$contents ) {
+
+    global $php_meta_header_import_pattern;
+    global $php_meta_header_pattern;
+    global $php_meta_empty_pattern;
+
+    foreach( array( $php_meta_header_import_pattern,  $php_meta_header_pattern,  $php_meta_empty_pattern ) as $p ) {
+
+        preg_replace( 
+            "/$p/m", 
+            '',
+            $contents
+        );
+    }
+
+    return $contents;
+    
+    
+
+
+
+
+}
+
+
 function line_diff( $text ) {
     
     return preg_replace( 
@@ -678,13 +705,23 @@ function epub_display( $file, $contents, $as_archive = false ) {
 }
 
 
-function _display_clean( $file, &$contents ) {
+function _display_clean( $file, $extension, &$contents ) {
 
+
+    // Strip / process any function links relevant to the
+    // clean output
     $contents = funcify_clean( $contents, $file );
 
+    // Perform metaify, but without display processing
 
+    // Strip giterary meta tags (%Key: Value)
+    // $contents = _strip_giterary_meta_headers( $contents );
+
+    // Strip giterary tags (~tags)
     $contents = _strip_giterary_tags( $contents );
 
+
+    // Strip any disallowed HTML tags
     $contents = _strip( $contents );
 
     return $contents;
@@ -722,7 +759,7 @@ function _display( $file, &$contents, $extension_override = null, $cache = true,
 
                     $ret = ( 
                         $extension == "clean" 
-                        ? _display_clean( $file, $contents )
+                        ? _display_clean( $file, $orig_extension, $contents )
                         : $contents 
                     );
             }
