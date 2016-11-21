@@ -216,6 +216,7 @@ if( isset( $p['annotations'][$commit_file] ) && count( $p['annotations'][$commit
                                         <li><a href="raw.php?file=<?= $f ?>">EPUB Archive</a></li>
                                     <? } else { ?>
                                         <li><a href="raw.php?file=<?= $f ?>">Raw Text (no formatting)</a></li>
+                                        <li><a href="clean.php?file=<?= $f ?>">Clean (export friendly)</a></li>
                                     <? } ?>
                                     <? if( $_GET['as'] ) { ?>
                                         <li><a href="index.php?file=<?= $f ?>">Normal</a></li>
