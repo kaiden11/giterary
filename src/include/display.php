@@ -498,28 +498,57 @@ function _strip( $text ) {
     return strip_tags( $text, join('', $allowed_tags ) );
 }
 
+function _strip_giterary_annotations( &$contents ) {
 
-function _strip_giterary_meta_headers( &$contents ) {
+    $patterns = array(
+    	'{
+            (                               # wrap whole match in $1
+    	        \{
+    	              ([^{}]+)              # link text = $2
+    	        \}
 
-    global $php_meta_header_import_pattern;
-    global $php_meta_header_pattern;
-    global $php_meta_empty_pattern;
+    	        [ ]?                        # one optional space
+    	        (?:\n[ ]*)?                 # one optional newline followed by spaces
 
-    foreach( array( $php_meta_header_import_pattern,  $php_meta_header_pattern,  $php_meta_empty_pattern ) as $p ) {
+    	        \[
+    	              (.*?)                 # id = $3
+    	        \]
+    	    )
+    	}xs',
+        '{
+    	    (				    # wrap whole match in $1
+    	        \{
+    	              ([^{}]+)              # link text = $2
+    	        \}
+    	        \(			    # literal paren
+    	          [ \n]*
+    	          (
+                              [^\)]+        # annotation = $3
+                          )
+    	          [ \n]*
+    	        \)
+    	    )
+    	}xs',
+        '{
+            (                               # wrap whole match in $1
+                \{
+                    ([^\[\]]+)              # link text = $2; can\'t contain [ or ]
+                \}
+            )
+    	}xs'
+    );
 
-        preg_replace( 
-            "/$p/m", 
-            '',
+
+
+    foreach( $patterns as $p ) {
+        $contents = preg_replace( 
+            $p,
+            '\2',
             $contents
         );
     }
 
     return $contents;
-    
-    
-
-
-
 
 }
 
@@ -719,6 +748,12 @@ function _display_clean( $file, $extension, &$contents ) {
 
     // Strip giterary tags (~tags)
     $contents = _strip_giterary_tags( $contents );
+
+    // Strip giterary annotations ( {this is}(annotated) )
+    $contents = _strip_giterary_annotations( $contents );
+
+    // Strip giterary end-of-line comments ( something something // comment )
+    $contents = _strip_giterary_commentify( $contents );
 
 
     // Strip any disallowed HTML tags
@@ -950,6 +985,15 @@ function commentify( $text ) {
         '/\/\/\s+(.*)$/m', 
         '<comment>\0</comment>', 
         $text 
+    );
+}
+
+function _strip_giterary_commentify( &$contents ) {
+
+    return preg_replace( 
+        '/\/\/\s+(.*)$/m', 
+        '', 
+        $contents 
     );
 }
 

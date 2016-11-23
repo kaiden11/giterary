@@ -681,7 +681,7 @@ function collection_display( $file, &$contents, $as = "collection", $is_preview 
                                 );
                                  
                             } else {
-                                $ret .= _collect_display_clean( $matched_file, $contents );
+                                $ret .= _collect_display_clean( $matched_file, $extension, $contents );
                             }
 
 
@@ -703,9 +703,9 @@ function collection_display( $file, &$contents, $as = "collection", $is_preview 
 }
 
 
-function _collect_display_clean( $file, &$contents ) {
+function _collect_display_clean( $file, $extension, &$contents ) {
 
-    return _display_clean( $file, $contents );
+    return _display_clean( $file, $extension, $contents );
 }
 
 
