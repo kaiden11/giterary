@@ -756,8 +756,16 @@ function _display_clean( $file, $extension, &$contents ) {
     $contents = _strip_giterary_commentify( $contents );
 
 
-    // Strip any disallowed HTML tags
-    $contents = _strip( $contents );
+    // Strip 'hidden' 6th-level headers (normally hidden by Giterary convention)
+    $contents = _strip_markdown_h6( $contents );
+
+
+    if( in_array( $extension, array( 'markdown' ) ) ) {
+
+        // Strip any HTML outpuit
+        $contents = strip_tags( $contents );
+    }
+
 
     return $contents;
 }
@@ -996,6 +1004,24 @@ function _strip_giterary_commentify( &$contents ) {
         $contents 
     );
 }
+
+function _strip_markdown_h6( &$contents ) {
+
+
+    return preg_replace( 
+        '{
+            ^(\#{6})                # $1 = string of #\'s
+                [ ]*
+                (.+?)               # $2 = Header text
+                [ ]*
+                \#*                 # optional closing #\'s (not counted)
+                \n+
+        }xm',
+        '',
+        $contents
+    );
+}
+
 
 
 function tagify( $text ) {
