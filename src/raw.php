@@ -113,6 +113,10 @@ switch ( $extension ) {
     case "pub":
         $content_type = "application/epub+zip";
         break;
+    case "pan":
+        $content_type = "application/x-tex";
+        break;
+
     case "audio": 
     case "image": 
         $finfo = new finfo(FILEINFO_MIME);
@@ -128,13 +132,23 @@ switch ( $extension ) {
         break;
 }
 
-if( $download === true || $content_type == "application/epub+zip" ) {
+if( $download === true || in_array( $content_type, array( "application/x-tex", "application/epub+zip" ) ) ) {
 
     $to_file_name = preg_replace( '/[\/\\:&><\[\]]/', '_', undirify( $file ) );
 
-    // epub file extension
-    if( $content_type == "application/epub+zip" ) {
-        $to_file_name = preg_replace( '/\.pub$/', '\.epub', $to_file_name );
+
+    switch( $content_type ) {
+
+        case "application/epub+zip":
+            // epub file extension
+            $to_file_name = preg_replace( '/\.pub$/', '\.epub', $to_file_name );
+            break;
+        // LaTeX / pan file extension
+        case "application/x-tex":
+            $to_file_name = preg_replace( '/\.pan$/', '\.tex', $to_file_name );
+            break;
+        default:
+            break;
     }
 
     if( $versioned === true ) { 
