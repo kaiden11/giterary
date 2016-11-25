@@ -1745,6 +1745,8 @@ function detect_extension( $file, $extension_override ) {
             break;
         case "txt": 
         case "text": 
+        case "tex": 
+        case "latex": 
             $extension = "text";
             break;
         case "raw": 
@@ -1796,6 +1798,10 @@ function detect_extension( $file, $extension_override ) {
         case "pub":
         case "publish":
             $extension = "pub";
+            break;
+        case "pan":
+        case "pandoc":
+            $extension = "pan";
             break;
         case "xml":
         case "aeonxml":

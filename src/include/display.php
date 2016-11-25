@@ -6,6 +6,7 @@ require_once( dirname( __FILE__ ) . "/collection.php");
 require_once( dirname( __FILE__ ) . "/funcify.php");
 require_once( dirname( __FILE__ ) . "/meta.php");
 require_once( dirname( __FILE__ ) . '/cache.php' );
+require_once( dirname( __FILE__ ) . '/characters.php' );
 require_once( dirname( __FILE__ ) . '/config/conventions.php' );
 
 function text_display( $contents, $wrap = false ) {
@@ -167,7 +168,7 @@ function annotation_display( $file, $contents ) {
 function markdown_display( $contents, $dialogify = false, $oob = null ) {
     perf_enter( "markdown_display" );
 
-    require_once( "markdown.annotated.php" );
+    require_once( dirname( __FILE__ ) . "/markdown.annotated.php" );
     //require_once( "markdown.php" );
 
     return Markdown( 
@@ -182,7 +183,7 @@ function markdown_display( $contents, $dialogify = false, $oob = null ) {
 function span_markdown_display( $contents, $dialogify = false, $oob = null ) {
     perf_enter( "span_markdown_display" );
 
-    require_once( "markdown.annotated.php" );
+    require_once( dirname( __FILE__ ) . "/markdown.annotated.php" );
     //require_once( "markdown.php" );
 
     return Markdown( 
@@ -199,7 +200,7 @@ function csv_display( $file, $contents, $show_search = true, $sort = true ) {
     GLOBAL $php_tag_pattern;
     perf_enter( "csv_display" );
 
-    require_once( "csv.php" );
+    require_once( dirname( __FILE__ ) . "/csv.php" );
 
     $contents = _strip( $contents );
 
@@ -721,7 +722,7 @@ function _display_pipeline( $file, $contents, $handlers = array(), $preview = fa
 }
 
 function epub_display( $file, $contents, $as_archive = false ) {
-    require_once( 'epub.php' );
+    require_once( dirname( __FILE__ ) . "/epub.php" );
 
 
     if( $as_archive ) {
@@ -732,6 +733,20 @@ function epub_display( $file, $contents, $as_archive = false ) {
 
     return $ret;
 }
+
+function pandoc_display( $file, $contents, $do_output = false ) {
+
+    require_once( dirname( __FILE__ ) . "/pandoc.php" );
+
+    if( $do_output ) {
+        $ret = gen_pandoc_output( $file, $contents );
+    } else {
+        $ret = gen_pan( $file, $contents );
+    }
+
+    return $ret;
+}
+
 
 
 function _display_clean( $file, $extension, &$contents ) {
@@ -766,6 +781,10 @@ function _display_clean( $file, $extension, &$contents ) {
         $contents = strip_tags( $contents );
     }
 
+    // Replace any glyphs with their proper equivalent (em dashes, left/right double quotes, 
+    // or apostrophes
+    $contents = proper_glyphs( $contents );
+
 
     return $contents;
 }
@@ -778,6 +797,7 @@ function _display( $file, &$contents, $extension_override = null, $cache = true,
 
     $orig_extension = detect_extension( $file, null );
     $extension = detect_extension( $file, $extension_override );
+
 
 
     switch ( $extension ) {
@@ -798,6 +818,10 @@ function _display( $file, &$contents, $extension_override = null, $cache = true,
                 case "pub":
                     $ret = epub_display( $file, $contents, true );
                     break;
+                case "pan":
+                    $ret = pandoc_display( $file, $contents, true );
+                    break;
+
                 default:
 
                     $ret = ( 
@@ -906,6 +930,10 @@ function _display( $file, &$contents, $extension_override = null, $cache = true,
         case "pub":
             $ret = epub_display( $file, $contents, false );
             break;
+        case "pan":
+            $ret = pandoc_display( $file, $contents, false );
+            break;
+
         case "image": 
             $ret = image_display( $file, $contents );
             break;

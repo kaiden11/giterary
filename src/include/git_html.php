@@ -9,6 +9,7 @@ require_once( dirname( __FILE__ ) . '/assoc.php' );
 require_once( dirname( __FILE__ ) . '/alias.php' );
 require_once( dirname( __FILE__ ) . '/drafts.php' );
 require_once( dirname( __FILE__ ) . '/html.php' );
+require_once( dirname( __FILE__ ) . '/pandoc.php' );
 
 function gen_history( $file = null, $author = null, $num = null, $since = null, $skip = null ) {
 
@@ -1764,6 +1765,36 @@ function _list_all_directories() {
     );
 
     return $all_directories;
+
+}
+
+function gen_latex( $file ) {
+
+    if( !git_file_exists( $file ) ) {
+        die( "File '$file' does not exist!" );
+    }
+
+    if( !can( "read", $file ) ) {
+        return render( 'not_logged_in', array() );
+    }
+
+    $extension = detect_extension( $file, null );
+
+    if( !in_array( $extension, array( "markdown", "pan" ) ) ) {
+        die( "Unable to produce LaTeX content using pandoc outside of Markdown files" );
+    }
+
+    $contents = gen_clean( $file );
+
+    $contents = _pandoc_markdown_to_latex( 
+        $contents, 
+        "latex", 
+        array(
+            'documentclass' =>  'book',
+        )
+    );
+
+    return $contents;
 
 }
 

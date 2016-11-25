@@ -10,25 +10,47 @@ function section_header( $file ) {
 
     if( $file[ 'title' ] ) {
         if( $file[ 'params' ] ) {
-            if( is_array( $file['params'] ) && isset( $file['params']['level'] ) ) {
-                switch( $file['params']['level'] ) {
-                    case 'chapter':
-                        $lvl = 1;
-                        break;
-                    case 'section':
-                        $lvl = 2;
-                        break;
-                    case 'subsection':
-                        $lvl = 3;
-                        break;
-                    case 'subsubsection':
-                    case 'paragraph':
-                    case 'subparagraph':
-                        $lvl = 4;
-                        break;
-                    default:
-                        $lvl = 1;
-                        break;
+
+
+            if( is_array( $file['params'] ) ) {
+
+                if( isset( $file['params']['no'] ) ) {
+
+                    $no = array();
+
+                    if( !is_array( $file['params']['no'] ) ) {
+                        $no[] = $file['params']['no'];
+                    } else {
+                        $no = $file['params']['no'];
+                    }
+                
+                    if( in_array( 'title', $no ) ) {
+                        // Don't print the title
+                        return '';
+                    }
+
+                }
+
+                if( isset( $file['params']['level'] ) ) {
+                    switch( $file['params']['level'] ) {
+                        case 'chapter':
+                            $lvl = 1;
+                            break;
+                        case 'section':
+                            $lvl = 2;
+                            break;
+                        case 'subsection':
+                            $lvl = 3;
+                            break;
+                        case 'subsubsection':
+                        case 'paragraph':
+                        case 'subparagraph':
+                            $lvl = 4;
+                            break;
+                        default:
+                            $lvl = 1;
+                            break;
+                    }
                 }
             }
         }
