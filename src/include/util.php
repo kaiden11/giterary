@@ -190,7 +190,7 @@ function match_excerpt( $msg, $pattern, $length=50, $as_regex = false) {
 
 function excerpt($msg,$length=50) {
     $words = explode(' ', 
-        preg_repclickable_urls('/<img.*>/','[img]',
+        preg_replace('/<img.*>/','[img]',
             strip_tags($msg, '<img>')
         )
     );
