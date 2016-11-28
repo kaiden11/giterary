@@ -56,7 +56,7 @@
             <div class="panel-body">
                 <pre
                     class="pre-scrollable"
-                ><?= he( $p['show']['body'] ) ?></pre>
+                ><?= clickable_urls( $p['show']['body'] ) ?></pre>
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
                         <div>
                             <pre 
                                 class="pre-scrollable"
-                            ><?= he( $note ) ?></pre>
+                            ><?= clickable_urls( $note ) ?></pre>
                         </div>
                     </div>
                 <? } ?>

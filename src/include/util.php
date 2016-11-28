@@ -190,7 +190,7 @@ function match_excerpt( $msg, $pattern, $length=50, $as_regex = false) {
 
 function excerpt($msg,$length=50) {
     $words = explode(' ', 
-        preg_replace('/<img.*>/','[img]',
+        preg_repclickable_urls('/<img.*>/','[img]',
             strip_tags($msg, '<img>')
         )
     );
@@ -386,6 +386,39 @@ function abbreviate_hostname( $url_host ) {
 
     return $url_host;
 }
+
+// From: http://stackoverflow.com/questions/1188129/replace-urls-in-text-with-html-links
+function clickable_urls( $message ) {
+
+    $rexProtocol = '(https?://)';
+    $rexDomain   = '((?:[-a-zA-Z0-9]{1,63}\.)+[-a-zA-Z0-9]{2,63}|(?:[0-9]{1,3}\.){3}[0-9]{1,3})';
+    $rexPort     = '(:[0-9]{1,5})?';
+    $rexPath     = '(/[!$-/0-9:;=@_\':;!a-zA-Z\x7f-\xff]*?)?';
+    $rexQuery    = '(\?[!$-/0-9:;=@_\':;!a-zA-Z\x7f-\xff]+?)?';
+    $rexFragment = '(#[!$-/0-9:;=@_\':;!a-zA-Z\x7f-\xff]+?)?';
+
+    $ret =  preg_replace_callback(
+        "&\\b$rexProtocol$rexDomain$rexPort$rexPath$rexQuery$rexFragment(?=[?.!,;:\"]?(\s|$))&",
+        function( $match ) {
+        
+            // Prepend http:// if no protocol specified
+            $completeUrl = $match[1] ? $match[0] : "http://{$match[0]}";
+    
+            return '<a href="' . $completeUrl . '">'
+                . he( $completeUrl )
+                . '</a>'
+            ;
+        }, 
+        htmlspecialchars( $message )
+    );
+
+
+    // only allow hyperlinks coming back from the commit message
+    $ret = strip_tags( $ret, '<a>' );
+
+    return $ret;
+}
+
 
 function to_si( $num ) {
     if( !is_numeric( $num ) ) {

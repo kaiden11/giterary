@@ -46,7 +46,7 @@
                                 <?php if( $i % 2 == 0 ) { ?>
                                     <?= he( $c ) ?>
                                 <?php } else { ?>
-                                    <pre><code><?= he( trim( $c ) ) ?></code></pre>
+                                    <pre><?= clickable_urls( trim( $c ) ) ?></pre>
                                 <?php }
                                     $i++;
                                 ?>
