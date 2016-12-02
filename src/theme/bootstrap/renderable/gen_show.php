@@ -1,5 +1,6 @@
 <? renderable( $p ) ?>
 <? $stash['css'][] = 'simpler.v2.show.css'; ?>
+<? $stash['js'][] = 'show.js'; ?>
 
 <div class="commit container-fluid">
     <div class="col-md-6">
@@ -61,7 +62,7 @@
         </div>
     </div>
     <div class="col-md-12">
-        <div class="panel panel-default">
+        <div class="panel panel-default notes">
             <div class="panel-heading">
                 <span>Notes:</span>
             </div>
@@ -73,7 +74,7 @@
                 ); ?>
                 <? foreach( $p['notes'] as $note_ref => &$note ) { ?>
                     <? if( $note == "" ) { continue; } ?>
-                    <div>
+                    <div class="<?= he( $note_ref ) ?> <?= $note_ref_display[ $note_ref ] ?>">
                         <div>
                             <?= ( $note_ref_display[$note_ref] ? $note_ref_display[ $note_ref ] : $note_ref ) ?>
                         </div>

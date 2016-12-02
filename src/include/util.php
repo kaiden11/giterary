@@ -404,7 +404,7 @@ function clickable_urls( $message ) {
             // Prepend http:// if no protocol specified
             $completeUrl = $match[1] ? $match[0] : "http://{$match[0]}";
     
-            return '<a href="' . $completeUrl . '">'
+            return '<a class="clickable url" href="' . $completeUrl . '">'
                 . he( $completeUrl )
                 . '</a>'
             ;
