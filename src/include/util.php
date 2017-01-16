@@ -1553,7 +1553,7 @@ function context_log( $context, $message ) {
             if( ! method_exists( $p[0], $p[1] ) ) {
                 echo "method does not exist";
             } else {
-                $p[0]->$p[1]( $context, $message );
+                $p[0]->{$p[1]}( $context, $message );
             }
         }
     }
@@ -1603,7 +1603,7 @@ function can( $verb, $thing ) {
                 $is_denied = false;
 
                 foreach( $thing as $i => $t ) {
-                    if( !$p[0]->$p[1]( $verb, $t ) ) {
+                    if( !$p[0]->{$p[1]}( $verb, $t ) ) {
                         # echo "go ahead!";
                         return false;
                     }

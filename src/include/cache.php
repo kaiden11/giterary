@@ -30,7 +30,7 @@ function clear_cache( $tag, $discriminator = null ) {
             #  echo "$tag:$discriminator";
             $ret = array_merge( 
                 $ret,
-                $handler[0]->$handler[3]( $tag, $discriminator )
+                $handler[0]->{$handler[3]}( $tag, $discriminator )
             );
         }
 
@@ -103,7 +103,7 @@ function encache( $tag, $discriminator, $value ) {
             die( "Method " . $handler[1] . " does not exist on object!" );
         }
 
-        $handler[0]->$handler[1]( $tag, $discriminator, $value );
+        $handler[0]->{$handler[1]}( $tag, $discriminator, $value );
     }
 
     perf_exit( "encache" );
@@ -163,7 +163,7 @@ function decache( $tag, $discriminator  ) {
             die( "Method " . $handler[2] . " does not exist on object!" );
         }
 
-        $ret = $handler[0]->$handler[2]( $tag, $discriminator );
+        $ret = $handler[0]->{$handler[2]}( $tag, $discriminator );
 
         # echo "wrapper: $ret\n";
 
@@ -239,7 +239,7 @@ function cache_keys( ) {
         #  echo "$tag:$discriminator";
         $ret = array_merge( 
             $ret,
-            $handler[0]->$handler[4]()
+            $handler[0]->{$handler[4]}()
         );
     }
 
@@ -269,7 +269,7 @@ function clear_key( $key ) {
         #  echo "$tag:$discriminator";
         $ret = array_merge( 
             $ret,
-            $handler[0]->$handler[5]( $key )
+            $handler[0]->{$handler[5]}( $key )
         );
     }
 
