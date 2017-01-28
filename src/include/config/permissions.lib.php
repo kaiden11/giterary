@@ -1,5 +1,6 @@
 <?
 require_once( dirname( __FILE__ ) . '/../util.php' );
+require_once( dirname( __FILE__ ) . '/../collection.php' );
 
 class AllPlay {
     public function can( $verb, $thing ) {
@@ -16,6 +17,174 @@ class MustBeLoggedIn {
         return false;
     }
 }
+
+class CollectionPermissions {
+
+    private $rules_cache = array();
+    private $glob_cache = array();
+    private $tag_cache = array();
+
+    function __construct( $path ) {
+
+        if( is_null( $path ) ) {
+            die( 'Invalid path passed to CollectionPermissions' );
+        }
+
+        if( !file_exists( $path ) ) {
+            die( "CollectionPermissions file does not exist '$path'" );
+        }
+
+        $content = file_get_contents( $path );
+
+        if( $content === false ) {
+            die( "Unable to read from '$path' when initializing CollectionPermissions" );
+        }
+
+        $rules = $this->_parse( $content );
+
+
+        if( $rules === false ) {
+            die( 'Problem parsing CollectionPermissions rules' );
+        }
+
+
+        $this->rules_cache = $rules;
+
+    }
+
+    function _parse( &$content ) {
+
+        $ret = array();
+
+        foreach( preg_split( "/(\r)?\n/", $content ) as $line ) {
+
+            // Remove any comments 
+            $line = preg_replace( "/#.*$/", '', $line );
+
+            // Trim
+            $line = trim( $line );
+
+            if( $line == "" ) {
+                continue;
+            }
+
+            list( $file_spec, $tag_spec, $user_spec, $perm_spec ) = preg_split( "/\s*:\s*/", $line, 4 );
+
+            $ret[] = array(
+                'file_spec' =>  trim( $file_spec ),
+                'tag_spec'  =>  trim( $tag_spec ),
+                'user_spec' =>  trim( $user_spec ),
+                'perm_spec' =>  trim( $perm_spec ),
+            );
+        }
+
+
+        return $ret;
+    }
+
+    function can ( $verb, $thing ) {
+
+        $u = $_SESSION['usr']['name'];
+
+        if( !$this->rules_cache || !is_array( $this->rules_cache ) || count( $this->rules_cache ) <= 0 ) {
+            // No rules, then no permissions to enforce.
+            return true;
+        }
+
+        foreach( $this->rules_cache as $rule ) {
+
+            $file_matched   = false;
+            $tag_matched    = false;
+            $user_matched   = false;
+            $perm_matched   = false;
+
+            // Check user spec first
+
+            if( $rule['user_spec'] == "*" ) {
+                $user_matched = true;
+            }
+
+            if( !$user_matched ) {
+                
+                $users = preg_split( "/\s*,\s*/", $rule['user_spec'] );
+
+                $users = array_map(
+                    function( $a ) {
+                        return trim( strtolower( $a ) );
+                    },
+                    $users
+                );
+
+                if( in_array( $u, $users ) ) {
+                    $user_matched = true;
+                }
+            }
+
+            if( $rule['user_spec'] == "?" ) {
+                // Only match if user is not logged in (anonymous usser)
+                $user_matched = !is_logged_in();
+            }
+
+            if( !$user_matched ) { continue; }
+
+            if( $rule['file_spec'] == "*" ) {
+                $file_matched = true;
+            }
+
+            if( !$file_matched ) {
+
+                if( preg_match( '@' . $rule['file_spec'] . '@', $thing ) === 1 ) {
+                    $file_matched = true;
+                }
+            }
+
+            if( !$file_matched ) { continue; }
+
+            if( $rule['tag_spec'] == "" || $rule['tag_spec'] == "*" ) {
+                $tag_matched = true;
+            }
+
+            if( !$tag_matched ) {
+                $tag_matched = false;    // TODO: Implement tag permissions
+            }
+
+            if( !$tag_matched ) { continue; }
+
+
+            // echo 'checking perms';
+
+            if( $rule['perm_spec'] == "*" ) {
+                return true; // User has all permissions for thing
+            }
+
+            if( $rule['perm_spec'] == "" ) {
+                return false; // Users without a specified verb / permission will not be given permission
+            }
+
+            $verbs = preg_split( "/\s*,\s*/", $rule['perm_spec'] );
+
+            $verbs = array_map(
+                function( $a ) {
+                    return trim( strtolower( $a ) );
+                },
+                $verbs
+            );
+
+            // Matched everything up until this point. We return true
+            // or false depending on whether we are given permissions, and 
+            // do not fall through as with other matching failures.
+            if( in_array( $verb, $verbs ) ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+
+    }
+}
+
 
 class AllPlayExcept {
 
