@@ -527,7 +527,8 @@ function collect_files( $lines = array(), $current_file = null ) {
                     # $matched_file = dirify( trim( $matched_file ) );
 
                     if( !file_or( $matched_file, false ) || $file == $matched_file || isset( $collection_loop_detection[$matched_file] ) ) {
-                        next;
+                        // next;
+                        continue;
                     } else {
                         $collection_loop_detection[$matched_file] = 1;
 
