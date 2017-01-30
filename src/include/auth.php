@@ -9,6 +9,9 @@ function establish_session( $usr ) {
     # session_register('usr'); 
     $_SESSION['usr'] = $usr; 
 
+    # Force username to lower case once authenticated
+    $_SESSION['usr']['name'] = trim( strtolower( $_SESSION['usr']['name']  ) );
+
     $theme_paths_to_check = array(
         dirify( implode(    "/",    array( $_SESSION['usr']['name'], "Theme"        ) ) ),
         dirify( implode(    "/",    array( $_SESSION['usr']['name'], "theme"        ) ) ),
@@ -59,7 +62,7 @@ function validate_login( $uname, $password ) {
                 echo "method does not exist";
             } else {
 
-                $ret = $p[0]->$p[1]( $uname, $password );
+                $ret = $p[0]->{$p[1]}( $uname, $password );
 
                 if( $ret === false ) {
                     # Attempt another authentication mechanism
@@ -93,7 +96,7 @@ function userlist() {
                 echo "method does not exist";
             } else {
 
-                $ret = $p[0]->$p[1]();
+                $ret = $p[0]->{$p[1]}();
 
                 if( $ret === false ) {
                     # Attempt another authentication mechanism
