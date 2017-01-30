@@ -68,6 +68,13 @@
                 />
             <? } ?>
         <? } ?>
+
+        <item
+            id="giterary-metadata"
+            href="giterary.metadata"
+            media-type="text/plain"
+        />
+
     </manifest>
     
     <spine toc="ncx">

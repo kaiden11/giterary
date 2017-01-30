@@ -273,7 +273,7 @@ function epub_archive( $file, $contents ) {
 
     // Required
     $zip->addFromString(
-        "giterary.metadata",
+        "OEBPS/giterary.metadata",
         "
             Application Name:   $application_name
             Instance Name:      $instance_name
