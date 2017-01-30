@@ -85,7 +85,7 @@ class CollectionPermissions {
 
     function can ( $verb, $thing ) {
 
-        $u = $_SESSION['usr']['name'];
+        $u = trim( strtolower( $_SESSION['usr']['name'] ) );
 
         if( !$this->rules_cache || !is_array( $this->rules_cache ) || count( $this->rules_cache ) <= 0 ) {
             // No rules, then no permissions to enforce.
