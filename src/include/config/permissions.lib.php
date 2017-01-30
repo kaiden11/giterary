@@ -1,6 +1,7 @@
 <?
 require_once( dirname( __FILE__ ) . '/../util.php' );
 require_once( dirname( __FILE__ ) . '/../collection.php' );
+require_once( dirname( __FILE__ ) . '/../git.php' );
 
 class AllPlay {
     public function can( $verb, $thing ) {
@@ -145,7 +146,35 @@ class CollectionPermissions {
             }
 
             if( !$tag_matched ) {
-                $tag_matched = false;    // TODO: Implement tag permissions
+                // $tag_matched = false;    // TODO: Implement tag permissions
+
+                $tags_to_search = array();
+                $file_collection = array();
+
+                foreach( preg_split( '/,\s*/', $rule['tag_spec'] ) as $tag ) {
+                    
+                    $tag = preg_replace( '/^~/', '', $tag );
+
+                    if( tag_or( $tag, false ) !== false ) {
+                        $tags_to_search[] = $tag;
+                    }
+                }
+
+                if( count( $tags_to_search ) > 0 ) {
+
+                    $match_results = git_tags( 
+                        $tags_to_search, 
+                        null            //  No file / directory to search under
+                    );
+
+                    foreach ($match_results as $file => $result ) {
+                        $file_collection[] = $file;
+                    }
+                }
+
+                if( in_array( $thing, $file_collection ) ) {
+                    $tag_matched = true;
+                }
             }
 
             if( !$tag_matched ) { continue; }
