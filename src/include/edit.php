@@ -24,7 +24,7 @@ function gen_edit( $parameters = array()  )  {
     perf_enter( "gen_edit" );
 
     if( !can( "edit", implode( ":", array( $parameters['file'] ) ) ) ) {
-        return render( 'not_logged_in', array() );
+        return render( 'not_allowed', array() );
     }
 
     # Multiplex rendering of edit screens based on detectect/overridden

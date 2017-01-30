@@ -1045,7 +1045,7 @@ function gen_show( $commit = null ) {
     perf_enter( "gen_show" );
 
     if( !can( "show", $commit ) ) {
-        return render( 'not_logged_in', array() );
+        return render( 'not_allowed', array() );
     }
 
     return _gen_show( 
@@ -1775,7 +1775,7 @@ function gen_latex( $file ) {
     }
 
     if( !can( "read", $file ) ) {
-        return render( 'not_logged_in', array() );
+        return render( 'not_allowed', array() );
     }
 
     $extension = detect_extension( $file, null );
