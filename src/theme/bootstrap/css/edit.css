@@ -82,6 +82,10 @@ body.giterary {
     padding:    0px !important;
 }
 
+.edit.editor .CodeMirror .edited {
+    background-color: #e0e0e0;
+}
+
 .edit.preview-on.giterary-extension-storyboard .editor .CodeMirror {
     height: 200px;
 

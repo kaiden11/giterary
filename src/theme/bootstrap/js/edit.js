@@ -95,6 +95,8 @@ var edit = {
                 edit.maintain_working_time
             )
         ;
+
+
     },
     tag_suggest_handler:    function( ) {
         $.ajax(
@@ -281,7 +283,23 @@ var edit = {
         );
 
         edit.editor
-            .on( 'change',  function( cm, e ) { $(cm.getTextArea()).trigger( 'change.codemirror', cm, e ); } )
+            .on( 
+                'change',  
+                function( cm, e ) { 
+
+                    $(cm.getTextArea()).trigger( 
+                        'change.codemirror', 
+                        [ cm, e ]
+                    ); 
+                } 
+            )
+        ;
+
+        edit.editor
+            .on(
+                'change',
+                edit.set_edited_marks
+            )
         ;
 
         edit.editor
@@ -1176,6 +1194,27 @@ var edit = {
         var t = Math.floor( (new Date()).getTime() / 1000 ) + '';
         edit.draft_working_seconds[ t ] = 1;
         // console.log( 'working time: ' + t );
+    },
+    set_edited_marks: function( cm, change ) {
+
+        console.log( change );
+        
+        cm.markText( 
+            { 
+                line:   change.from.line,
+                ch:     change.from.ch,
+            },
+            {
+                line:   change.to.line,
+                ch:     change.to.ch + change.text[ 0 ].length
+            },
+            {
+                className: 'edited'
+            }
+
+        );
+
+
     },
     draft: function( notes, commit, filename ) {
 
