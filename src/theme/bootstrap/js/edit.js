@@ -199,6 +199,22 @@ var edit = {
             );
         }
     },
+    toggle_edited_marks:  function( e ) {
+
+        var clazz = 'show-edited-marks';
+
+        if( edit.editor != null ) {
+
+            var $cm = $('.CodeMirror');
+
+            if( $cm.hasClass( clazz ) ) {
+                $cm.removeClass( clazz );
+            } else {
+                $cm.addClass( clazz );
+            }
+        }
+    },
+
     setup_editor: function( mode, textarea ) {
         // platform combo spec
         var pcs = function( c ) {
@@ -228,6 +244,7 @@ var edit = {
         extra_keys[ pcs( 'A' ) ] = edit.annotation_handler;
         extra_keys[ pcs( 'C' ) ] = edit.comment_handler;
         extra_keys[ pcs( 'W' ) ] = edit.toggle_wordwrap;
+        extra_keys[ pcs( 'M' ) ] = edit.toggle_edited_marks;
         extra_keys[ pcs( 'Enter' ) ] = edit.wrap_handler;
         extra_keys[ 'Alt-T'    ] = edit.timestamp_handler;
         extra_keys[ 'Alt-P'    ] = edit.preview_toggle;
@@ -562,6 +579,7 @@ var edit = {
             )
             .on( 'click', '#toggle_editor',     function() { edit.toggle_editor();                     }  )
             .on( 'click', '#toggle_wordwrap',   then_focus( edit.toggle_wordwrap ) )
+            .on( 'click', '#toggle_edited_marks', then_focus( edit.toggle_edited_marks ) )
             .on( 'click', '#escape',            then_focus( edit.escape_handler                         ) )
             .on( 'click', '#fullscreen',        then_focus( edit.fullscreen_handler                     ) )
             .on( 'click', '#comment',           then_focus( edit.comment_handler                        ) )

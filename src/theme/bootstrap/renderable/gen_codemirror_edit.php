@@ -192,6 +192,7 @@ switch( $p['extension'] ) {
                             <?php /*<li role="presentation" class="dropdown-header">Fold/unfold elements <kbd>H</kbd></li> */ ?>
                             <li class="shortcut"><a href="#" id="toggle_editor">Toggle editor</a></li>
                             <li class="shortcut"><a href="#" id="toggle_wordwrap">Toggle line <kbd>w</kbd>rapping</a></li>
+                            <li class="shortcut"><a href="#" id="toggle_edited_marks">Toggle edit <kbd>m</kbd>arks</a></li>
                             <li class="shortcut"><a href="#" id="fullscreen"><kbd>F</kbd>ull Screen</a></li>
 
                             <? if( SHAREJS_ENABLE ) { ?>

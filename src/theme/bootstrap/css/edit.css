@@ -82,7 +82,7 @@ body.giterary {
     padding:    0px !important;
 }
 
-.edit.editor .CodeMirror .edited {
+.edit.editor .CodeMirror.show-edited-marks .edited {
     background-color: #e0e0e0;
 }
 
