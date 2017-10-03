@@ -2,7 +2,8 @@
 renderable( $p );
 $stash['css'][]  = 'diff.css';
 $stash['css'][]  = 'flags.css';
-$stash['core_js'][]   = 'jquery.scrollTo-1.4.3.1-min.js';
+# $stash['core_js'][]   = 'jquery.scrollTo-1.4.3.1-min.js';
+$stash['core_js'][]   = 'jquery.scrollTo-2.1.2-min.js';
 $stash['js'][]   = 'diff.js';
 ?>
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
@@ -101,6 +102,18 @@ $stash['js'][]   = 'diff.js';
         <div class="panel-heading">
             <span class="panel-title">
                 Diff for <?= linkify( '[[' . $p['file'] . ']]', array( 'minify' => true ) ) ?>
+                <span class="commit-parameters">
+                    (Commits: <a 
+                        title="Commit Before"
+                        class="wikilink"
+                        href="show_commit.php?commit=<?= $p['commit_before'] ?>"
+                    ><?= commit_excerpt( $p['commit_before'] ) ?></a>,
+                    <a 
+                        title="Commit After"
+                        class="wikilink"
+                        href="show_commit.php?commit=<?= $p['commit_after'] ?>"
+                    ><?= commit_excerpt( $p['commit_after'] ) ?></a>)
+                </span>
             </span>
         </div>
         <div class="panel-body">

@@ -8,7 +8,8 @@ $stash['css'][] = 'edit.css';
 $stash['css'][] = 'giterary-codemirror.css';
 $stash['css'][] = 'codemirror.css';
 
-$stash['core_js'][]   = 'jquery.scrollTo-1.4.3.1-min.js';
+# $stash['core_js'][]   = 'jquery.scrollTo-1.4.3.1-min.js';
+$stash['core_js'][]   = 'jquery.scrollTo-2.1.2-min.js';
 $stash['js'][]  = 'cm/current/lib/codemirror.js';
 $stash['js'][]  = 'cm/current/addon/display/fullscreen.js';
 $stash['js'][]  = 'cm/current/addon/display/rulers.js';

@@ -31,7 +31,7 @@ if( isset( $p['directories'] ) && is_array( $p['directories'] ) ) {
     <div class="todo todos display table-responsive">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><?= plural( count( $p['search'] ), "document") ?> with TODOs or TBDs</span>
+                <span><?= plural( count( $p['search'] ), "document") ?> with TODOs or TBDs, <?= plural( array_sum( array_map( function( $a ) { return $a['count']; }, $p['search'] ) ), 'pending  item' ) ?></span>
             </div>
             <div class="panel-body">
                 Documents with TODO or TBD text embedded in them (without a leading "\" as an escape character).

@@ -5,7 +5,8 @@ $stash['css'][] = 'display.css';
 $stash['css'][] = 'table.css';
 $stash['css'][] = 'read.css';
 // Base JS
-$stash['core_js'][] = 'jquery.scrollTo-1.4.3.1-min.js';
+# $stash['core_js'][] = 'jquery.scrollTo-1.4.3.1-min.js';
+$stash['core_js'][]   = 'jquery.scrollTo-2.1.2-min.js';
 $stash['js'][] = 'view.js';
 // $stash['js'][] = 'view.annotations.js';
 

@@ -90,7 +90,8 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<?php /* <script type="text/javascript" src="js/jquery.scrollTo-1.4.3.1-min.js"></script> */ ?>
+<script type="text/javascript" src="js/jquery.scrollTo-2.1.2-min.js"></script>
 <script type="text/javascript">
     
     var edit_form               = $('#edit_file').get(0);

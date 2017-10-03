@@ -1916,6 +1916,140 @@ function git_work_stats( $files ) {
 
 }
 
+function git_pickaxe( $search, $cache = true ) {
+
+    perf_enter( 'git_pickaxe' );
+
+    $output = "";
+
+    $separator = '->>-';
+    $format = join(
+        $separator, 
+        array(
+            '%H',
+            '%T',
+            '%an',
+            '%ae',
+            '%aD',
+            '%s',
+            '%P',
+            '%at',
+        )
+    );
+
+    $hc = git_head_commit();
+
+    $memoize_key = implode( " ", array( $hc, $search ) );
+
+    if( CACHE_ENABLE ) {
+        if( !is_null( $cache ) ) {
+            if( is_bool( $cache ) && $cache === true ) {
+                $r = decache( 'git_pickaxe', $memoize_key );
+    
+                if( !is_null( $r ) ) {
+                    perf_exit( "git_pickaxe" );
+                    return $r;
+                }
+    
+            } elseif( is_array( $cache ) ) {
+                $r = decache( $cache['tag'], $memoize_key );
+    
+                if( !is_null( $r ) ) {
+                    perf_exit( "git_pickaxe" );
+                    return $r;
+                }
+            }
+        }
+    }
+    
+    if( CACHE_ENABLE ) {
+        perf_enter( "git_pickaxe.cache_miss" );
+    }
+   
+    if( !is_null( $search ) ) {
+        git("log --name-only --pretty=format:" . escapeshellarg( $format ) . ' ' . "-S " . escapeshellarg( $search ) . " -- ", $output );
+    }    
+
+    $history = array();
+    $historyItem = array();
+    $found_header = false;
+
+    $lines = preg_split( '/\r?\n/' , $output );
+
+    while( !is_null( ( $line = array_shift( $lines ) ) ) ) {
+        $log_entry = explode( $separator, $line );
+
+        # Header line?
+        if( count( $log_entry ) > 1 ) {
+            $history_item = null;
+            $history_item = array(
+                "author"            =>  $log_entry[2], 
+                "email"             =>  $log_entry[3],
+                "linked-author"     =>  (
+                                            $log_entry[3] == "" ?  $log_entry[2] : "<a href=\"mailto:$log_entry[3]\">$log_entry[2]</a>"
+                                        ),
+                "date"              =>  from_git_time( $log_entry[4] ), 
+                "date_orig"         =>  $log_entry[4],
+                "message"           =>  $log_entry[5],
+                "commit"            =>  $log_entry[0],
+                "parent_commit"     =>  $log_entry[6],
+                "epoch"             =>  $log_entry[7]
+            );
+
+            # While there are additional lines, check if the next line
+            # is a "header." If not, check if it looks like a file. If so
+            # add that file to the history item, and keep checking
+            # until you run out of lines, or you peek the next "header."
+            while( count( $lines ) > 0 ) {
+            
+                if( ( substr_count( current( $lines ), $separator ) > 1 ) ) {
+                    # Stop processing file list, we found another header.
+                    break;
+                } else {
+
+                    # Process this line as a commit content file
+                    $curr = array_shift( $lines );
+
+                    if( $curr != "" && file_or( $curr, null ) != null ) {
+                        # Looks to be content files...
+                        if( !isset( $history_item["pages"] ) ) {
+                            $history_item["pages"] = array( trim( $curr ) );
+                        } else {
+                            $history_item["pages"][] = trim( $curr );
+                        }
+                    }
+                }
+            }
+
+            # Add this history item
+            $history[] = $history_item;
+
+        } else {
+            # Do nothing
+        }
+    }
+
+    if( CACHE_ENABLE ) {
+        perf_exit( "git_pickaxe.cache_miss" );
+    }
+
+    if( CACHE_ENABLE ) {
+        if( !is_null( $cache ) ) {
+            if( is_bool( $cache ) && $cache === true ) {
+                encache( 'git_pickaxe', $memoize_key, $history );
+    
+            } elseif( is_array( $cache ) ) {
+                encache( $cache['tag'], $memoize_key, $history );
+            }
+        }
+    }
+
+    perf_exit( 'git_pickaxe' );
+
+    return $history;
+
+}
+
 function git_history( $num = 100, $file = null, $author = null, $since = null, $skip = 0, $cache = true  ) {
 
     perf_enter( 'git_history' );

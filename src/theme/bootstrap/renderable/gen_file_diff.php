@@ -2,7 +2,8 @@
 renderable( $p );
 $stash['css'][]  = 'diff.css';
 $stash['css'][]  = 'flags.css';
-$stash['core_js'][]   = 'jquery.scrollTo-1.4.3.1-min.js';
+# $stash['core_js'][]   = 'jquery.scrollTo-1.4.3.1-min.js';
+$stash['core_js'][]   = 'jquery.scrollTo-2.1.2-min.js';
 $stash['js'][]   = 'diff.js';
 ?>
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
