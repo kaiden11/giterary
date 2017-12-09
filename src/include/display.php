@@ -530,13 +530,13 @@ function _strip_giterary_annotations( &$contents ) {
     	        \)
     	    )
     	}xs',
-        '{
-            (                               # wrap whole match in $1
-                \{
-                    ([^\[\]]+)              # link text = $2; can\'t contain [ or ]
-                \}
-            )
-    	}xs'
+        # '{
+        #     (                               # wrap whole match in $1
+        #         \{
+        #             ([^\[\]]+)              # link text = $2; can\'t contain [ or ]
+        #         \}
+        #     )
+    	# }xs'
     );
 
 
