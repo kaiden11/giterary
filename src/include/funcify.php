@@ -161,6 +161,7 @@ function funcify( $text, $current_file = null, $is_preview = false ) {
                     case "history":
                     case "index":
                     case "partition":
+                    case "clean":
                     case "move":
                     case "revert":
                     case "search":

@@ -157,15 +157,25 @@ if( $download === true || in_array( $content_type, array( "application/x-tex", "
         $hc = commit_excerpt( $hc );
         $dt = strftime( "%Y%m%d.%H%M%S", time() );
 
-        $to_file_name = preg_replace( '/(\.[a-z]+)$/', ".$dt.$hc\\1", $to_file_name );
-
+        // If has a file extension, add versioning just 
+        // before the file extension
+        if( preg_match( '/(\.[a-z]+)$/', $to_file_name ) === 1 ) {
+            $to_file_name = preg_replace( '/(\.[a-z]+)$/', ".$dt.$hc\\1", $to_file_name );
+        } else {
+            $to_file_name .= ".$dt.$hc";
+        }
     }
 
     header( 'Content-Disposition: attachment; filename="' . $to_file_name . '"' );
 
 }
 
+if( $content_type == "text/plain" ) {
+    $content_type .= "; charset=UTF-8";
+}
+
 header( "Content-Type: $content_type" );
+
 
 // Attempt to handling caching for certain
 // extensions

@@ -9,8 +9,11 @@ require_once( dirname( __FILE__ ) . '/include/download.php');
 $file       = file_or( $_GET['file'], null );
 $download   = $_GET['download'] == "yes" ? true : false;
 $versioned  = set_or( $_GET['versioned'], false );
+$prefix = set_or( $_GET['prefix'], false );
+$basename = set_or( $_GET['basename'], false );
 
 $versioned  = ( $versioned === false ? false : ( strtolower( trim( $versioned ) ) == "yes" ) );
+$basename  = ( $basename === false ? false : ( strtolower( trim( $basename ) ) == "yes" ) );
 
 
 # $mode = mode_or( $_GET['mode'], null );
@@ -119,7 +122,18 @@ switch ( $extension ) {
 
 if( $download === true || $content_type == "application/epub+zip" ) {
 
-    $to_file_name = preg_replace( '/[\/\\:&><\[\]]/', '_', undirify( $file ) );
+    $temp_file = $file;
+
+    if( $basename !== false ) {
+        $temp_file = basename( $temp_file );
+    }
+
+    if( $prefix !== false ) {
+        $temp_file = $prefix . "." . $temp_file;
+    }
+
+
+    $to_file_name = preg_replace( '/[\/\\:&><\[\]]/', '_', undirify( $temp_file ) );
 
     if( $versioned === true ) { 
 
@@ -127,12 +141,22 @@ if( $download === true || $content_type == "application/epub+zip" ) {
         $hc = commit_excerpt( $hc );
         $dt = strftime( "%Y%m%d.%H%M%S", time() );
 
-        $to_file_name = preg_replace( '/(\.[a-z]+)$/', ".$dt.$hc\\1", $to_file_name );
+        // If has a file extension, add versioning just 
+        // before the file extension
+        if( preg_match( '/(\.[a-z]+)$/', $to_file_name ) === 1 ) {
+            $to_file_name = preg_replace( '/(\.[a-z]+)$/', ".$dt.$hc\\1", $to_file_name );
+        } else {
+            $to_file_name .= ".$dt.$hc";
+        }
 
     }
 
     header( 'Content-Disposition: attachment; filename="' . $to_file_name . '"' );
 
+}
+
+if( $content_type == "text/plain" ) {
+    $content_type .= "; charset=UTF-8";
 }
 
 header( "Content-Type: $content_type" );
