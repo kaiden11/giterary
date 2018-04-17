@@ -35,13 +35,20 @@ function proper_glyphs( $contents ) {
 
     // Contractions or possessives
     $contents = preg_replace( '@\b([a-zA-Z]+)\'([a-zA-Z]+)\b@', '\1’\2', $contents );
-    // Single quotes around word-ish things.
-    $contents = preg_replace( '@(^|\s)\'([^\']+)\'@', '\1‘\2’', $contents );
+
+    // Forcing single-qupotes using specific _' or '_ syntax
+    // in order to force apostrophe direction (the underscore indicates
+    // the thing that is 'missing', and therefore, should be quoted
+    // towards
+    $contents = preg_replace( '@([\w.?!])\'_(\W|$)@', '\1‘\2', $contents );   // No example, but provided
+                                                                            // for completeness 
+    $contents = preg_replace( '@(^|\W)_\'(\w)@', '\1’\2', $contents );      // Example: 'nother
 
     // End-of-word apostrophes
-    $contents = preg_replace( '@(\w)\'(\W|$)@', '\1’\2', $contents );
+    $contents = preg_replace( '@([\w.?!])\'(\W|$)@', '\1’\2', $contents );
     // Beginning-of-word apostrophes
-    $contents = preg_replace( '@(^|\W)\'(\w)@', '\1’\2', $contents );
+    $contents = preg_replace( '@(^|\W)\'(\w)@', '\1‘\2', $contents );
+
 
     return $contents;
 
