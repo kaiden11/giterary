@@ -35,13 +35,13 @@ body.giterary {
 .diff .diff.adds span.diff.add
 {
     display: inline;
-    color: blue;
+    color: blue !important;
 }
 
 .diff .diff.removes span.diff.remove
 {
     display: inline;
-    color: red;
+    color: red !important;
 }
 
 
@@ -70,4 +70,15 @@ body.giterary {
     background-color:   #f0F0c0;
 }
 
+
+* {
+    -webkit-print-color-adjust: exact;
+}
+
+@media only print {
+    a[href]:after {
+        content: "" !important;
+    }
+
+}
 
