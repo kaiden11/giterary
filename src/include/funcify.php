@@ -191,8 +191,12 @@ function funcify( $text, $current_file = null, $is_preview = false ) {
 
                     case "metrics":
                     case "metric":
-                        $replacement = _handle_metrics( $func, $params, $display );
+                        $replacement = _handle_metrics( $current_file, $func, $params, $display );
                         break;
+                    case "searchgrid":
+                        $replacement = _handle_searchgrid( $current_file, $func, $params, $display );
+                        break;
+
                     case "progress":
                         $replacement = _handle_progress( $func, $params, $display );
                         break;
@@ -1057,7 +1061,186 @@ function _handle_meta( $current_file, $func, $params, $display ) {
 }
 
 
-function _handle_metrics( $func, $params, $display ) {
+function _handle_searchgrid( $current_file, $func, $params, $display ) {
+    $ret = '';
+
+    $args = argify( $params );
+
+    $files_to_search = array();
+
+    if( $args['file'] ) {
+        $file = $args['file'];
+
+        if( !is_array( $file ) ) {
+            $file = array( $file );
+        }
+
+        $file = array_map(
+            function( $a ) use( $current_file ) {
+                return interpolate_relative_path( $a, $current_file );
+            },
+            $file
+        );
+
+        $files_to_search = collect_files(
+            $file,
+            $current_file
+        );
+
+    } elseif( $args['list'] ) {
+
+        $list = file_or( $args['list'], false );
+
+        if( !git_file_exists( $list ) ) {
+            return "List '$list' does not exist";
+        }
+
+        $files_to_search = collect_files(
+            preg_split( 
+                '/\r?\n/',
+                git_file_get_contents( $list )
+            ),
+            $list
+        );
+    }
+
+
+
+    $terms =   set_or( $args['term'], array() );
+    if( !is_array( $terms ) ) {
+        $terms = array( $terms );
+    }
+
+    if( count( $terms ) <= 0 ) {
+        return "No terms to search!";
+    }
+
+    $search = array();
+
+    foreach( $terms as $t ) {
+        $matches = array();
+
+        $t_temp = $t;
+        $as_regex = false;
+        if( preg_match( '@^/(.+)/$@', $t, $matches ) === 1 ) {
+            $t_temp = $matches[ 1 ];
+            $as_regex = true;
+        }
+
+        $result = git_grep( 
+            $t_temp,
+            $as_regex
+        ); 
+
+        if( is_array( $result ) && count( $result ) <= 0 ) {
+            $search[ $t ] = array();
+        } else {
+
+            foreach( $result as $res_file => $res ) {
+
+                if( !isset( $search[ $t ] ) ) {
+                    $search[ $t ] = array();
+                }
+
+                if( !isset( $search[ $t ][ $res_file ]  ) ) {
+                    $search[ $t ][ $res_file ] = 0;
+                }
+
+                $search[ $t ][ $res_file ] += $res[ 'count' ];
+
+            }
+        }
+
+    }
+
+    if( count( $files_to_search ) <= 0 ) {
+
+        $temp_files = array();
+
+        foreach( $search as $t => $sf ) {
+            $temp_files[ $sf ] = 1;
+        }
+
+        $temp_files = array_keys( $temp_files );
+
+        sort( $temp_files );
+
+        $files_to_search = $temp_files;
+
+        $temp_files = null;
+    }
+
+    $ret = '';
+
+    $ret .= '<table class="table table-hover table-condensed table-striped">';
+
+    $ret .= '<thead>';
+
+    $ret .= '<tr>';
+    $ret .= '<th>Term / File</th>';
+
+    foreach( $files_to_search as $sf ) {
+        $ret .= '<th>';
+
+        $ret .= linkify( '[[' . undirify( $sf ) . '|' . basename( $sf ) . ']]' ) ;
+
+        $ret .= '</th>';
+    }
+
+    $ret .= '<th>Total</th>';
+
+    $ret .= '</tr>';
+    
+    $ret .= '</thead>';
+
+    $ret .= '<tbody>';
+
+    foreach( $search as $search_term => $res ) {
+        $ret .= '<tr>';
+
+        $ret .= '<td><code><a href="search.php?term=' . urlencode( $search_term ) . '">' . he( $search_term ) ."</a></code></td>";
+
+        $total_count = 0;
+
+        foreach( $files_to_search as $sf ) {
+
+            $count = 0;
+
+            if( isset( $search[ $search_term ][ $sf ] ) ) {
+                $count = $search[ $search_term ][ $sf ] ;
+            }
+
+            $ret .= "<td>" . $count . "</td>";
+
+            $total_count += $count;
+
+
+        }
+
+        $ret .= "<td>" . $total_count . "</td>";
+
+
+        $ret .= '</tr>';
+
+    }
+
+    $ret .= '</tbody>';
+
+    $ret .= '</table>';
+
+
+
+
+
+
+
+
+
+    return $ret;
+
+}
+
+function _handle_metrics( $current_file, $func, $params, $display ) {
 
     $ret = '';
 
@@ -1081,12 +1264,12 @@ function _handle_metrics( $func, $params, $display ) {
             $file = array( $file );
         }
 
-        $file   =   array_map(
-                        function( $a ) use( $current_file ) {
-                            return interpolate_relative_path( $a, $current_file );
-                        },
-                        $file
-                    );
+        $file = array_map(
+            function( $a ) use( $current_file ) {
+                return interpolate_relative_path( $a, $current_file );
+            },
+            $file
+        );
 
         $files_to_measure = collect_files(
             $file,
