@@ -1,5 +1,13 @@
 <?
 
+# Create dummy function if apache_request_headers cannot be found
+if( !function_exists('apache_request_headers') ) {
+    function apache_request_headers() {
+        return array();
+    }
+}
+
+
 # From here: http://stackoverflow.com/questions/13043816/html5-video-and-partial-range-http-requests
 function handle_partial_download( $full_path ) {
     // Avoid sending unexpected errors to the client - we should be serving a file,
