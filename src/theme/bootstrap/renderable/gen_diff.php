@@ -5,6 +5,18 @@ $stash['css'][]  = 'flags.css';
 # $stash['core_js'][]   = 'jquery.scrollTo-1.4.3.1-min.js';
 $stash['core_js'][]   = 'jquery.scrollTo-2.1.2-min.js';
 $stash['js'][]   = 'diff.js';
+
+# $show_before = null;
+$show_after = null;
+
+# if( commit_or( $p['commit_before'], false ) !== false ) {
+#     $show_before = git_show( $p['commit_before'] );
+# }
+
+if( commit_or( $p['commit_after'], false ) !== false ) {
+    $show_after = git_show( $p['commit_after'] );
+}
+
 ?>
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
     <div class="container-fluid">
@@ -112,7 +124,9 @@ $stash['js'][]   = 'diff.js';
                         title="Commit After"
                         class="wikilink"
                         href="show_commit.php?commit=<?= $p['commit_after'] ?>"
-                    ><?= commit_excerpt( $p['commit_after'] ) ?></a>)
+                    ><?= commit_excerpt( $p['commit_after'] ) ?></a>,
+                    <?= ( !is_null( $show_after ) ? '<code>' . he( excerpt( $show_after[ 'subject' ], 75 ) ) . '</code/>' : '' ) ?>
+                    )
                 </span>
             </span>
         </div>
