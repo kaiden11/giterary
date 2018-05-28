@@ -40,12 +40,12 @@ function proper_glyphs( $contents ) {
     // in order to force apostrophe direction (the underscore indicates
     // the thing that is 'missing', and therefore, should be quoted
     // towards
-    $contents = preg_replace( '@([\w.?!])\'_(\W|$)@', '\1‘\2', $contents );   // No example, but provided
+    $contents = preg_replace( '@([\w,.?!])\'_(\W|$)@', '\1‘\2', $contents );   // No example, but provided
                                                                             // for completeness 
     $contents = preg_replace( '@(^|\W)_\'(\w)@', '\1’\2', $contents );      // Example: 'nother
 
     // End-of-word apostrophes
-    $contents = preg_replace( '@([\w.?!])\'(\W|$)@', '\1’\2', $contents );
+    $contents = preg_replace( '@([\w,.?!])\'(\W|$)@', '\1’\2', $contents );
     // Beginning-of-word apostrophes
     $contents = preg_replace( '@(^|\W)\'(\w)@', '\1‘\2', $contents );
 
