@@ -12,9 +12,9 @@ $header .= '<html>
         <title>';
 if($stash['pg_title'] != NULL) {
     # $header .= SITE_NAME . ' // ' . $stash['pg_title'];
-    $header .=  $stash['pg_title'] . ' // ' . SITE_NAME;
+    $header .=  he( $stash['pg_title'] ) . ' // ' . he( SITE_NAME );
 } else {
-    $header .= SITE_NAME;
+    $header .= he( SITE_NAME );
 }
 $header .=  '
         </title>';
