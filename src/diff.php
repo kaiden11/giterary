@@ -1,4 +1,4 @@
-<? 
+<?php
 require_once('include/header.php');
 require_once('include/footer.php');
 require_once('include/git_html.php');
@@ -18,8 +18,10 @@ if( $is_session_available ) {
 
 echo layout(
     array(
-        'header'            => gen_header( "Diff" ), 
-        'content'           => gen_diff( 
+        'header'    => gen_header( 
+            "Diff" . ( file_or( $file, false ) !== false ? " " . basename( $file ) : "" )  
+        ), 
+        'content'   =>  gen_diff( 
             $commit_before, 
             $commit_after, 
             $file, 
@@ -28,9 +30,6 @@ echo layout(
             $additions
         ),
     )
-#     array(  
-#         'renderer'  =>  'default_layout' 
-#     )
 );
 
 ?>
