@@ -1575,7 +1575,9 @@ function _handle_stamp( $current_file, $func, $params, $display ) {
 
     $display = trim( strtolower( $display ) );
 
-    $hc = git_file_head_commit( dirify( $file ) );
+    $df = dirify( $file );
+
+    $hc = git_file_head_commit( $df );
 
     if( commit_or( $hc, false ) === false ) {
         return "$file?$hc?";
@@ -1614,6 +1616,19 @@ function _handle_stamp( $current_file, $func, $params, $display ) {
 
         case "author":
             $ret = $commit['author_name'];
+            break;
+
+        case "todo":
+        case "todos":
+            $todos = git_todos();
+
+            $num = 0;
+
+            if( isset( $todos[ $df ] ) && is_array( $todos[ $df ] ) ) {
+                $num = $todos[ $df ][ 'count' ];
+            }
+
+            $ret = plural( $num, 'TODO' );
             break;
 
         default:

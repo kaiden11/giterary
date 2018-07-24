@@ -226,7 +226,8 @@ function csv_display( $file, $contents, $show_search = true, $sort = true ) {
                     'todoify',
                     'linkify',
                     'span_markdown',
-                    'highlightify'
+                    'highlightify',
+                    'funcify'
                     // Too much of a performance hit
                 )
             );
