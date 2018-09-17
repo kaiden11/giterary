@@ -49,10 +49,18 @@ if( !git_file_exists( dirify( $file ) ) && !$is_dirifile  ) {
 
 } else {
 
+    $pg_title = ( 
+        $is_dirifile 
+        ? "Directory: " . basename( $file ) 
+        : basename( $file ) 
+    );
+
     switch( $as ) {
         case "print":
         case "printable":
             $layout = "printable";
+
+            $pg_title .= " (" . commit_excerpt( git_file_head_commit( $file ) ) . ")";
             break;
         case "read":
         case "readable":
@@ -65,22 +73,18 @@ if( !git_file_exists( dirify( $file ) ) && !$is_dirifile  ) {
 
     echo layout(
         array(
-            'header'            =>  gen_header( 
-                                        ( 
-                                            $is_dirifile 
-                                                ? "Directory: " . basename( $file ) 
-                                                : basename( $file ) 
-                                        ),
-                                        dirify( $file )
-                                    ),
-            'content'           =>  ( 
-                                        $is_dirifile 
-                                            ? gen_dir_view( $file ) 
-                                            : gen_view( $file, null, $as ) 
-                                    )
+            'header' => gen_header( 
+                $pg_title,
+                dirify( $file )
+            ),
+            'content' => (
+                $is_dirifile 
+                ? gen_dir_view( $file ) 
+                : gen_view( $file, null, $as ) 
+            )
         ),
         array(
-            'renderer'          =>  $layout
+            'renderer' => $layout
         )
     );
 }
