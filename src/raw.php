@@ -114,7 +114,30 @@ switch ( $extension ) {
         $content_type = "application/epub+zip";
         break;
     case "pan":
-        $content_type = "application/x-tex";
+
+        require_once( dirname( __FILE__ ) . '/include/pandoc.php');
+
+        $pan = _pan_parse( 
+            $file, 
+            git_file_get_contents( $file )
+        );
+
+
+        switch( strtolower( trim( $pan['format'] ) ) ) {
+
+            case "icml":
+                $content_type = "application/icml";
+                break;
+
+            case "markdown":
+                $content_type = "text/markdown";
+                break;
+
+            case "latex":
+            default:
+                $content_type = "application/x-tex";
+                break;
+        }
         break;
 
     case "audio": 
@@ -132,7 +155,19 @@ switch ( $extension ) {
         break;
 }
 
-if( $download === true || in_array( $content_type, array( "application/x-tex", "application/epub+zip" ) ) ) {
+if( 
+    $download === true 
+    || 
+    in_array( 
+        $content_type, 
+        array( 
+            "application/x-tex", 
+            "application/icml", 
+            "text/markdown", 
+            "application/epub+zip" 
+        ) 
+    ) 
+) {
 
     $to_file_name = preg_replace( '/[\/\\:&><\[\]]/', '_', undirify( $file ) );
 
@@ -143,6 +178,17 @@ if( $download === true || in_array( $content_type, array( "application/x-tex", "
             // epub file extension
             $to_file_name = preg_replace( '/\.pub$/', '\.epub', $to_file_name );
             break;
+
+        case "text/markdown":
+            // Markdown / pan file extension
+            $to_file_name = preg_replace( '/\.pan$/', '\.md', $to_file_name );
+            break;
+
+        case "application/icml":
+            // ICML / pan file extension
+            $to_file_name = preg_replace( '/\.pan$/', '\.icml', $to_file_name );
+            break;
+
         // LaTeX / pan file extension
         case "application/x-tex":
             $to_file_name = preg_replace( '/\.pan$/', '\.tex', $to_file_name );
