@@ -2059,6 +2059,7 @@ function git_history( $num = 100, $file = null, $author = null, $since = null, $
     }
 
 
+
     $output = "";
 
     $separator = '->>-';
@@ -2084,7 +2085,7 @@ function git_history( $num = 100, $file = null, $author = null, $since = null, $
         if( !is_null( $cache ) ) {
             if( is_bool( $cache ) && $cache === true ) {
                 $r = decache( 'git_history', $memoize_key );
-    
+
                 if( !is_null( $r ) ) {
                     perf_exit( "git_history" );
                     return $r;
@@ -2104,6 +2105,9 @@ function git_history( $num = 100, $file = null, $author = null, $since = null, $
     if( CACHE_ENABLE ) {
         perf_enter( "git_history.cache_miss" );
     }
+
+
+
    
     if( !is_null( $author ) ) {
         git("log --no-notes -n " . escapeshellarg( $num ) . " --skip " . escapeshellarg( $skip ) . " --name-only --pretty=format:" . escapeshellarg( $format ) . " --author=" . escapeshellarg( $author ) . " -- ", $output );
@@ -2141,7 +2145,8 @@ function git_history( $num = 100, $file = null, $author = null, $since = null, $
             }
         }
     }
-    
+
+
     $history = array();
     $historyItem = array();
     $found_header = false;
