@@ -160,12 +160,42 @@ function gen_pandoc_output( $file, $contents, $opts = array() ) {
     // Render output using render mechanism
     $markdown_output = render( $renderer, $puck );
 
-    return _pandoc_markdown_to_latex( 
-        $markdown_output, 
-        $ret['format'], 
-        $ret['variables'],
-        $ret['includes']
-    ) .  perf_exit( "_gen_pan_output" );
+    $r = '';
+    // Switch on the pandoc output format
+    switch( strtolower( $ret[ 'format'] ) ) {
+
+        case 'icml':
+
+            $r = _pandoc_markdown_to_icml( 
+                $markdown_output, 
+                $ret['format'], 
+                $ret['variables'],
+                $ret['includes']
+            ) ;
+            break;
+
+        case 'latex':
+            
+            $r = _pandoc_markdown_to_latex( 
+                $markdown_output, 
+                $ret['format'], 
+                $ret['variables'],
+                $ret['includes']
+            ) ;
+            break;
+
+        case 'markdown':
+        default:
+
+            // No-op
+            $r = $markdown_output;
+            break;
+
+    }
+
+    perf_exit( "_gen_pan_output" );
+    return $r;
+
 
 }
 
@@ -234,6 +264,47 @@ function _pandoc_markdown_to_latex( $contents, $format, $variables, $includes = 
     return $contents;
 }
 
+function _pandoc_markdown_to_icml( $contents, $format, $variables, $includes = null ) {
 
+    if( PANDOC_ENABLE ) {
+
+        if( ( $clean_file = tempnam( TMP_DIR, "clean" ) ) == false ) {
+            die( "Unable to create 'clean' file for pandoc generation" );
+        } else {
+            file_put_contents( $clean_file, $contents );
+
+            $output = "";
+
+            $var_cmd = '';
+
+            if( is_array( $variables ) ) {
+                foreach( $variables as $k => $v ) {
+                    $var_cmd .= ' --variable ';
+                    $var_cmd .= escapeshellarg( $k ) . '=' . escapeshellarg( $v );
+                }
+            }
+
+            $pandoc_cmd = " -s "
+                . $include_cmd . ' '
+                . $var_cmd . ' '
+                . ' -f markdown '
+                . ' -t ' . escapeshellarg( $format ) . ' '
+                . escapeshellarg( $clean_file )
+            ;
+
+            pandoc(
+                $pandoc_cmd,
+                $output 
+            );
+
+            unlink( $clean_file );
+
+            $contents = $output;
+
+        }
+    }
+
+    return $contents;
+}
 
 ?>
