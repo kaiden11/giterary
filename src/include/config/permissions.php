@@ -4,8 +4,13 @@ require_once( dirname( __FILE__ ) . '/permissions.lib.php' );
 $registered_auth_calls = array();
 
 # All access to loggied in users
-$must_be_logged_in = new MustBeLoggedInToWrite();
+$must_be_logged_in = new MustBeLoggedIn();
 register_auth_call( $must_be_logged_in, "can" );
+
+
+# All access to loggied in users
+# $must_be_logged_in = new MustBeLoggedInToWrite();
+# register_auth_call( $must_be_logged_in, "can" );
 
 
 ###############################################################################
