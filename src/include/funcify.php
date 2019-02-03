@@ -230,6 +230,10 @@ function funcify( $text, $current_file = null, $is_preview = false ) {
                     case "churn":
                         $replacement =  _handle_churn( $current_file, $func, $params, $display );
                         break;
+                    case "worddiff":
+                        $replacement =  _handle_worddiff( $current_file, $func, $params, $display );
+                        break;
+
 
                     case "image":
                         $replacement =  _handle_image( $current_file, $func, $params, $display );
@@ -2182,6 +2186,45 @@ function word_diff_count( $text ) {
     return array( $word_count_adds, $word_count_subtracts );
 }
 
+function word_diff_representation( $text ) {
+
+    $ret = array();
+
+    $w = '.';
+    $a = '+';
+    $s = '-';
+
+    $text = lineskip( $text, 5 );
+
+    $split = preg_split( 
+        '/(\{\+.+?\+\}|\[\-.+?\-\])/s',
+        $text,
+        null,
+        PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
+    );
+
+    $text = null;
+
+    foreach( $split as $words ) {
+
+
+        $stats = _calc_stats( $words );
+
+        if( strpos( $words, '{+' ) === 0 ) {
+            $ret[] = array( $a, $stats['total_words'] );
+
+        } elseif( strpos( $words, '[-' ) === 0 ) {
+            $ret[] = array( $s, $stats['total_words'] );
+
+        } else {
+            $ret[] = array( $w, $stats['total_words'] );
+
+        }
+    }
+
+    return $ret;
+}
+
 /*
 function _handle_timeline( $current_file, $func, $params, $display ) {
 
@@ -2362,6 +2405,180 @@ function _handle_churn( $current_file, $func, $params, $display ) {
             $ret .= '<td>' . $churn['subtracts']    . '</td>';
             $ret .= '<td>' . ( $churn['adds'] + $churn['subtracts'] ) . '</td>';
             $ret .= '</tr>';
+        }
+
+    }
+
+    $ret .= '</tbody>';
+    $ret .= '</table>';
+
+    return $ret;
+}
+
+function _handle_worddiff( $current_file, $func, $params, $display ) {
+
+    $args = argify( $params );
+    $num = set_or( $args['num'], 1 );
+    $file = set_or( $args['file'], false );
+    $list_file = set_or( $args['list'], false );
+
+    if( $file !== false && !is_array( $file ) ) {
+        $file = array( $file );
+    }
+
+    if( $list_file !== false && is_array( $list ) ) {
+        $list_file = array_shift( $list_file );
+    }
+
+    if( $file !== false ) {
+        foreach( $file as &$f ) {
+            $f = undirify( file_or( $f, false, $current_file ) );
+        }
+    }
+    
+    $list_file  = file_or( $list_file, false, $current_file );
+
+    $matched_files = array();
+
+    if( $list_file !== false && git_file_exists( $list_file ) ) {
+        $list_contents = git_file_get_contents( $list_file );
+        foreach( preg_split( '/\r?\n/', $list_contents ) as $line ) {
+            if( $line == "" ) { continue; }
+        
+            $matched_files = array_merge(
+                $matched_files,
+                collect_files( 
+                    $line,
+                    $list_file
+                )
+            );
+        }
+    } else {
+
+        foreach( $file as $f ) {
+            if( git_file_exists( $f ) ) {
+                $matched_files[] = $f;
+            }
+        }
+    }
+
+    if( count( $matched_files ) <= 0 ) {
+        return 'No files matches for file= or list= specification';
+    }
+
+    $file_diffs = array();
+
+    // Maximum commit entries to iterate over
+    $max_commits = 200;
+    if( $num > $max_commits ) {
+        $num = $max_commits;
+    }
+
+
+    // Walk the file's history backwards, looking at "churn" of the
+    // added/subtracted words in the file
+    foreach( $matched_files as $f ) {
+
+        $df = dirify( $f );
+
+        $hist =  git_history( $num, $df );
+
+        foreach( $hist as $h ) {
+
+            $diff = git_diff( 
+                $h['parent_commit'],
+                $h['commit'],
+                $df
+            );
+
+            $representation = word_diff_representation( $diff );
+
+            $diff = null;
+
+            $hdiff = array(
+                'commit' => $h,
+                'word_diff' => $representation
+            );
+
+            if( !isset( $file_diffs[ $df ] ) ) {
+                $file_diffs[ $df ] = array();
+            }
+
+            $file_diffs[ $df ][] = $hdiff;
+
+        }
+
+        $hist = null;
+    }
+
+    if( count( $file_diffs ) <= 0 ) {
+        return 'No commits for these files';
+    }
+
+    $ret = '';
+    $ret .= '<table class="word-diff-table table ">';
+    $ret .= '<thead>';
+    $ret .= '<tr>';
+    $ret .= '<th>File</th>';
+
+    foreach( array( "Commit", "Diff" ) as $m ) {
+        $ret .= '<th>';
+        $ret .= '<span>' . $m . '</span>';
+        $ret .= '</th>';
+    }
+
+    $ret .= '</tr>';
+    $ret .= '</thead>';
+    $ret .= '<tbody>';
+
+    foreach( $file_diffs as $f => $fd ) {
+
+        foreach( $fd as $d ) {
+            $ret .= '<tr>';
+            $ret .= '<td>' . linkify( '[[' . undirify( $f ) . '|' . basename( $f ) . ']]' ) . '</td>';
+            $ret .= '<td>' 
+                . '<a href="show_commit.php?commit=' . $d['commit']['commit'] . '">' . commit_excerpt( $d['commit']['commit'] ) . '</a>'
+                . '<br/><samp class="live-timestamp" data-time="' . $d['commit']['epoch'] . '">' 
+                . short_time_diff( $d['commit']['epoch'], time()) 
+                . '</samp>'
+                .  '</td>'
+            ;
+            $ret .= '<td>';
+
+            $ret .= '<div class="representation">';
+
+            for( $i = 0; $i < count( $d['word_diff'] ); $i++ ) {
+
+                $clz = "w";
+                switch( $d['word_diff'][$i][ 0 ] ) {
+                    case '+':
+                        $clz = 'a';
+                        break;
+                    case '-':
+                        $clz = 's';
+                        break;
+                    case '.':
+                    default:
+                        $clz = 'w';
+                }
+
+                $ret .= '<span class="' . $clz . '">' 
+                    . str_repeat( 
+                        $d['word_diff'][$i][0], 
+                        // '&#9608;',
+                        $d['word_diff'][$i][1]
+                    ) .
+                    '</span>'
+                ;
+                // $ret .= $d['word_diff'][$i];
+            }
+
+            $ret .= '</div>'; 
+           
+            $ret .= '</td>';
+            $ret .= '</tr>';
+
+
         }
 
     }

@@ -310,3 +310,36 @@ a.internal.annotation.highlight + annotate,
     border-top: 1px solid #666;
 }
 
+
+table.word-diff-table .representation {
+    display: block;
+    /* line-height: 10px; */
+    max-width: 100rem;
+    word-break: break-all;
+    white-space: pre;
+}
+
+table.word-diff-table .representation .w,
+    table.word-diff-table .representation .a,
+    table.word-diff-table .representation .s
+{
+    display: inline;
+    line-height: 10px;
+    height: 10px;
+    color: #f0f0f0;
+    background-color: #f0f0f0;
+    font-size: 2px;
+}
+
+table.word-diff-table .representation .a {
+    color: #00f;
+    background-color: #0000ff;
+    /* border-left: 2px solid #00f; */
+}
+
+table.word-diff-table .representation .s {
+    color: #f00;
+    background-color: #ff0000;
+    /* border-left: 2px solid #f00; */
+} 
+
