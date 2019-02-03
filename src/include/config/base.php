@@ -41,7 +41,7 @@ define('COOKIE_DOMAIN', 'giterary.yourdomain.com');
 define('COOKIE_PATH', '/');
 define('COOKIE_EXPR_TIME', 86400);
 define('SESS_NAME', "$instance_name-GITERARY-SESSION");
-define('SESS_PATH', "/var/lib/$application_name/session/$instance_name/");
+# define('SESS_PATH', "/var/lib/$application_name/session/$instance_name/");
 
 $cookie_vars = array("usr");
 
