@@ -25,6 +25,13 @@ $stash['css'][] = 'pandoc.css';
             </h4>
         </li>
 
+        <li>
+            <h4>
+                Output Mode: <em><?= he( $p['pan']['mode'] ) ?></em>
+            </h4>
+        </li>
+
+
 
         <li>
             <?= plural( count( $p['pan']['variables'] ), "variable", "s" ) ?> (in order):

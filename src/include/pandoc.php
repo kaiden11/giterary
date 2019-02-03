@@ -51,6 +51,7 @@ function _pan_parse( $file, $contents ) {
     $ret = array(
         'pan_file' =>  $file,
         'format'    =>  'latex',
+        'mode'      =>  'normal',
         'files'     =>  array(),
         'variables' =>  array(),
         'includes'  =>  array(),
@@ -80,6 +81,10 @@ function _pan_parse( $file, $contents ) {
             case "format":
                 $ret['format'] = $b;
                 break;
+            case "mode":
+                $ret['mode'] = $b;
+                break;
+
             case "variable":
                 $ret['variables'][$b] = funcify( $c, $file );
                 break;
@@ -143,18 +148,11 @@ function _gen_pan( $opts = array() ) {
     return render( $renderer, $puck ) .  perf_exit( "_gen_pan" );
 }
 
-
-function gen_pandoc_output( $file, $contents, $opts = array() ) {
-
-    perf_enter( "_gen_pan_output" );
-
-    $renderer   =   ( isset( $opts['renderer'] ) ? $opts['renderer'] : 'gen_pan_output'); 
-
-    $ret = _pan_parse( $file, $contents );
+function _render_pandoc_output( $file, $renderer, $pan ) {
 
     $puck = array(
         'file'          =>  $file,
-        'pan'          =>  &$ret
+        'pan'          =>  &$pan
     );
 
     // Render output using render mechanism
@@ -162,15 +160,15 @@ function gen_pandoc_output( $file, $contents, $opts = array() ) {
 
     $r = '';
     // Switch on the pandoc output format
-    switch( strtolower( $ret[ 'format'] ) ) {
+    switch( strtolower( $pan[ 'format'] ) ) {
 
         case 'icml':
 
             $r = _pandoc_markdown_to_icml( 
                 $markdown_output, 
-                $ret['format'], 
-                $ret['variables'],
-                $ret['includes']
+                $pan['format'], 
+                $pan['variables'],
+                $pan['includes']
             ) ;
             break;
 
@@ -178,9 +176,9 @@ function gen_pandoc_output( $file, $contents, $opts = array() ) {
             
             $r = _pandoc_markdown_to_latex( 
                 $markdown_output, 
-                $ret['format'], 
-                $ret['variables'],
-                $ret['includes']
+                $pan['format'], 
+                $pan['variables'],
+                $pan['includes']
             ) ;
             break;
 
@@ -192,6 +190,175 @@ function gen_pandoc_output( $file, $contents, $opts = array() ) {
             break;
 
     }
+
+    # TODO: Revisit this to determine if there's a way
+    # to fix the pandoc memory leak. Currently, is annoying
+    # but appears innocuous.
+    $r = preg_replace( 
+        '/pandoc: unable to decommit memory: Invalid argument/',
+        '',
+        $r
+    );
+
+    return $r;
+
+}
+
+function section_header( $file ) {
+
+    $lvl = 1;
+
+    if( $file[ 'title' ] ) {
+        if( $file[ 'params' ] ) {
+
+
+            if( is_array( $file['params'] ) ) {
+
+                if( isset( $file['params']['no'] ) ) {
+
+                    $no = array();
+
+                    if( !is_array( $file['params']['no'] ) ) {
+                        $no[] = $file['params']['no'];
+                    } else {
+                        $no = $file['params']['no'];
+                    }
+                
+                    if( in_array( 'title', $no ) ) {
+                        // Don't print the title
+                        return '';
+                    }
+
+                }
+
+                if( isset( $file['params']['level'] ) ) {
+                    switch( $file['params']['level'] ) {
+                        case 'chapter':
+                            $lvl = 1;
+                            break;
+                        case 'section':
+                            $lvl = 2;
+                            break;
+                        case 'subsection':
+                            $lvl = 3;
+                            break;
+                        case 'subsubsection':
+                        case 'paragraph':
+                        case 'subparagraph':
+                            $lvl = 4;
+                            break;
+                        default:
+                            $lvl = 1;
+                            break;
+                    }
+                }
+            }
+        }
+
+        return str_repeat( '#', $lvl ) . ' ' . $file[ 'title' ];
+    }
+
+    return '';
+}
+
+function _clean_output( $file ) {
+
+    return gen_clean( $file['file'] );
+
+}
+
+function _clean_file( $file ) {
+
+    if( git_file_exists( $file['file'] ) ) {
+
+        return section_header( $file ) 
+            . "\n\n"
+            . _clean_output( $file ) 
+            . "\n\n"
+        ;
+    }
+
+
+    return '';
+
+}
+
+
+function gen_pandoc_output( $file, $contents, $opts = array() ) {
+
+    perf_enter( "_gen_pan_output" );
+
+    $renderer   =   ( isset( $opts['renderer'] ) ? $opts['renderer'] : 'gen_pan_output'); 
+
+    $ret = _pan_parse( $file, $contents );
+
+    $r = '';
+    switch( strtolower( trim( $ret[ 'mode'] ) ) ) {
+
+        case "archive":
+
+            if( ( $temp_archive = tempnam( TMP_DIR, "pandoc_archive" ) ) == false ) {
+                die( "Unable to create $temp_archive" );
+            }
+
+            $zip = new ZipArchive();
+
+            if( $zip->open( $temp_archive, ZipArchive::CREATE ) !== TRUE ) {
+                die( "Cannot open '$filename' as zip archive\n" );
+            }
+
+
+            foreach( $ret['files'] as $panfile  ) {
+
+                $ext = 'tex';
+                switch( $ret['format'] ) {
+
+                    case 'markdown':
+                        $ext = 'md';
+                        break;
+
+                    case 'icml':
+                        $ext = 'icml';
+                        break;
+
+                    case 'latex':
+                    default:
+                        $ext = 'tex';
+                        break;
+                }
+                
+                $z = _render_pandoc_output( 
+                    $file, 
+                    $renderer, 
+                    array(
+                        'format'    => $ret['format'],
+                        'variables' => $ret['variables'],
+                        'includes'  => $ret['includes'],
+                        'files'     => array( $panfile )
+                    )
+                );
+
+                // Adding to ZIP archive
+                $zip->addFromString(
+                    path_to_filename( $panfile['path'] ) . "." . $ext,
+                    $z
+                );
+            }
+
+            $zip->close();
+
+            $r = file_get_contents( $temp_archive );
+
+            unlink( $temp_archive );
+
+            break;
+
+        case "normal":
+        default:
+            $r = _render_pandoc_output( $file, $renderer, $ret );
+            break;
+    }
+
 
     perf_exit( "_gen_pan_output" );
     return $r;
