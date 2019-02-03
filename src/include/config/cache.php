@@ -35,7 +35,9 @@ $tag_expirations = array(
     'git_all_meta'          =>  5*86400,
     'git_file_rev_list'     =>  5*86400,
     '_document_stats'       =>  5*86400,
-    'git_history'           =>  2*86400
+    'lookup'                =>  5*86400,
+    'git_history'           =>  2*86400,
+    'git_pickaxe'           =>  2*86400
 );
 
 
