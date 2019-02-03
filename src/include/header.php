@@ -12,7 +12,7 @@ perf_enter( "total" );
 perf_enter( "session_setup" );
 
 ini_set("session.gc_maxlifetime", COOKIE_EXPR_TIME ); 
-ini_set("session.save_path", SESS_PATH ); 
+# ini_set("session.save_path", SESS_PATH ); 
 // Get some cookie modifications going
 session_name( SESS_NAME );
 # $ck = session_get_cookie_params();
