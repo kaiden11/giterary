@@ -18,10 +18,11 @@ ENV DOMAIN_NAME                 giterary.yourdomain.com
 EXPOSE 80
 
 RUN apt-get update \
-    && apt-get install -y libmemcached-dev zlib1g-dev git telnet \
+    && apt-get install -y libmemcached-dev zlib1g-dev git pandoc \
     && apt-get clean -y \
     && pecl install memcached-3.1.3 \
     && apt-get autoremove -y \
+    && docker-php-ext-install opcache \
     && docker-php-ext-enable memcached \
     && true
 
