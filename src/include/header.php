@@ -461,7 +461,7 @@ function _gen_breadcrumb( $opts = array() ) {
         }
     }
 
-    if( count( $tmp ) < 10 && is_logged_in() ) {
+    if( count( $ret ) < 10 && is_logged_in() ) {
         $tmp_recently_modified = array();
 
         $hist = git_history( 20 );
@@ -508,7 +508,7 @@ function _gen_breadcrumb( $opts = array() ) {
                     }
 
 
-                    if( count( $tmp ) >= 10 ) {
+                    if( count( $ret ) >= 10 ) {
                         // Break out completely
                         continue 2;
                     }

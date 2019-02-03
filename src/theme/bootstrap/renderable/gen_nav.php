@@ -1,5 +1,5 @@
-<? renderable( $p ) ?>
-<?
+<?php renderable( $p ) ?>
+<?php
 
 function bootstrap_helper_class( $i, $helper_type ) {
 
@@ -26,14 +26,20 @@ function bootstrap_helper_class( $i, $helper_type ) {
     id="collapse-gen-nav"
     class="navigation collapse navbar-collapse"
 >
-    <? if( count( $_SESSION['breadcrumb'] > 0 ) ) { ?>
+    <?php if( 
+        isset( $_SESSION['breadcrumb'] ) 
+        && 
+        is_array( $_SESSION['breadcrumb'] ) 
+        && 
+        count( $_SESSION['breadcrumb'] ) > 0 
+    ) { ?>
         <?= _gen_breadcrumb( 
             array(
                 'ul-class'  =>  'nav navbar-nav'
             )
         )
         ?>
-    <? } ?>
+    <?php } ?>
     <form 
         method="get" 
         action="search.php" 
@@ -106,7 +112,7 @@ function bootstrap_helper_class( $i, $helper_type ) {
                     </a>
                 </li>
 
-                <? if( is_logged_in() && $p['latest_user_commit']['commit'] != $p['head_commit'] ) { ?>
+                <?php if( is_logged_in() && $p['latest_user_commit']['commit'] != $p['head_commit'] ) { ?>
                     <li>
                         <a
                             class="bg-danger" 
@@ -115,10 +121,10 @@ function bootstrap_helper_class( $i, $helper_type ) {
                             Changes Since My Last Commit
                         </a>
                     </li>
-                <? } ?>
+                <?php } ?>
             </ul>
         </li>
-        <? if( is_logged_in() ) { ?>
+        <?php if( is_logged_in() ) { ?>
             <li class="dropdown btn-group">
                 <button
                     class="btn btn-default navbar-btn dropdown-toggle"
@@ -172,7 +178,7 @@ function bootstrap_helper_class( $i, $helper_type ) {
                     </li>
                 </ul>
             </li>
-        <? } ?>
+        <?php } ?>
         <li class="dropdown btn-group ">
             <button 
                 class="btn btn-default navbar-btn clickable"
@@ -180,11 +186,11 @@ function bootstrap_helper_class( $i, $helper_type ) {
                 title="Files with TODO lines in them"
             >
                 <span class="glyphicon glyphicon-pushpin"></span>
-                <? if( $p['todo_count'] && $p['todo_count'] > 0 ) { ?>
+                <?php if( $p['todo_count'] && $p['todo_count'] > 0 ) { ?>
                     <span class="badge badge-<?= bootstrap_helper_class( $p['todo_count'], 'badge' )?> " >
                         <?= $p['todo_count'] ?>
                     </span>
-                <? } ?>
+                <?php } ?>
             </button>
             <button 
                 class="btn btn-default navbar-btn dropdown-toggle"
@@ -194,7 +200,7 @@ function bootstrap_helper_class( $i, $helper_type ) {
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <? if( $p['todo_count'] && $p['todo_count'] > 0 ) { ?>
+                <?php if( $p['todo_count'] && $p['todo_count'] > 0 ) { ?>
                     <li>
                         <a 
                             href="todos.php" 
@@ -213,7 +219,7 @@ function bootstrap_helper_class( $i, $helper_type ) {
                             Directory TODO Count
                         </a>
                     </li>
-                <? } ?>
+                <?php } ?>
                 <li>
                     
                     <a 
@@ -262,7 +268,7 @@ function bootstrap_helper_class( $i, $helper_type ) {
                         Document Metadata
                     </a>
                 </li>
-                <? if( ASSOC_ENABLE ) { ?>
+                <?php if( ASSOC_ENABLE ) { ?>
                     <li role="presentation" class="dropdown-header">Between pages...</li>
                     <li class="dropdown btn-group">
                         <a
@@ -291,7 +297,7 @@ function bootstrap_helper_class( $i, $helper_type ) {
                             Wanted Pages
                         </a>
                     </li>
-                <? } ?>
+                <?php } ?>
 
             </ul>
         </li>

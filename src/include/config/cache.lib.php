@@ -225,7 +225,7 @@ class memcacheCache {
 
         $this->tag_expirations  =   $tag_expirations;
 
-        $this->memcache_obj     =   new Memcache;
+        $this->memcache_obj     =   new Memcached;
 
         $this->memcache_obj->addServer( 
             $this->cache_server,
@@ -322,7 +322,6 @@ class memcacheCache {
             $success = $this->memcache_obj->set( 
                 $key, 
                 serialize( $value ),
-                0,  //  No flags
                 $expire 
             );
         }
@@ -402,8 +401,8 @@ class memcacheCache {
 
         # perf_log( "decache.memcacheCache.$key" );
 
-        $flags = false;
-        $ret = $this->memcache_obj->get( $key, $flags  );
+        # $flags = false;
+        $ret = $this->memcache_obj->get( $key );
 
         if( $ret === false ) {
 
