@@ -37,6 +37,7 @@ $php_meta_header_pattern = '@^(!)?(%([^%:]+?):\s*([^\s]+?.*)\s*)$@';
 $php_meta_empty_pattern = '@^%([^%:]+?):\s*$@';
 $git_meta_header_pattern = '^(?<!\!)%([^%:]+?):\s*([^\s]+?.*)\s*$';
 
+$metaify_enabled_extensions = array( "markdown", "text", "print","read" );
 
 # Determine whether to force inclusion of word count in commit notes
 define( 'INCLUDE_WORD_COUNT', 1 );
