@@ -195,7 +195,7 @@ function _render_pandoc_output( $file, $renderer, $pan ) {
     # to fix the pandoc memory leak. Currently, is annoying
     # but appears innocuous.
     $r = preg_replace( 
-        '/pandoc: unable to decommit memory: Invalid argument/',
+        '/pandoc: unable to decommit memory: Invalid argument(\r?\n)?/',
         '',
         $r
     );
