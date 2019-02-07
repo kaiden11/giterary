@@ -122,21 +122,25 @@ switch ( $extension ) {
             git_file_get_contents( $file )
         );
 
+        if( strtolower( trim( $pan['mode'] ) ) == 'archive' ) {
+            $content_type = "application/zip";
+        } else {
 
-        switch( strtolower( trim( $pan['format'] ) ) ) {
+            switch( strtolower( trim( $pan['format'] ) ) ) {
 
-            case "icml":
-                $content_type = "application/icml";
-                break;
+                case "icml":
+                    $content_type = "application/icml";
+                    break;
 
-            case "markdown":
-                $content_type = "text/markdown";
-                break;
+                case "markdown":
+                    $content_type = "text/markdown";
+                    break;
 
-            case "latex":
-            default:
-                $content_type = "application/x-tex";
-                break;
+                case "latex":
+                default:
+                    $content_type = "application/x-tex";
+                    break;
+            }
         }
         break;
 
@@ -163,6 +167,7 @@ if(
         array( 
             "application/x-tex", 
             "application/icml", 
+            "application/zip", 
             "text/markdown", 
             "application/epub+zip" 
         ) 
@@ -177,6 +182,11 @@ if(
         case "application/epub+zip":
             // epub file extension
             $to_file_name = preg_replace( '/\.pub$/', '\.epub', $to_file_name );
+            break;
+
+        case "application/zip":
+            // epub file extension
+            $to_file_name = preg_replace( '/\.pan$/', '\.zip', $to_file_name );
             break;
 
         case "text/markdown":

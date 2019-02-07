@@ -307,6 +307,7 @@ function gen_pandoc_output( $file, $contents, $opts = array() ) {
                 die( "Cannot open '$filename' as zip archive\n" );
             }
 
+            $i = 1;
 
             foreach( $ret['files'] as $panfile  ) {
 
@@ -340,9 +341,25 @@ function gen_pandoc_output( $file, $contents, $opts = array() ) {
 
                 // Adding to ZIP archive
                 $zip->addFromString(
-                    path_to_filename( $panfile['path'] ) . "." . $ext,
+                    (
+                        str_pad( $i , 3, "0", STR_PAD_LEFT ) 
+                        .
+                        "-" 
+                        . 
+                        path_to_filename( 
+                            basename( 
+                                $panfile[ 'title' ]
+                            ) 
+                        ) 
+                        . 
+                        "."
+                        . 
+                        $ext
+                    ),
                     $z
                 );
+
+                $i++;
             }
 
             $zip->close();
