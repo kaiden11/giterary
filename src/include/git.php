@@ -1337,12 +1337,15 @@ function git_commit_file_list( $commit = null, $cache = true ) {
         perf_enter( "git_commit_file_list.cache_miss" );
     }    
 
-    git("show --name-only --pretty=format:'' $commit ", $output  );
-    
-    $lines = explode( "\n", $output );
+    git("show --name-only --pretty=format:'' " . escapeshellarg( $commit ) , $output  );
 
-    array_shift( $lines );
-    array_pop( $lines );
+    $lines = preg_split( 
+        "/(\r)?\n/", 
+        trim( $output ) 
+    );
+
+    # array_shift( $lines );
+    # array_pop( $lines );
 
     if( CACHE_ENABLE ) {
         perf_exit( "git_commit_file_list.cache_miss" );
