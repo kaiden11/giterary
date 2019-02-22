@@ -172,6 +172,17 @@ function _render_pandoc_output( $file, $renderer, $pan ) {
             ) ;
             break;
 
+        case 'docx':
+
+            $r = _pandoc_markdown_to_docx( 
+                $markdown_output, 
+                $pan['format'], 
+                $pan['variables'],
+                $pan['includes']
+            ) ;
+            break;
+
+
         case 'latex':
             
             $r = _pandoc_markdown_to_latex( 
@@ -320,6 +331,10 @@ function gen_pandoc_output( $file, $contents, $opts = array() ) {
 
                     case 'icml':
                         $ext = 'icml';
+                        break;
+
+                    case 'docx':
+                        $ext = 'docx';
                         break;
 
                     case 'latex':
@@ -491,4 +506,53 @@ function _pandoc_markdown_to_icml( $contents, $format, $variables, $includes = n
     return $contents;
 }
 
+function _pandoc_markdown_to_docx( $contents, $format, $variables, $includes = null ) {
+
+    if( PANDOC_ENABLE ) {
+
+        if( ( $clean_file = tempnam( TMP_DIR, "clean" ) ) == false ) {
+            die( "Unable to create 'clean' file for pandoc generation" );
+        } else {
+            file_put_contents( $clean_file, $contents );
+
+            $output = "";
+
+            $var_cmd = '';
+
+            if( is_array( $variables ) ) {
+                foreach( $variables as $k => $v ) {
+                    $var_cmd .= ' --variable ';
+                    $var_cmd .= escapeshellarg( $k ) . '=' . escapeshellarg( $v );
+                }
+            }
+
+            if( ( $out_file = tempnam( TMP_DIR, "out" ) ) == false ) {
+                die( "Unable to create 'out' file for pandoc docx generation" );
+            } 
+
+            $pandoc_cmd = " -s "
+                . $include_cmd . ' '
+                . $var_cmd . ' '
+                . ' -f markdown '
+                . ' -t ' . escapeshellarg( $format ) . ' '
+                . ' -o ' . escapeshellarg( $out_file ) . ' '
+                . escapeshellarg( $clean_file )
+            ;
+
+            pandoc(
+                $pandoc_cmd,
+                $output // ignored, as docx only outputs to file
+            );
+
+            unlink( $clean_file );
+
+            $contents = file_get_contents( $out_file );
+
+            unlink( $out_file );
+
+        }
+    }
+
+    return $contents;
+}
 ?>
