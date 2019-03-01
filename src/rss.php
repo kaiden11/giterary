@@ -1,6 +1,6 @@
 <?
-require_once( dirname( _FILE_ ) . "/include/config.php");
-require_once( dirname( _FILE_ ) . "/include/git.php");
+require_once( dirname( __FILE__ ) . "/include/config.php");
+require_once( dirname( __FILE__ ) . "/include/git.php");
 
 $ret = git_history( 10, null, null );
 
