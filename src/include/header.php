@@ -214,7 +214,13 @@ function maintain_breadcrumb( $file ) {
 
     }
 
-    if( count( $_SESSION['breadcrumb'] ) > 0 ) {
+    if( 
+        isset( $_SESSION['breadcrumb'] ) 
+        &&
+        is_array( $_SESSION['breadcrumb'] ) 
+        && 
+        count( $_SESSION['breadcrumb'] ) > 0 
+    ) {
         uasort( 
             $_SESSION['breadcrumb'],
             function( $a, $b ) {
