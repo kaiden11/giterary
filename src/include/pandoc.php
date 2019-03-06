@@ -471,6 +471,7 @@ function _pandoc_markdown_to_icml( $contents, $format, $variables, $includes = n
             die( "Unable to create 'clean' file for pandoc generation" );
         } else {
 
+
             // If in your ICML / InDesign layout you plan to use dropcaps, it's 
             // sometimes a pain to have to go back and remove all starting 
             // quotations in order to make sure that the leading character of
@@ -485,9 +486,9 @@ function _pandoc_markdown_to_icml( $contents, $format, $variables, $includes = n
             ) {
                 $contents = mb_ereg_replace( 
                     '^(\s*)[”“\']', // Leading whitespace followed by a quotation-mark-ish-thing
-                    '',                     // Leave the whitespace
+                    '\\1',         // Leave the whitespace
                     $contents,
-                    1               // Replace no more than 1 match
+                    "sr"            // as opposed to msr, which is the default, and does multiline
                 ); 
             }
 
@@ -507,7 +508,7 @@ function _pandoc_markdown_to_icml( $contents, $format, $variables, $includes = n
             $pandoc_cmd = " -s "
                 . $include_cmd . ' '
                 . $var_cmd . ' '
-                . ' -f markdown '
+                . ' -f markdown_strict '
                 . ' -t ' . escapeshellarg( $format ) . ' '
                 . escapeshellarg( $clean_file )
             ;

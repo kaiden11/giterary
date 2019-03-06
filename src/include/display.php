@@ -1044,7 +1044,7 @@ function _strip_markdown_h6( &$contents ) {
                 (.+?)               # $2 = Header text
                 [ ]*
                 \#*                 # optional closing #\'s (not counted)
-                \n+
+                (\r?\n)+
         }xm',
         '',
         $contents
