@@ -470,6 +470,27 @@ function _pandoc_markdown_to_icml( $contents, $format, $variables, $includes = n
         if( ( $clean_file = tempnam( TMP_DIR, "clean" ) ) == false ) {
             die( "Unable to create 'clean' file for pandoc generation" );
         } else {
+
+            // If in your ICML / InDesign layout you plan to use dropcaps, it's 
+            // sometimes a pain to have to go back and remove all starting 
+            // quotations in order to make sure that the leading character of
+            // a given document is always an alphanumeric, and not a quotation
+            // mark, etc.
+            if( 
+                isset( $variables['dropcap'] ) 
+                && in_array( 
+                    trim( strtolower( $variables['dropcap'] ) ), 
+                    array( 'true', 'yes' ) 
+                ) 
+            ) {
+                $contents = mb_ereg_replace( 
+                    '^(\s*)[”“\']', // Leading whitespace followed by a quotation-mark-ish-thing
+                    '',                     // Leave the whitespace
+                    $contents,
+                    1               // Replace no more than 1 match
+                ); 
+            }
+
             file_put_contents( $clean_file, $contents );
 
             $output = "";
