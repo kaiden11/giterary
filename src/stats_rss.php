@@ -1,7 +1,7 @@
-<?
-require_once( dirname( _FILE_ ) . "/include/config.php");
-require_once( dirname( _FILE_ ) . "/include/git.php");
-require_once( dirname( _FILE_ ) . "/include/stats.php");
+<?php
+require_once( dirname( __FILE__ ) . "/include/config.php");
+require_once( dirname( __FILE__ ) . "/include/git.php");
+require_once( dirname( __FILE__ ) . "/include/stats.php");
 
 $file       = file_or(    $_GET['file'], false );
 $stat       = set_or(     $_GET['stat'], 'total_words' );
