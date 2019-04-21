@@ -230,7 +230,11 @@ function maintain_breadcrumb( $file ) {
         );
     }
 
-    while( count( $_SESSION['breadcrumb'] ) > 10  ) {
+    while( 
+        isset( $_SESSION['breadcrumb'] )
+        && 
+        count( $_SESSION['breadcrumb'] ) > 10  
+    ) {
         array_shift( $_SESSION['breadcrumb'] );
     }
 
