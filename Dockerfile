@@ -22,7 +22,7 @@ RUN apt-get update \
     && apt-get clean -y \
     && pecl install memcached-3.1.3 \
     && apt-get autoremove -y \
-    && docker-php-ext-install opcache zip \
+    && docker-php-ext-install opcache zip exif \
     && docker-php-ext-enable memcached \
     && true
 
