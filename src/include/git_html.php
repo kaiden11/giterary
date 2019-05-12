@@ -84,10 +84,19 @@ function gen_list( $file_collection = array(), $args = array() ) {
 }
 
 
-function gen_search( $term ) {
+function gen_search( $term, $directory = null ) {
     perf_enter( 'gen_search' );
 
     $search = array();
+
+    if( isset( $directory ) ) {
+
+        $directory = dirify( $directory, true );
+    
+        if( !is_dirifile( $directory ) || !git_file_exists( $directory ) ) {
+            $directory = null;
+        }
+    }
 
     if( $term != null && $term != "" ) {
 
@@ -96,15 +105,16 @@ function gen_search( $term ) {
 
             $search = git_grep( 
                 $matches[ 1 ],
-                true    // as_regex = true
+                true,   // as_regex = true
+                $directory
             ); 
         } else {
             $search = git_grep( 
                 $term, 
-                false    // as_regex = true
+                false,  // as_regex = false
+                $directory
             ); 
         }
-
 
         $filename_matches = git_search( $term );
 
@@ -140,7 +150,8 @@ function gen_search( $term ) {
 
     $puck = array(
         'search'    =>  &$search,
-        # 'glob'      =>  &$glob
+        'term'      =>  $term,
+        'directory' =>  $directory
     );
 
     return render( 'gen_search', $puck ) .  perf_exit( "gen_search" );

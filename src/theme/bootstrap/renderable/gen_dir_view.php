@@ -54,16 +54,29 @@ renderable( $p )
                         <li>
                             <a href="annotations.php?file=<?= urlencode( undirify( $p['file'] ) ) ?>">Annotations</a>
                         <li>
+                            <form class="navbar-form" action="search.php" method="get">
+                                <div class="form-group">
+                                    <input type="hidden" name="directory" value="<?= undirify( $p['file'] ) ?>">
+                                    <input class="form-control" type="text" name="term" value="">
+                                    <button class="btn btn-default" type="submit">
+                                        Search this directory
+                                    </button>
+                                </div>
+                            </form>
+                        </li>
+                        <li>
+                            <form class="navbar-form" action="tags.php" method="get">
+                                <div class="form-group">
+                                    <input type="hidden" name="file" value="<?= undirify( $p['file'] ) ?>">
+                                    <input class="form-control" type="text" name="tag" id="tag-search" value="">
+                                    <button class="btn btn-default" type="submit">
+                                        Search for a tag
+                                    </button>
+                                </div>
+                            </form>
+                        </li>
                     </ul>
-                    <form class="navbar-form" action="tags.php" method="get">
-                        <div class="form-group">
-                            <input type="hidden" name="file" value="<?= undirify( $p['file'] ) ?>">
-                            <input class="form-control" type="text" name="tag" id="tag-search" value="">
-                            <button class="btn btn-default" type="submit">
-                                Search for a tag
-                            </button>
-                        </div>
-                    </form>
+
                 </div>
             </nav>
             <div class="dir-view display">

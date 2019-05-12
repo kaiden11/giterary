@@ -46,6 +46,9 @@ function bootstrap_helper_class( $i, $helper_type ) {
         role="search" 
         class="navbar-form"
     >
+        <?php if( $_GET['directory'] && $_GET['term'] ) { ?>
+            <input type="hidden" name="directory" value="<?= he( $_GET['directory'] ) ?>" />
+        <?php } ?>
         <div class="form-group">
             <input 
                 class="form-control quick-nav handle" 
