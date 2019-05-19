@@ -492,6 +492,48 @@ function _pandoc_markdown_to_icml( $contents, $format, $variables, $includes = n
                 ); 
             }
 
+            // The default pandoc converter just bitbuckets any horizontal lines. This is pretty
+            // painful when it comes to inserting scene breaks after the fact. This allows for the
+            // replacement of horizontal lines with a known text string to make search/replace on
+            // scene breaks easier.
+            if( 
+                isset( $variables['horizontal_line_replacement'] ) 
+            ) {
+
+                $repl = '';
+
+                if( 
+                    in_array( 
+                        trim( strtolower( $variables['horizontal_line_replacement'] ) ), 
+                        array( 'true', 'yes' ) 
+                    )
+                ) {
+
+                    $repl = '~~~';
+
+                } else {
+
+                    $repl = trim( strtolower( $variables['horizontal_line_replacement'] ) );
+
+                }
+
+                // From PHP Markdown, Michael Fortin
+                $contents = preg_replace(
+                    '{
+                        ^[ ]{0,3}       # Leading space
+                    	([-*_])         # $1: First marker
+                        (?>                     # Repeated marker group
+                                [ ]{0,2}        # Zero, one, or two spaces.
+                                \1              # Marker character
+                    	){2,}           # Group repeated at least twice
+                    	[ ]*            # Tailing spaces
+                    	$               # End of line.
+                    }mx',
+                    "\n".$repl."\n", 
+                    $contents
+                );
+            }
+
             file_put_contents( $clean_file, $contents );
 
             $output = "";
