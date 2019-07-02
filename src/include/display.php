@@ -778,6 +778,10 @@ function _display_clean( $file, $extension, &$contents ) {
 
     if( in_array( $extension, array( 'markdown' ) ) ) {
 
+        // Easiest just to generate any links prior to stripping the anchor 
+        // tags.
+        $contents = linkify( $contents, array( 'current_file', $file )  );
+
         // Strip any HTML outpuit
         $contents = strip_tags( $contents );
     }
