@@ -1,2 +1,7 @@
 error_log
 include/config/*
+cfg/passfile.csv
+cfg/base.php
+cfg/alias.php
+cfg/cache.php
+cfg/auth.php

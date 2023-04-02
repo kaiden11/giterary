@@ -1,4 +1,4 @@
-FROM php:7.2-apache
+FROM php:7.4-apache
 
 ENV GITERARY_APPLICATION_NAME   giterary
 ENV GITERARY_INSTANCE_NAME      Giterary

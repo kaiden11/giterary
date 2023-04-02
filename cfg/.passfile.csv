@@ -1,0 +1,2 @@
+# Username,user.name,user.email,Password Hash
+"anonymous","name","email","sha512$HASH

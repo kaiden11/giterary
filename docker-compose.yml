@@ -1,0 +1,25 @@
+version: "3"
+
+volumes:
+  giterary-data:
+
+services:
+
+  memcache:
+    image: memcached:1.6
+    restart: unless-stopped
+
+  giterary:
+    image: giterary:latest
+    build:
+      context:    .
+      dockerfile: Dockerfile
+    ports:
+      - 8010:80/tcp
+    restart: unless-stopped
+    volumes:
+      - "giterary-data:/var/lib/giterary:rw"
+      # - "./cfg/passfile.csv:/var/lib/giterary/auth/Giterary/passfile.csv:ro"
+      # - "./cfg/base.php:/var/www/html/include/config/base.php:ro"
+      # - "./cfg/alias.php:/var/www/html/include/config/alias.php:ro"
+      # - "./cfg/cache.php:/var/www/html/include/config/cache.php:ro"
