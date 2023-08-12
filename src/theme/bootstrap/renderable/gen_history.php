@@ -32,10 +32,10 @@ function number_to_helper_class( $num ) {
 }
 
 function commit_pages( $commit ) {
-    if( count( $commit['pages'] ) <= 0 ) {
+    if( !is_array( $commit['pages'] ) || count( $commit['pages'] ) <= 0 ) {
         return '<span>None</span>';
     } else {
-        if( count( $commit['pages'] ) == 1 ) {
+        if( is_array( $commit['pages'] ) &&  count( $commit['pages'] ) == 1 ) {
             $exists = git_file_exists( join( '', $commit['pages'] ) );
 
             return '
@@ -312,7 +312,7 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                         perf_enter( 'render.gen_history.row' );
 
                         if( ASSOC_ENABLE ) {
-                            if( count( $commit['pages'] ) > 0 ) {
+                            if( is_array( $commit['pages'] ) && count( $commit['pages'] ) > 0 ) {
                                 foreach( $commit['pages'] as $f ) {
                                     if( has_directory_prefix( ASSOC_DIR, $f ) ) {
                                         $is_assoc = true;
@@ -328,7 +328,7 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                         }
 
                         if( ALIAS_ENABLE ) {
-                            if( count( $commit['pages'] ) > 0 ) {
+                            if( is_array( $commit['pages'] ) && count( $commit['pages'] ) > 0 ) {
                                 foreach( $commit['pages'] as $f ) {
                                     if( has_directory_prefix( ALIAS_DIR, $f ) ) {
                                         $is_alias = true;
