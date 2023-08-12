@@ -5,3 +5,4 @@ cfg/base.php
 cfg/alias.php
 cfg/cache.php
 cfg/auth.php
+cfg/permissions.php
