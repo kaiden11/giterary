@@ -9,7 +9,7 @@ function pager_url( $file, $num, $skip ) {
     $ret = 'history.php?';
 
     if( file_or( $file, false ) !== false ) {
-        $ret .= "file=" . urlencode( $file ) . "&";    
+        $ret .= "file=" . urlencode( $file ) . "&";
     }
 
     $ret .= "skip=" . urlencode( $skip );
@@ -31,10 +31,6 @@ function number_to_helper_class( $num ) {
 
 }
 
-
-
-
-
 function commit_pages( $commit ) {
     if( count( $commit['pages'] ) <= 0 ) {
         return '<span>None</span>';
@@ -44,20 +40,20 @@ function commit_pages( $commit ) {
 
             return '
                 <div class="filename-box">
-                    <a class="' . ( !$exists ? "edit" : "" ) . '" title="' 
-                        . undirify( 
-                            join( 
-                                '',  
-                                $commit['pages'] 
-                            )  
-                        ) 
-                        . '" href="index.php?file=' 
-                        . undirify( 
-                            join( 
-                                '', 
-                                $commit['pages'] 
-                            ) 
-                        ) 
+                    <a class="' . ( !$exists ? "edit" : "" ) . '" title="'
+                        . undirify(
+                            join(
+                                '',
+                                $commit['pages']
+                            )
+                        )
+                        . '" href="index.php?file='
+                        . undirify(
+                            join(
+                                '',
+                                $commit['pages']
+                            )
+                        )
                         . '">' .
                         page_linktext( join('', $commit['pages'] ) )
                         . '
@@ -71,7 +67,7 @@ function commit_pages( $commit ) {
             foreach( $commit['pages'] as $page ) {
                 $ret .= '
                     <li>
-                        <a 
+                        <a
                             href="index.php?file=' . undirify( $page ) . '"
                         >
                             ' . page_linktext( $page ) . '
@@ -82,7 +78,7 @@ function commit_pages( $commit ) {
 
             return '
                 <div class="btn-group">
-                    <button 
+                    <button
                         class="btn btn-default btn-xs dropdown-toggle"
                         data-toggle="dropdown"
                     >
@@ -103,14 +99,14 @@ function commit_pages( $commit ) {
 function page_linktext( $page ) {
     if( ASSOC_ENABLE && has_directory_prefix( ASSOC_DIR, $page )  ) {
         return '(' .
-            basename( 
-                undirify( 
-                    assoc_file_denormalize( 
-                        basename( 
+            basename(
+                undirify(
+                    assoc_file_denormalize(
+                        basename(
                             $page
-                        ) 
-                    ) 
-                ) 
+                        )
+                    )
+                )
             )
             . ')'
         ;
@@ -118,14 +114,14 @@ function page_linktext( $page ) {
 
     if( ALIAS_ENABLE && has_directory_prefix( ALIAS_DIR, $page ) ) {
         return '(' .
-            basename( 
-                undirify( 
-                    alias_file_denormalize( 
-                        basename( 
+            basename(
+                undirify(
+                    alias_file_denormalize(
+                        basename(
                             $page
-                        ) 
-                    ) 
-                ) 
+                        )
+                    )
+                )
             )
             . ')'
         ;
@@ -133,51 +129,51 @@ function page_linktext( $page ) {
 
 
     if( basename( $page ) == TALK_PAGE ) {
-        return "(Talk:" . 
-            basename( 
+        return "(Talk:" .
+            basename(
                 dirname(
-                    undirify( 
+                    undirify(
                         $page
-                    ) 
+                    )
                 )
             ) . ")"
         ;
     }
 
     if( basename( $page ) == STORYBOARD_PAGE ) {
-        return "(Storyboard:" . 
-            basename( 
+        return "(Storyboard:" .
+            basename(
                 dirname(
-                    undirify( 
+                    undirify(
                         $page
-                    ) 
+                    )
                 )
             ) . ")"
         ;
     }
 
-    
+
     if( basename( $page ) == ANNOTATORJS_FILE ) {
-        return "(Anno:" . 
-            basename( 
+        return "(Anno:" .
+            basename(
                 dirname(
-                    undirify( 
+                    undirify(
                         $page
-                    ) 
+                    )
                 )
             ) . ")"
         ;
     }
 
-    return basename( 
-        undirify( 
+    return basename(
+        undirify(
             $page
-        ) 
+        )
     );
 }
 
 function diff_url( $commit_before, $commit_after, $pages, $plain ) {
-    return 'diff.php?commit_before=' . urlencode( $commit_before ) . 
+    return 'diff.php?commit_before=' . urlencode( $commit_before ) .
         '&commit_after=' . urlencode( $commit_after ) .
         ( $plain == "yes" ? '&plain=yes' : '' ) .
         ( is_array( $pages ) && count( $pages ) == 1 ? '&file=' . urlencode( undirify( array_shift( $pages ) ) ) : '' ) .
@@ -204,7 +200,7 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
             ?>
             <ul class="nav navbar-nav navbar-left activities" >
                 <li class="btn-group">
-                    <button 
+                    <button
                         class="btn btn-default navbar-btn clickable"
                         value="<?= pager_url( $p['file'], $p['num'], $prev_skip ) ?>">
                         &lt;&lt;
@@ -223,11 +219,11 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                         <li id="assoc-list-item">
                             <span class="nav-checkbox">
                                 <label for="checkbox-enable-assoc">
-                                    <input 
-                                        type="checkbox" 
-                                        class="checkbox-enable-assoc" 
-                                        id="checkbox-enable-assoc" 
-                                        title="Show hidden page association related commits" 
+                                    <input
+                                        type="checkbox"
+                                        class="checkbox-enable-assoc"
+                                        id="checkbox-enable-assoc"
+                                        title="Show hidden page association related commits"
                                     />
                                     Show <kbd>A</kbd>ssociations
                                 </label>
@@ -238,11 +234,11 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                             <li id="alias-list-item">
                                 <span class="nav-checkbox">
                                     <label for="checkbox-enable-alias">
-                                        <input 
-                                            type="checkbox" 
-                                            class="checkbox-enable-alias" 
-                                            id="checkbox-enable-alias" 
-                                            title="Show hidden page alias related commits" 
+                                        <input
+                                            type="checkbox"
+                                            class="checkbox-enable-alias"
+                                            id="checkbox-enable-alias"
+                                            title="Show hidden page alias related commits"
                                         />
                                         Show A<kbd>l</kbd>iases
                                     </label>
@@ -263,7 +259,7 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
             </ul>
         </div>
     </nav>
-    
+
     <div id="gen-history" class="history container-fluid meta-off">
         <div class="row">
             <div class="history display col-md-12">
@@ -284,7 +280,7 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                         </thead>
                         <tbody>
                     <?
-                    
+
                     $count = 0;
                     $latest_commit = 'HEAD';
                     $second_latest_commit = 'HEAD';
@@ -304,49 +300,49 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                         if( $count == 0 ) {
                             $latest_commit = $commit['commit'];
                         }
-                    
+
                         if( $count == 1 ) {
                             $second_latest_commit = $commit['commit'];
                         }
-                    
+
                         $row_classes = array();
                         $is_assoc = false;
                         $is_alias = false;
-        
+
                         perf_enter( 'render.gen_history.row' );
-                    
+
                         if( ASSOC_ENABLE ) {
                             if( count( $commit['pages'] ) > 0 ) {
-                                foreach( $commit['pages'] as $f ) { 
+                                foreach( $commit['pages'] as $f ) {
                                     if( has_directory_prefix( ASSOC_DIR, $f ) ) {
                                         $is_assoc = true;
                                         $row_classes[] = "assoc";
                                         break;
                                     }
                                 }
-        
+
                                 if( !$is_assoc ) {
                                     $row_classes[] = "not-assoc";
                                 }
                             }
                         }
-        
+
                         if( ALIAS_ENABLE ) {
                             if( count( $commit['pages'] ) > 0 ) {
-                                foreach( $commit['pages'] as $f ) { 
+                                foreach( $commit['pages'] as $f ) {
                                     if( has_directory_prefix( ALIAS_DIR, $f ) ) {
                                         $is_alias = true;
                                         $row_classes[] = "alias";
                                         break;
                                     }
                                 }
-        
+
                                 if( !$is_alias ) {
                                     $row_classes[] = "not-alias";
                                 }
                             }
                         }
-                    
+
                         $notes = array();
                         if( INCLUDE_WORK_TIME && !$is_assoc ) {
                             if( ( $n = git_notes( $commit['commit'], WORKING_TIME_NOTES_REF ) ) !== false ) {
@@ -359,29 +355,29 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                 $response_exists = substr_count( $n, COMMIT_RESPONSE_PREFIX );
 
                                 /*
-                                $latest_response = array_pop( 
+                                $latest_response = array_pop(
                                     explode( COMMIT_RESPONSE_PREFIX, $n )
                                 );
 
-                                $latest_response_author = array_shift( 
-                                    explode( "\n", $latest_response ) 
+                                $latest_response_author = array_shift(
+                                    explode( "\n", $latest_response )
                                 );
 
                                 $author_hash = substr( md5( $latest_response_author ), 0, 6 );
                                 */
-                            } 
+                            }
                         }
-                    
+
                         ?>
                             <tr class="<?= implode( " ", $row_classes ) ?>">
                                 <td class="before-after-btn">
                                     <div class="btn-group" data-toggle="buttons">
                                         <label class="btn btn-default btn-xs before-after-radio">
-                                            <input 
-                                                type="radio" 
-                                                name="commit_before" 
-                                                id="commit_before_<?= $commit['commit'] ?>"  
-                                                value="<?= $commit['commit'] ?>" 
+                                            <input
+                                                type="radio"
+                                                name="commit_before"
+                                                id="commit_before_<?= $commit['commit'] ?>"
+                                                value="<?= $commit['commit'] ?>"
                                             >
                                             <span
                                                 title="Find difference between two commits, using this as the 'before' commit"
@@ -389,23 +385,23 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                                 &laquo;
                                             </span>
                                         </label>
-                                        <? 
-                                        
-                                            $file_prior_commit = git_file_prior_commit( 
+                                        <?
+
+                                            $file_prior_commit = git_file_prior_commit(
                                                 is_array( $commit['pages'] )
-                                                    ? implode( '', $commit['pages'] ) 
+                                                    ? implode( '', $commit['pages'] )
                                                     : false
-                                                ,$commit['commit'] 
-                                            ); 
+                                                ,$commit['commit']
+                                            );
                                             $is_single_page = is_array( $commit['pages'] ) && count( $commit['pages'] ) == 1;
                                         ?>
                                         <label class="btn btn-default btn-xs before-after-radio file-prior <?= ( !$is_single_page || !$file_prior_commit  ? 'disabled' : '' ) ?>">
                                             <? if( $file_prior_commit !== false ) { ?>
-                                                <input 
-                                                    type="radio" 
-                                                    name="commit_before"  
-                                                    id="commit_before_<?= $file_prior_commit ?>"  
-                                                    value="<?= $file_prior_commit ?>" 
+                                                <input
+                                                    type="radio"
+                                                    name="commit_before"
+                                                    id="commit_before_<?= $file_prior_commit ?>"
+                                                    value="<?= $file_prior_commit ?>"
                                                 >
                                             <? } ?>
                                             <span
@@ -415,38 +411,38 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                             </span>
                                         </label>
                                         <label class="btn btn-default btn-xs before-after-radio">
-                                            <input 
-                                                type="radio" 
-                                                name="commit_after"  
-                                                id="commit_after_<?= $commit['commit'] ?>"  
-                                                value="<?= $commit['commit'] ?>" 
+                                            <input
+                                                type="radio"
+                                                name="commit_after"
+                                                id="commit_after_<?= $commit['commit'] ?>"
+                                                value="<?= $commit['commit'] ?>"
                                             >
                                             <span
                                                 title="Find difference between two commits, using this as the 'after' commit"
                                             >
                                                 &raquo;
                                             </span>
-        
+
                                         </label>
                                     </div>
                                 </td>
                                 <td class="dropdown commit-btn">
                                     <div class="btn-group">
                                         <a
-                                            class="btn btn-<?= number_to_helper_class( $response_exists ) ?> btn-xs combo-btn" 
-                                            href="show_commit.php?commit=<?= $commit['commit'] ?>" 
-                                            title="<?= commit_excerpt( $commit['commit'] ) ?> @ <?= strftime( '%Y-%m-%d %H:%M:%S', $commit['epoch' ] ) ?>: Show details on this commit." 
+                                            class="btn btn-<?= number_to_helper_class( $response_exists ) ?> btn-xs combo-btn"
+                                            href="show_commit.php?commit=<?= $commit['commit'] ?>"
+                                            title="<?= commit_excerpt( $commit['commit'] ) ?> @ <?= strftime( '%Y-%m-%d %H:%M:%S', $commit['epoch' ] ) ?>: Show details on this commit."
                                         >
                                             <samp
                                                 class="live-timestamp"
                                                 data-time="<?= $commit['epoch'] ?>"
-                                            ><?= short_time_diff( 
-                                                $commit['epoch'], 
+                                            ><?= short_time_diff(
+                                                $commit['epoch'],
                                                 time()
                                             ) ?></samp>
 
                                             <?php if( $response_exists > 0 ) { ?>
-                                                <span 
+                                                <span
                                                     class="badge"
                                                 >
                                                     <?= $response_exists ?>
@@ -454,14 +450,14 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                             <?php } ?>
                                         </a>
                                         <a
-                                            class="btn btn-default btn-xs" 
-                                            href="<?= diff_url( $commit['parent_commit'], $commit['commit'], $commit['pages'], 'yes' ) ?>" 
+                                            class="btn btn-default btn-xs"
+                                            href="<?= diff_url( $commit['parent_commit'], $commit['commit'], $commit['pages'], 'yes' ) ?>"
                                             title="Difference between this commit and its parent"
                                         >
                                             diff
                                         </a>
                                         <button
-                                            class="btn btn-default btn-xs dropdown-toggle" 
+                                            class="btn btn-default btn-xs dropdown-toggle"
                                             <? if( false ) { ?>
                                                 style="background-color: #<?= $author_hash ?>"
                                             <? } ?>
@@ -511,7 +507,7 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                                     </div>
                                 </td>
                                 <td class="author <?= he( $commit['author'] ) ?>">
-                                    <a 
+                                    <a
                                         href="history.php?author=<?= $commit['author'] ?>"
                                     >
                                         <?= $commit['author'] ?>
@@ -528,10 +524,10 @@ function diff_anchor( $display, $commit_before, $commit_after, $pages, $plain, $
                         $count++;
                         perf_exit( 'render.gen_history.row' );
                     }
-        
+
                     ?>
                         </tbody>
-        
+
                     </table>
                 </div>
             </div>
